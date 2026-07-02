@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-labelledby="title" preserveAspectRatio="xMidYMid slice">
+  <title>Profile placeholder</title>
+  <defs>
+    <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2563eb" />
+      <stop offset="100%" stop-color="#60a5fa" />
+    </linearGradient>
+  </defs>
+  <rect width="200" height="200" rx="32" fill="url(#grad)" />
+  <circle cx="100" cy="76" r="40" fill="#ffffff" opacity="0.95" />
+  <path d="M52 170c0-28 22-50 48-50s48 22 48 50" fill="#ffffff" opacity="0.95" />
+  <text x="100" y="118" text-anchor="middle" font-family="Inter,ui-sans-serif,system-ui,sans-serif" font-size="26" font-weight="700" fill="#2563eb">You</text>
+</svg>

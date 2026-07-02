@@ -1,19 +1,139 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
 
-@theme {
+:root {
+  color-scheme: dark;
   --color-background: #000000;
-  --color-foreground: #ededed;
-  --color-muted: #a1a1aa;
-  --color-accent: #3b82f6;
+  --color-card: #111827;
+  --color-foreground: #f8fafc;
+  --color-muted: #94a3b8;
+  --color-accent: #60a5fa;
+  --color-accent-soft: rgba(96, 165, 250, 0.12);
+  --color-border: rgba(148, 163, 184, 0.24);
+  --color-surface: rgba(255, 255, 255, 0.04);
+  --star-dot-1: rgba(255, 255, 255, 0.55);
+  --star-dot-2: rgba(255, 255, 255, 0.32);
+  --star-dot-3: rgba(96, 165, 250, 0.14);
+}
+
+.light {
+  color-scheme: light;
+  --color-background: #f8fafc;
+  --color-card: #ffffff;
+  --color-foreground: #0f172a;
+  --color-muted: #475569;
+  --color-accent: #2563eb;
+  --color-accent-soft: rgba(37, 99, 235, 0.12);
+  --color-border: rgba(148, 163, 184, 0.32);
+  --color-surface: rgba(15, 23, 42, 0.06);
+  --star-dot-1: rgba(15, 23, 42, 0.42);
+  --star-dot-2: rgba(15, 23, 42, 0.22);
+  --star-dot-3: rgba(37, 99, 235, 0.12);
+}
+
+.dark {
+  color-scheme: dark;
+  --color-background: #000000;
+  --color-card: #111827;
+  --color-foreground: #f8fafc;
+  --color-muted: #94a3b8;
+  --color-accent: #60a5fa;
+  --color-accent-soft: rgba(96, 165, 250, 0.12);
+  --color-border: rgba(148, 163, 184, 0.24);
+  --color-surface: rgba(255, 255, 255, 0.04);
+  --star-dot-1: rgba(255, 255, 255, 0.55);
+  --star-dot-2: rgba(255, 255, 255, 0.32);
+  --star-dot-3: rgba(96, 165, 250, 0.14);
 }
 
 @layer base {
   body {
     background-color: var(--color-background);
+    background-image:
+      radial-gradient(circle at 20% 14%, rgba(59, 130, 246, 0.14), transparent 20%),
+      radial-gradient(circle at 82% 18%, rgba(59, 130, 246, 0.14), transparent 25%),
+      linear-gradient(to top, rgba(0, 0, 0, 0.95), rgba(0, 0, 0, 0));
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
     color: var(--color-foreground);
     font-family: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+  }
+
+  .light body {
+    background-color: #EFF6FF;
+    background-image:
+      radial-gradient(circle at 18% 20%, rgba(37, 99, 235, 0.12), transparent 24%),
+      radial-gradient(circle at 80% 16%, rgba(59, 130, 246, 0.08), transparent 28%);
+  }
+
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background-image:
+      radial-gradient(circle, var(--star-dot-1) 1.2px, transparent 1.2px),
+      radial-gradient(circle, var(--star-dot-2) 1.2px, transparent 1.2px),
+      radial-gradient(circle, var(--star-dot-3) 1.2px, transparent 1.2px);
+    background-size: 110px 110px, 170px 170px, 230px 230px, 145px 145px;
+    background-position: 8% 12%, 42% 28%, 68% 62%, 88% 78%;
+    mix-blend-mode: screen;
+    filter: blur(0.3px);
+    opacity: 0.42;
+    z-index: -1;
+  }
+
+  .light body::after {
+    mix-blend-mode: normal;
+    opacity: 0.22;
+  }
+
+  .prose {
+    color: var(--color-foreground);
+  }
+
+  .prose a {
+    color: var(--color-accent);
+  }
+
+  .prose a:hover {
+    color: var(--color-accent);
+  }
+
+  .prose p,
+  .prose li,
+  .prose blockquote,
+  .prose figcaption,
+  .prose td,
+  .prose th {
+    color: var(--color-foreground);
+  }
+
+  .prose blockquote {
+    border-left-color: var(--color-accent);
+    background-color: var(--color-surface);
+  }
+
+  .prose hr {
+    border-color: var(--color-border);
+  }
+
+  .prose strong,
+  .prose b {
+    color: var(--color-foreground);
+  }
+
+  .prose code,
+  .prose kbd,
+  .prose pre {
+    color: var(--color-foreground);
+    background-color: var(--color-surface);
+  }
+
+  .prose pre {
+    background-color: var(--color-card);
   }
 }

@@ -3,18 +3,20 @@ import { getCollection } from "astro:content";
 import Layout from "../../layouts/Layout.astro";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
+import { SITE_TITLE } from "../../config/site"; // Import SITE_TITLE
+import { SITE_DESCRIPTION } from "../../config/site"; // Import SITE_DESCRIPTION
 
 const posts = (await getCollection("blog")).sort(
   (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
 );
 ---
 
-<Layout title="Blog | Manoj Kumar Chaudhary">
+<Layout title={`Blog | ${SITE_TITLE}`} description={SITE_DESCRIPTION}> {/* Dynamically use SITE_TITLE */}
   <Header />
   <main class="flex-grow">
     <section class="mb-16">
       <h1
-        class="text-3xl font-bold text-white mb-8 border-b border-gray-800 pb-4"
+        class="text-3xl font-bold text-foreground mb-8 border-b border-card pb-4"
       >
         Blog
       </h1>
@@ -23,10 +25,10 @@ const posts = (await getCollection("blog")).sort(
           posts.map((post) => (
             <li>
               <a href={`/blog/${post.id}/`} class="group block">
-                <h2 class="text-xl font-medium text-white group-hover:text-accent transition-colors mb-2">
+                <h2 class="text-xl font-medium text-foreground group-hover:text-accent mb-2">
                   {post.data.title}
                 </h2>
-                <p class="text-gray-400 text-sm mb-2">
+                <p class="text-muted text-sm mb-2">
                   <time datetime={post.data.pubDate.toISOString()}>
                     {post.data.pubDate.toLocaleDateString("en-us", {
                       year: "numeric",
@@ -35,7 +37,7 @@ const posts = (await getCollection("blog")).sort(
                     })}
                   </time>
                 </p>
-                <p class="text-gray-300">{post.data.description}</p>
+                <p class="text-muted">{post.data.description}</p>
               </a>
             </li>
           ))

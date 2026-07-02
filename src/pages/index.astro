@@ -5,13 +5,13 @@ import Hero from "../components/Hero";
 import Experience from "../components/Experience";
 import Projects from "../components/Projects";
 import Footer from "../components/Footer";
-import { SITE_TITLE, SITE_DESCRIPTION } from "../data/portfolio";
+import { SITE_TITLE, SITE_DESCRIPTION } from "../config/site"; // Updated import
 ---
 
 <Layout title={SITE_TITLE} description={SITE_DESCRIPTION}>
-  <Header />
-  <main class="flex-grow">
-    <Hero />
+  <Header client:load />
+  <main class="grow">
+    <Hero client:load />
     <Experience />
     <Projects />
   </main>
