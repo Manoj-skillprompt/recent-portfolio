@@ -1,0 +1,19 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Header from "../components/Header";
+import Hero from "../components/Hero";
+import Experience from "../components/Experience";
+import Projects from "../components/Projects";
+import Footer from "../components/Footer";
+import { SITE_TITLE, SITE_DESCRIPTION } from "../data/portfolio";
+---
+
+<Layout title={SITE_TITLE} description={SITE_DESCRIPTION}>
+  <Header />
+  <main class="flex-grow">
+    <Hero />
+    <Experience />
+    <Projects />
+  </main>
+  <Footer />
+</Layout>

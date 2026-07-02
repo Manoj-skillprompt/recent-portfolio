@@ -1,0 +1,27 @@
+---
+import '../styles/global.css';
+
+export interface Props {
+	title: string;
+	description?: string;
+}
+
+const { title, description } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="generator" content={Astro.generator} />
+		<title>{title}</title>
+		{description && <meta name="description" content={description} />}
+	</head>
+	<body class="bg-black text-gray-200 selection:bg-gray-800">
+		<div class="max-w-2xl mx-auto px-4 py-12 md:py-20 flex flex-col min-h-screen">
+			<slot />
+		</div>
+	</body>
+</html>

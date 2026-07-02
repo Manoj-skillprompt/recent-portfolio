@@ -1,0 +1,47 @@
+---
+import { getCollection } from "astro:content";
+import Layout from "../../layouts/Layout.astro";
+import Header from "../../components/Header";
+import Footer from "../../components/Footer";
+
+const posts = (await getCollection("blog")).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
+---
+
+<Layout title="Blog | Manoj Kumar Chaudhary">
+  <Header />
+  <main class="flex-grow">
+    <section class="mb-16">
+      <h1
+        class="text-3xl font-bold text-white mb-8 border-b border-gray-800 pb-4"
+      >
+        Blog
+      </h1>
+      <ul class="space-y-8">
+        {
+          posts.map((post) => (
+            <li>
+              <a href={`/blog/${post.id}/`} class="group block">
+                <h2 class="text-xl font-medium text-white group-hover:text-accent transition-colors mb-2">
+                  {post.data.title}
+                </h2>
+                <p class="text-gray-400 text-sm mb-2">
+                  <time datetime={post.data.pubDate.toISOString()}>
+                    {post.data.pubDate.toLocaleDateString("en-us", {
+                      year: "numeric",
+                      month: "short",
+                      day: "numeric",
+                    })}
+                  </time>
+                </p>
+                <p class="text-gray-300">{post.data.description}</p>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+  </main>
+  <Footer />
+</Layout>
