@@ -7,9 +7,10 @@ export interface NavItem {
 
 export const NAV_ITEMS: NavItem[] = [
   {
-    label: 'Home',
-    href: '/',
-    action: 'scroll-top',
+    label: 'About',
+    href: '/#about',
+    action: 'scroll-to-section',
+    sectionId: 'about',
   },
   {
     label: 'Projects',
@@ -18,8 +19,20 @@ export const NAV_ITEMS: NavItem[] = [
     sectionId: 'projects',
   },
   {
-    label: 'Blog',
+    label: 'Blogs',
     href: '/blog',
     action: 'navigate',
+  },
+  {
+    label: 'Consulting',
+    href: '/#consulting',
+    action: 'scroll-to-section',
+    sectionId: 'consulting',
+  },
+  {
+    label: 'Newsletter',
+    href: '/#newsletter',
+    action: 'scroll-to-section',
+    sectionId: 'newsletter',
   },
 ];
