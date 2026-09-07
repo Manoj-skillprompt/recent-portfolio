@@ -4,31 +4,37 @@ import Header from "../components/Header";
 import Hero from "../components/Hero";
 import Experience from "../components/Experience";
 import Projects from "../components/Projects";
-import GitHubContributions from "../components/GitHubContributions";
 import Footer from "../components/Footer";
 import { SITE_TITLE, SITE_DESCRIPTION } from "../config/site";
 import type { GitHubUser, GitHubRepo, GitHubStats } from "../config/interfaces/github";
 
-const GITHUB_USERNAME = import.meta.env.PUBLIC_GITHUB_USERNAME;
-const GITHUB_TOKEN = import.meta.env.PUBLIC_GITHUB_TOKEN || "";
+const GITHUB_USERNAME = import.meta.env.PUBLIC_GITHUB_USERNAME || "";
 
 let gitHubData: GitHubStats | null = null;
 
 if (GITHUB_USERNAME && GITHUB_USERNAME !== "your-github-username") {
   try {
-    const headers: Record<string, string> = {};
-    if (GITHUB_TOKEN) headers.Authorization = `Bearer ${GITHUB_TOKEN}`;
-
-    const [userRes, reposRes] = await Promise.all([
-      fetch(`https://api.github.com/users/${GITHUB_USERNAME}`, { headers }),
+    const [userResult, reposResult, contributionsResult] = await Promise.allSettled([
+      fetch(`https://api.github.com/users/${GITHUB_USERNAME}`, { signal: AbortSignal.timeout(10000) }),
       fetch(`https://api.github.com/users/${GITHUB_USERNAME}/repos?per_page=100&sort=updated`, {
-        headers,
+        signal: AbortSignal.timeout(10000),
+      }),
+      fetch(`https://github-contributions-api.jogruber.de/v4/${GITHUB_USERNAME}`, {
+        signal: AbortSignal.timeout(10000),
       }),
     ]);
 
-    if (userRes.ok && reposRes.ok) {
+    const userRes = userResult.status === "fulfilled" && userResult.value.ok ? userResult.value : null;
+    const reposRes = reposResult.status === "fulfilled" && reposResult.value.ok ? reposResult.value : null;
+    const contributionsRes =
+      contributionsResult.status === "fulfilled" && contributionsResult.value.ok ? contributionsResult.value : null;
+
+    if (userRes && reposRes) {
       const user: GitHubUser = await userRes.json();
       const repos: GitHubRepo[] = await reposRes.json();
+      const contributionResponse: { contributions: GitHubStats["contributions"] } = contributionsRes
+        ? await contributionsRes.json()
+        : { contributions: [] };
 
       const totalStars = repos.reduce((sum, repo) => sum + repo.stargazers_count, 0);
       const totalForks = repos.reduce((sum, repo) => sum + repo.forks_count, 0);
@@ -38,10 +44,12 @@ if (GITHUB_USERNAME && GITHUB_USERNAME !== "your-github-username") {
         .sort((a, b) => b.stargazers_count - a.stargazers_count)
         .slice(0, 6);
 
-      gitHubData = { user, repos: topRepos, totalStars, totalForks };
+      gitHubData = { user, repos: topRepos, totalStars, totalForks, contributions: contributionResponse.contributions };
+    } else {
+      console.warn("GitHub profile data is unavailable during the build.");
     }
   } catch (err) {
-    console.error("Failed to fetch GitHub data at build time:", err);
+    console.warn("GitHub data could not be loaded during the build:", err instanceof Error ? err.message : err);
   }
 }
 ---
@@ -49,10 +57,9 @@ if (GITHUB_USERNAME && GITHUB_USERNAME !== "your-github-username") {
 <Layout title={SITE_TITLE} description={SITE_DESCRIPTION}>
   <Header client:load />
   <main class="grow">
-    <Hero client:load />
+    <Hero client:load data={gitHubData} />
     <Experience />
     <Projects />
-    <GitHubContributions data={gitHubData} />
   </main>
   <Footer />
 </Layout>

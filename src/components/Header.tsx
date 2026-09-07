@@ -71,13 +71,13 @@ export default function Header() {
       </div>
 
       <nav className='flex items-center justify-center rounded-full border border-white/10 bg-[rgba(29,25,23,0.72)] px-5 py-3 shadow-[0_12px_30px_rgba(0,0,0,0.35)] backdrop-blur-sm ring-1 ring-white/5 sm:px-7'>
-        <div className='flex items-center  gap-5 text-base font-medium text-white/90 sm:gap-8'>
+        <div className='flex items-center  gap-5 text-lg font-medium text-white/90 sm:gap-8'>
           {NAV_ITEMS.map((item) => (
             <a
               key={item.label}
               href={item.href}
               onClick={(e) => handleNavClick(e, item.action, item.sectionId)}
-              className='transition-colors duration-200 hover:text-[#f8d9b5]'
+              className='transition-colors duration-200 hover:text-[#7ee7c6]'
             >
               {item.label}
             </a>

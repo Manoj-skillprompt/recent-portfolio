@@ -19,9 +19,16 @@ export interface GitHubRepo {
   updated_at: string;
 }
 
+export interface GitHubContribution {
+  date: string;
+  count: number;
+  level: number;
+}
+
 export interface GitHubStats {
   user: GitHubUser | null;
   repos: GitHubRepo[];
   totalStars: number;
   totalForks: number;
+  contributions: GitHubContribution[];
 }

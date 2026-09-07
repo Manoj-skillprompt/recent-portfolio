@@ -3,6 +3,7 @@
 
 const githubUsername = import.meta.env.PUBLIC_GITHUB_USERNAME || 'your-github-username';
 const linkedinUsername = import.meta.env.PUBLIC_LINKEDIN_USERNAME || 'your-linkedin-username';
+const twitterUsername = import.meta.env.PUBLIC_TWITTER_USERNAME || 'your-twitter-username';
 const email = import.meta.env.PUBLIC_EMAIL || 'your-email@example.com';
 
 export interface SocialLink {
@@ -17,18 +18,24 @@ export const SOCIALS: SocialLink[] = [
     name: 'GitHub',
     icon: 'Github',
     url: `https://github.com/${githubUsername}`,
-    color: 'hover:text-gray-900 dark:hover:text-gray-100'
+    color: 'hover:bg-black',
   },
   {
     name: 'LinkedIn',
     icon: 'Linkedin',
     url: `https://linkedin.com/in/${linkedinUsername}`,
-    color: 'hover:text-[#0077b5]'
+    color: 'hover:bg-[#0077b5]',
+  },
+  {
+    name: 'Twitter',
+    icon: 'Twitter',
+    url: `https://twitter.com/${twitterUsername}`,
+    color: 'hover:bg-gray-800',
   },
   {
     name: 'Email',
     icon: 'Mail',
     url: `https://mail.google.com/mail/u/0/?fs=1&tf=cm&source=mailto&to=${email}`,
-    color: 'hover:text-red-500'
-  }
+    color: 'hover:bg-yellow-900',
+  },
 ];
