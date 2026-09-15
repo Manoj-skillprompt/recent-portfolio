@@ -20,10 +20,10 @@ const { Content } = await render(post);
 ---
 
 <Layout
-  title={`${post.data.title} | ${SITE_TITLE}`} // Dynamically use SITE_TITLE
+  title={`${post.data.title} | ${SITE_TITLE}`} 
   description={post.data.description}
 >
-  <Header />
+  <Header client:load />
   <main class="flex-grow">
     <article class="prose max-w-none">
       <header class="mb-8 border-b border-card pb-8">

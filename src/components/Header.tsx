@@ -5,6 +5,7 @@ import ThemeIcon from './ThemeIcon';
 
 export default function Header() {
   const [theme, setTheme] = useState<'dark' | 'light'>('dark');
+  const [activeNav, setActiveNav] = useState<string | null>(null);
 
   useEffect(() => {
     const storedTheme = window.localStorage.getItem('theme');
@@ -28,7 +29,40 @@ export default function Header() {
 
     handleHashNavigation();
     window.addEventListener('hashchange', handleHashNavigation);
-    return () => window.removeEventListener('hashchange', handleHashNavigation);
+
+    const updateActiveNav = () => {
+      const path = window.location.pathname.replace(/\/$/, '') || '/';
+
+      if (path === '/blog') {
+        setActiveNav('Blogs');
+        return;
+      }
+
+      if (path !== '/') {
+        setActiveNav(null);
+        return;
+      }
+
+      const visibleSections = NAV_ITEMS.filter((item) => item.sectionId)
+        .map((item) => {
+          const section = document.getElementById(item.sectionId!);
+          return section ? { item, top: section.getBoundingClientRect().top } : null;
+        })
+        .filter((section): section is { item: (typeof NAV_ITEMS)[number]; top: number } => section !== null)
+        .filter((section) => section.top <= window.innerHeight * 0.45);
+
+      setActiveNav(visibleSections.at(-1)?.item.label ?? 'Home');
+    };
+
+    updateActiveNav();
+    window.addEventListener('scroll', updateActiveNav, { passive: true });
+    window.addEventListener('resize', updateActiveNav);
+
+    return () => {
+      window.removeEventListener('hashchange', handleHashNavigation);
+      window.removeEventListener('scroll', updateActiveNav);
+      window.removeEventListener('resize', updateActiveNav);
+    };
   }, []);
 
   const toggleTheme = () => {
@@ -77,7 +111,10 @@ export default function Header() {
               key={item.label}
               href={item.href}
               onClick={(e) => handleNavClick(e, item.action, item.sectionId)}
-              className='transition-colors duration-200 hover:text-[#7ee7c6]'
+              aria-current={activeNav === item.label ? 'page' : undefined}
+              className={`relative transition-colors duration-200 hover:text-[#7ee7c6] ${
+                activeNav === item.label ? 'text-[#7ee7c6]' : ''
+              }`}
             >
               {item.label}
             </a>

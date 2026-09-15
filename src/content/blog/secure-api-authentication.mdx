@@ -1,0 +1,11 @@
+---
+title: 'Practical API Authentication: Sessions, Tokens, and Rotating Secrets'
+description: 'A clear guide to choosing authentication strategies for small web apps, including where sessions work better than JWTs and how to rotate secrets safely.'
+pubDate: 'Sep 18 2025'
+---
+
+# Practical API authentication
+
+Authentication decisions affect every part of an application. This guide compares secure cookie sessions, short-lived access tokens, refresh tokens, and secret rotation without assuming a large platform team.
+
+The best choice is usually the simplest one that fits the deployment model. For a server-rendered app, an HTTP-only secure cookie and a server-side session store can be easier to revoke and reason about than a self-contained token.

@@ -1,5 +1,6 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import { getCollection } from "astro:content";
 import Header from "../components/Header";
 import Hero from "../components/Hero";
 import Experience from "../components/Experience";
@@ -7,6 +8,10 @@ import Projects from "../components/Projects";
 import Footer from "../components/Footer";
 import { SITE_TITLE, SITE_DESCRIPTION } from "../config/site";
 import type { GitHubUser, GitHubRepo, GitHubStats } from "../config/interfaces/github";
+
+const blogPosts = (await getCollection("blog")).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
 
 const GITHUB_USERNAME = import.meta.env.PUBLIC_GITHUB_USERNAME || "";
 
@@ -60,6 +65,121 @@ if (GITHUB_USERNAME && GITHUB_USERNAME !== "your-github-username") {
     <Hero client:load data={gitHubData} />
     <Experience />
     <Projects />
+    <section id="blog" class="mb-16">
+      <div class="mb-6 flex items-end justify-between gap-4">
+        <div>
+          <h3 class="text-lg font-bold text-foreground">From the blog</h3>
+          <p class="mt-2 text-sm text-muted">Here are some of the recent articles from my blog.</p>
+        </div>
+        {blogPosts.length > 4 && (
+          <a
+            href="/blog/"
+            class="shrink-0 text-sm font-medium text-primary transition-colors hover:text-foreground"
+          >
+            Read more <span aria-hidden="true">-&gt;</span>
+          </a>
+        )}
+      </div>
+      <ul class="grid gap-5 sm:grid-cols-2">
+        {blogPosts.slice(0, 4).map((post) => (
+          <li class="h-full">
+            <a href={`/blog/${post.id}/`} class="home-blog-card group">
+              <div class="home-blog-card__content">
+                <h4 class="mb-3 text-lg font-medium text-foreground transition-colors duration-300 group-hover:text-primary">
+                  {post.data.title}
+                </h4>
+                <p class="text-sm leading-relaxed text-muted">{post.data.description}</p>
+                <p class="mt-7 text-sm text-muted">
+                  <time datetime={post.data.pubDate.toISOString()}>
+                    {post.data.pubDate.toLocaleDateString("en-us", {
+                      year: "numeric",
+                      month: "short",
+                      day: "numeric",
+                    })}
+                  </time>
+                </p>
+              </div>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </section>
   </main>
   <Footer />
 </Layout>
+
+<script>
+  const blogCards = document.querySelectorAll<HTMLElement>(".home-blog-card");
+
+  blogCards.forEach((card) => {
+    card.addEventListener("pointermove", (event) => {
+      const bounds = card.getBoundingClientRect();
+      const x = ((event.clientX - bounds.left) / bounds.width) * 100;
+      const y = ((event.clientY - bounds.top) / bounds.height) * 100;
+
+      card.style.setProperty("--pointer-x", `${x}%`);
+      card.style.setProperty("--pointer-y", `${y}%`);
+      card.style.setProperty(
+        "--pointer-glow",
+        "color-mix(in srgb, var(--color-primary) 20%, transparent)",
+      );
+    });
+
+    card.addEventListener("pointerleave", () => {
+      card.style.setProperty("--pointer-glow", "transparent");
+    });
+  });
+</script>
+
+<style>
+  .home-blog-card {
+    --pointer-x: 50%;
+    --pointer-y: 50%;
+    --pointer-glow: transparent;
+    position: relative;
+    display: block;
+    height: 100%;
+    overflow: hidden;
+    border: 1px solid rgba(148, 163, 184, 0.25);
+    border-radius: 1rem 3rem 1rem 3rem;
+    background: radial-gradient(circle at var(--pointer-x) var(--pointer-y), var(--pointer-glow), transparent 36%);
+    transition:
+      transform 400ms cubic-bezier(0.22, 1, 0.36, 1),
+      border-color 400ms ease,
+      background-color 400ms ease,
+      box-shadow 400ms ease;
+  }
+
+  .home-blog-card__content {
+    position: relative;
+    z-index: 1;
+    padding: 1.35rem;
+  }
+
+  .home-blog-card:hover,
+  .home-blog-card:focus-visible {
+    transform: translateY(-5px);
+    border-color: color-mix(in srgb, var(--color-primary) 76%, transparent);
+    background-color: color-mix(in srgb, var(--color-primary) 10%, var(--color-card));
+    box-shadow:
+      0 0 0 1px color-mix(in srgb, var(--color-primary) 24%, transparent),
+      0 18px 42px rgba(0, 0, 0, 0.28),
+      0 0 28px color-mix(in srgb, var(--color-primary) 18%, transparent);
+  }
+
+  .home-blog-card:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 4px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .home-blog-card {
+      transition: none;
+    }
+
+    .home-blog-card:hover,
+    .home-blog-card:focus-visible {
+      transform: none;
+    }
+  }
+</style>

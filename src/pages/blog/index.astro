@@ -12,32 +12,54 @@ const posts = (await getCollection("blog")).sort(
 ---
 
 <Layout title={`Blog | ${SITE_TITLE}`} description={SITE_DESCRIPTION}> {/* Dynamically use SITE_TITLE */}
-  <Header />
+  <Header client:load />
   <main class="flex-grow">
     <section class="mb-16">
-      <h1
-        class="text-3xl font-bold text-foreground mb-8 border-b border-card pb-4"
-      >
-        Blog
-      </h1>
-      <ul class="space-y-8">
+      <div class="mb-8 flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
+        <h1 class="max-w-2xl text-2xl font-bold leading-tight text-foreground sm:text-3xl">
+          What I learn while building products, solving problems, and sharpening my craft.
+        </h1>
+        <div class="relative block w-full sm:max-w-xs">
+          <span class="sr-only">Search blog articles</span>
+          <input
+            id="blog-search"
+            type="search"
+            placeholder="Search articles..."
+            autocomplete="off"
+            aria-keyshortcuts="Slash Control+K Meta+K"
+            class="w-full rounded-full border border-white/15 bg-[rgba(29,25,23,0.72)] px-4 py-2.5 text-sm text-foreground outline-none transition-colors placeholder:text-muted focus:border-primary"
+          />
+          <p class="mt-2 text-right text-xs text-muted">
+            Press <kbd class="rounded border border-white/15 px-1.5 py-0.5 text-foreground">/</kbd> or
+            <kbd class="rounded border border-white/15 px-1.5 py-0.5 text-foreground">Ctrl/Cmd+K</kbd> to search
+          </p>
+        </div>
+      </div>
+      <p id="blog-no-results" class="mb-6 hidden text-sm text-muted">No articles matched your search.</p>
+      <ul id="blog-list" class="grid gap-5 sm:grid-cols-2">
         {
           posts.map((post) => (
-            <li>
-              <a href={`/blog/${post.id}/`} class="group block">
-                <h2 class="text-xl font-medium text-foreground group-hover:text-accent mb-2">
-                  {post.data.title}
-                </h2>
-                <p class="text-muted text-sm mb-2">
-                  <time datetime={post.data.pubDate.toISOString()}>
-                    {post.data.pubDate.toLocaleDateString("en-us", {
-                      year: "numeric",
-                      month: "short",
-                      day: "numeric",
-                    })}
-                  </time>
-                </p>
-                <p class="text-muted">{post.data.description}</p>
+            <li
+              class="h-full"
+              data-blog-card
+              data-search={`${post.data.title} ${post.data.description}`.toLowerCase()}
+            >
+              <a href={`/blog/${post.id}/`} class="blog-card group">
+                <div class="blog-card__content">
+                  <h2 class="mb-3 text-xl font-medium text-foreground transition-colors duration-300 group-hover:text-primary">
+                    {post.data.title}
+                  </h2>
+                  <p class="text-sm leading-relaxed text-muted">{post.data.description}</p>
+                  <p class="mt-8 text-sm text-muted">
+                    <time datetime={post.data.pubDate.toISOString()}>
+                      {post.data.pubDate.toLocaleDateString("en-us", {
+                        year: "numeric",
+                        month: "short",
+                        day: "numeric",
+                      })}
+                    </time>
+                  </p>
+                </div>
               </a>
             </li>
           ))
@@ -47,3 +69,134 @@ const posts = (await getCollection("blog")).sort(
   </main>
   <Footer />
 </Layout>
+
+<script>
+  const cards = document.querySelectorAll<HTMLElement>(".blog-card");
+  const searchInput = document.querySelector<HTMLInputElement>("#blog-search");
+  const noResults = document.querySelector<HTMLElement>("#blog-no-results");
+
+  cards.forEach((card) => {
+    card.addEventListener("pointermove", (event) => {
+      const bounds = card.getBoundingClientRect();
+      const x = ((event.clientX - bounds.left) / bounds.width) * 100;
+      const y = ((event.clientY - bounds.top) / bounds.height) * 100;
+
+      card.style.setProperty("--pointer-x", `${x}%`);
+      card.style.setProperty("--pointer-y", `${y}%`);
+      card.style.setProperty(
+        "--pointer-glow",
+        "color-mix(in srgb, var(--color-primary) 20%, transparent)",
+      );
+    });
+
+    card.addEventListener("pointerleave", () => {
+      card.style.setProperty("--pointer-glow", "transparent");
+    });
+  });
+
+  searchInput?.addEventListener("input", () => {
+    const query = searchInput.value.trim().toLowerCase();
+    let visibleCards = 0;
+
+    document.querySelectorAll<HTMLElement>("[data-blog-card]").forEach((card) => {
+      const matches = !query || card.dataset.search?.includes(query);
+      card.hidden = !matches;
+      if (matches) visibleCards += 1;
+    });
+
+    if (noResults) noResults.hidden = visibleCards > 0;
+  });
+
+  window.addEventListener("keydown", (event) => {
+    const target = event.target as HTMLElement;
+    const isTyping =
+      target.tagName === "INPUT" ||
+      target.tagName === "TEXTAREA" ||
+      target.isContentEditable;
+    const isSearchShortcut =
+      event.key === "/" ||
+      ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "k");
+
+    if (searchInput && isSearchShortcut && (!isTyping || event.key.toLowerCase() === "k")) {
+      event.preventDefault();
+      searchInput.focus();
+      searchInput.select();
+    }
+  });
+</script>
+
+<style>
+  .blog-card {
+    --pointer-x: 50%;
+    --pointer-y: 50%;
+    --pointer-glow: transparent;
+    position: relative;
+    display: block;
+    height: 100%;
+    overflow: hidden;
+    border: 1px solid rgba(148, 163, 184, 0.25);
+    border-radius: 1rem 3rem 1rem 3rem;
+    background:
+      radial-gradient(
+        circle at var(--pointer-x) var(--pointer-y),
+        var(--pointer-glow),
+        transparent 36%
+      ),
+      transparent;
+    transition:
+      transform 400ms cubic-bezier(0.22, 1, 0.36, 1),
+      border-color 400ms ease,
+      background-color 400ms ease,
+      box-shadow 400ms ease;
+  }
+
+  .blog-card::after {
+    position: absolute;
+    inset: 0;
+    border: 1px solid color-mix(in srgb, var(--color-primary) 34%, transparent);
+    border-radius: inherit;
+    content: "";
+    opacity: 0;
+    transition: opacity 400ms ease;
+    pointer-events: none;
+  }
+
+  .blog-card__content {
+    position: relative;
+    z-index: 1;
+    padding: 1.35rem;
+  }
+
+  .blog-card:hover,
+  .blog-card:focus-visible {
+    transform: translateY(-5px);
+    border-color: color-mix(in srgb, var(--color-primary) 76%, transparent);
+    background-color: color-mix(in srgb, var(--color-primary) 10%, var(--color-card));
+    box-shadow:
+      0 0 0 1px color-mix(in srgb, var(--color-primary) 24%, transparent),
+      0 18px 42px rgba(0, 0, 0, 0.28),
+      0 0 28px color-mix(in srgb, var(--color-primary) 18%, transparent);
+  }
+
+  .blog-card:hover::after,
+  .blog-card:focus-visible::after {
+    opacity: 1;
+  }
+
+  .blog-card:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 4px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .blog-card,
+    .blog-card::after {
+      transition: none;
+    }
+
+    .blog-card:hover,
+    .blog-card:focus-visible {
+      transform: none;
+    }
+  }
+</style>
