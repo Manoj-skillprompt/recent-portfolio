@@ -30,7 +30,7 @@ export default function GitHubContributions({ data }: Props) {
       </div>
       */}
 
-      <div className='mb-4 rounded-lg bg-surface p-4 sm:p-5'>
+      <div className='mb-4 rounded-lg bg-surface'>
         <div className='mb-4 flex items-start justify-between gap-4'>
           <div>
             {/* <p className='flex items-center gap-2 text-sm font-medium text-foreground'>

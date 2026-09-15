@@ -62,7 +62,7 @@ if (GITHUB_USERNAME && GITHUB_USERNAME !== 'your-github-username') {
   <Header client:load />
   <main class='grow'>
     <Hero client:load data={gitHubData} />
-    <Experience />
+    <Experience client:visible />
     <Projects />
     <section id='blog' class='mb-12'>
       <div class='mb-8 flex items-end justify-between gap-4'>

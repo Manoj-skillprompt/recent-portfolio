@@ -62,8 +62,11 @@
 
   body::before {
     content: '';
-    position: fixed;
-    inset: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 700px;
     pointer-events: none;
     background:
       radial-gradient(ellipse at 50% 0%, rgba(71, 214, 159, 0.2), rgba(71, 214, 159, 0.08) 20%, transparent 48%),

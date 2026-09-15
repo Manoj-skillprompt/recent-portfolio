@@ -48,7 +48,7 @@ const getIcon = (iconName: string, size: number = 24) => {
 
 const PortfolioMosaic = ({ data }: Props) => (
   <section className='grid grid-cols-1 gap-2.5 overflow-hidden text-white sm:grid-cols-12 mt-24'>
-    <article className='relative min-h-65 overflow-hidden rounded-tl-2xl rounded-tr-[3rem] rounded-br-xl rounded-bl-[3rem] bg-[#119bb6] px-7 py-7 sm:col-span-8'>
+    <article className='relative min-h-65 overflow-hidden rounded-tl-2xl rounded-tr-[3rem] rounded-br-xl rounded-bl-[3rem] bg-blue-400 px-7 py-7 sm:col-span-8'>
       <div className='tech-icon-cloud' aria-hidden='true'>
         <span className='tech-icon tech-icon--ts'>
           <SiTypescript className='text-3xl' />
@@ -196,7 +196,7 @@ export default function Hero({ data }: Props) {
 
   return (
     <section className='flex flex-col justify-center mt-22'>
-      <div className='mx-auto w-full max-w-6xl'>
+      <div className='mx-auto w-full max-w-267'>
         {/* <div className="mb-10 flex items-center justify-center">
           <div className="flex items-center gap-4">
             <div className="h-16 w-16 overflow-hidden rounded-full border border-white/10 bg-[#1b1b1b] shadow-[0_0_24px_rgba(0,0,0,0.45)] ring-1 ring-white/5 sm:h-16 sm:w-16">
