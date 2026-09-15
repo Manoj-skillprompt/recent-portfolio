@@ -1,61 +1,63 @@
 ---
-import { getCollection } from "astro:content";
-import Layout from "../../layouts/Layout.astro";
-import Header from "../../components/Header";
-import Footer from "../../components/Footer";
-import { SITE_TITLE } from "../../config/site"; // Import SITE_TITLE
-import { SITE_DESCRIPTION } from "../../config/site"; // Import SITE_DESCRIPTION
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header';
+import Footer from '../../components/Footer';
+import { SITE_TITLE } from '../../config/site'; // Import SITE_TITLE
+import { SITE_DESCRIPTION } from '../../config/site'; // Import SITE_DESCRIPTION
 
-const posts = (await getCollection("blog")).sort(
-  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
-);
+const posts = (await getCollection('blog')).sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 ---
 
-<Layout title={`Blog | ${SITE_TITLE}`} description={SITE_DESCRIPTION}> {/* Dynamically use SITE_TITLE */}
+<Layout title={`Blog | ${SITE_TITLE}`} description={SITE_DESCRIPTION}>
+  {/* Dynamically use SITE_TITLE */}
   <Header client:load />
-  <main class="flex-grow">
-    <section class="mb-16">
-      <div class="mb-8 flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
-        <h1 class="max-w-2xl text-2xl font-bold leading-tight text-foreground sm:text-3xl">
-          What I learn while building products, solving problems, and sharpening my craft.
-        </h1>
-        <div class="relative block w-full sm:max-w-xs">
-          <span class="sr-only">Search blog articles</span>
-          <input
-            id="blog-search"
-            type="search"
-            placeholder="Search articles..."
-            autocomplete="off"
-            aria-keyshortcuts="Slash Control+K Meta+K"
-            class="w-full rounded-full border border-white/15 bg-[rgba(29,25,23,0.72)] px-4 py-2.5 text-sm text-foreground outline-none transition-colors placeholder:text-muted focus:border-primary"
-          />
-          <p class="mt-2 text-right text-xs text-muted">
-            Press <kbd class="rounded border border-white/15 px-1.5 py-0.5 text-foreground">/</kbd> or
-            <kbd class="rounded border border-white/15 px-1.5 py-0.5 text-foreground">Ctrl/Cmd+K</kbd> to search
+  <main class='grow'>
+    <section class='flex flex-col mt-22'>
+      <div class='mb-8 flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between'>
+        <div class='flex flex-col gap-2 max-w-2xl'>
+          <h1 class='max-w-2xl text-2xl font-bold leading-tight text-foreground sm:text-3xl'>
+            Thoughts, Learnings & Experiments
+          </h1>
+          <p class='text-lg mt-4'>
+            A collection of things I’ve learned while building projects, solving problems, and exploring software
+            development. I share what I discover, what works, and sometimes what doesn’t.
           </p>
+          <p class='text-lg'>I hope you enjoy them ✨</p>
         </div>
       </div>
-      <p id="blog-no-results" class="mb-6 hidden text-sm text-muted">No articles matched your search.</p>
-      <ul id="blog-list" class="grid gap-5 sm:grid-cols-2">
+      <p id='blog-no-results' class='mb-6 hidden text-sm text-muted'>No articles matched your search.</p>
+      <div class='relative ml-auto block w-full sm:max-w-xs my-4'>
+        <span class='sr-only'>Search blog articles</span>
+        <input
+          id='blog-search'
+          type='search'
+          placeholder='Search articles...'
+          autocomplete='off'
+          aria-keyshortcuts='Slash Control+K Meta+K'
+          class='w-full rounded-full border border-white/15 bg-[rgba(29,25,23,0.72)] px-4 py-2.5 text-sm text-foreground outline-none transition-colors placeholder:text-muted focus:border-primary'
+        />
+        <p class='mt-2 text-right text-xs text-muted'>
+          Press <kbd class='rounded border border-white/15 px-1.5 py-0.5 text-foreground'>/</kbd> or
+          <kbd class='rounded border border-white/15 px-1.5 py-0.5 text-foreground'>Ctrl/Cmd+K</kbd> to search
+        </p>
+      </div>
+      <ul id='blog-list' class='grid gap-5 sm:grid-cols-2'>
         {
           posts.map((post) => (
-            <li
-              class="h-full"
-              data-blog-card
-              data-search={`${post.data.title} ${post.data.description}`.toLowerCase()}
-            >
-              <a href={`/blog/${post.id}/`} class="blog-card group">
-                <div class="blog-card__content">
-                  <h2 class="mb-3 text-xl font-medium text-foreground transition-colors duration-300 group-hover:text-primary">
+            <li class='h-full' data-blog-card data-search={`${post.data.title} ${post.data.description}`.toLowerCase()}>
+              <a href={`/blog/${post.id}/`} class='blog-card group'>
+                <div class='blog-card__content'>
+                  <h2 class='mb-3 text-xl font-medium text-foreground transition-colors duration-300 group-hover:text-primary'>
                     {post.data.title}
                   </h2>
-                  <p class="text-sm leading-relaxed text-muted">{post.data.description}</p>
-                  <p class="mt-8 text-sm text-muted">
+                  <p class='text-sm leading-relaxed text-muted'>{post.data.description}</p>
+                  <p class='mt-8 text-sm text-muted'>
                     <time datetime={post.data.pubDate.toISOString()}>
-                      {post.data.pubDate.toLocaleDateString("en-us", {
-                        year: "numeric",
-                        month: "short",
-                        day: "numeric",
+                      {post.data.pubDate.toLocaleDateString('en-us', {
+                        year: 'numeric',
+                        month: 'short',
+                        day: 'numeric',
                       })}
                     </time>
                   </p>
@@ -71,34 +73,31 @@ const posts = (await getCollection("blog")).sort(
 </Layout>
 
 <script>
-  const cards = document.querySelectorAll<HTMLElement>(".blog-card");
-  const searchInput = document.querySelector<HTMLInputElement>("#blog-search");
-  const noResults = document.querySelector<HTMLElement>("#blog-no-results");
+  const cards = document.querySelectorAll<HTMLElement>('.blog-card');
+  const searchInput = document.querySelector<HTMLInputElement>('#blog-search');
+  const noResults = document.querySelector<HTMLElement>('#blog-no-results');
 
   cards.forEach((card) => {
-    card.addEventListener("pointermove", (event) => {
+    card.addEventListener('pointermove', (event) => {
       const bounds = card.getBoundingClientRect();
       const x = ((event.clientX - bounds.left) / bounds.width) * 100;
       const y = ((event.clientY - bounds.top) / bounds.height) * 100;
 
-      card.style.setProperty("--pointer-x", `${x}%`);
-      card.style.setProperty("--pointer-y", `${y}%`);
-      card.style.setProperty(
-        "--pointer-glow",
-        "color-mix(in srgb, var(--color-primary) 20%, transparent)",
-      );
+      card.style.setProperty('--pointer-x', `${x}%`);
+      card.style.setProperty('--pointer-y', `${y}%`);
+      card.style.setProperty('--pointer-glow', 'color-mix(in srgb, var(--color-primary) 20%, transparent)');
     });
 
-    card.addEventListener("pointerleave", () => {
-      card.style.setProperty("--pointer-glow", "transparent");
+    card.addEventListener('pointerleave', () => {
+      card.style.setProperty('--pointer-glow', 'transparent');
     });
   });
 
-  searchInput?.addEventListener("input", () => {
+  searchInput?.addEventListener('input', () => {
     const query = searchInput.value.trim().toLowerCase();
     let visibleCards = 0;
 
-    document.querySelectorAll<HTMLElement>("[data-blog-card]").forEach((card) => {
+    document.querySelectorAll<HTMLElement>('[data-blog-card]').forEach((card) => {
       const matches = !query || card.dataset.search?.includes(query);
       card.hidden = !matches;
       if (matches) visibleCards += 1;
@@ -107,17 +106,12 @@ const posts = (await getCollection("blog")).sort(
     if (noResults) noResults.hidden = visibleCards > 0;
   });
 
-  window.addEventListener("keydown", (event) => {
+  window.addEventListener('keydown', (event) => {
     const target = event.target as HTMLElement;
-    const isTyping =
-      target.tagName === "INPUT" ||
-      target.tagName === "TEXTAREA" ||
-      target.isContentEditable;
-    const isSearchShortcut =
-      event.key === "/" ||
-      ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "k");
+    const isTyping = target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.isContentEditable;
+    const isSearchShortcut = event.key === '/' || ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'k');
 
-    if (searchInput && isSearchShortcut && (!isTyping || event.key.toLowerCase() === "k")) {
+    if (searchInput && isSearchShortcut && (!isTyping || event.key.toLowerCase() === 'k')) {
       event.preventDefault();
       searchInput.focus();
       searchInput.select();
@@ -137,12 +131,7 @@ const posts = (await getCollection("blog")).sort(
     border: 1px solid rgba(148, 163, 184, 0.25);
     border-radius: 1rem 3rem 1rem 3rem;
     background:
-      radial-gradient(
-        circle at var(--pointer-x) var(--pointer-y),
-        var(--pointer-glow),
-        transparent 36%
-      ),
-      transparent;
+      radial-gradient(circle at var(--pointer-x) var(--pointer-y), var(--pointer-glow), transparent 36%), transparent;
     transition:
       transform 400ms cubic-bezier(0.22, 1, 0.36, 1),
       border-color 400ms ease,
@@ -155,7 +144,7 @@ const posts = (await getCollection("blog")).sort(
     inset: 0;
     border: 1px solid color-mix(in srgb, var(--color-primary) 34%, transparent);
     border-radius: inherit;
-    content: "";
+    content: '';
     opacity: 0;
     transition: opacity 400ms ease;
     pointer-events: none;

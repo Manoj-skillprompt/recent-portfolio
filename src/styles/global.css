@@ -169,6 +169,136 @@
 }
 
 @layer utilities {
+  .tech-icon-cloud {
+    position: absolute;
+    inset: 0 0 0 auto;
+    width: 42%;
+    overflow: hidden;
+    opacity: 0.3;
+    pointer-events: none;
+  }
+
+  .tech-icon {
+    position: absolute;
+    display: grid;
+    width: 7rem;
+    height: 7rem;
+    place-items: center;
+    border: 0;
+    background: transparent;
+    color: rgba(255, 255, 255, 0.75);
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    backdrop-filter: blur(2px);
+    animation: tech-icon-float 7s ease-in-out infinite;
+  }
+
+  .tech-icon--ts {
+    top: 12%;
+    right: 12%;
+    color: #b9f6d0;
+  }
+
+  .tech-icon--js {
+    top: 48%;
+    right: 37%;
+    animation-delay: -2s;
+  }
+
+  .tech-icon--react {
+    top: 22%;
+    right: 55%;
+    font-size: 1.8rem;
+    animation-delay: -4s;
+  }
+
+  .tech-icon--git {
+    top: 66%;
+    right: 10%;
+    animation-delay: -1s;
+  }
+
+  .tech-icon--next {
+    top: 72%;
+    right: 47%;
+    width: 4.5rem;
+    animation-delay: -3s;
+  }
+
+  .tech-icon--api {
+    top: 42%;
+    right: 2%;
+    width: 3rem;
+    height: 3rem;
+    font-size: 0.65rem;
+    animation-delay: -5s;
+  }
+
+  @keyframes tech-icon-float {
+    0%,
+    100% {
+      transform: translate3d(0, 0, 0) rotate(-3deg);
+    }
+
+    50% {
+      transform: translate3d(-8px, -12px, 0) rotate(3deg);
+    }
+  }
+
+  .honeycomb-pattern {
+    position: absolute;
+    top: 6.5rem;
+    right: -0.5rem;
+    width: 11rem;
+    height: 12rem;
+    z-index: 0;
+    opacity: 0.28;
+    pointer-events: none;
+  }
+
+  .honeycomb-cell {
+    position: absolute;
+    width: 4.25rem;
+    height: 4.75rem;
+    padding: 1px;
+    background: #26303b;
+    clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%);
+  }
+
+  .honeycomb-cell__inner {
+    display: block;
+    width: 100%;
+    height: 100%;
+    background: #0b0d13;
+    clip-path: inherit;
+  }
+
+  .honeycomb-cell:nth-child(1) {
+    top: 0;
+    left: 3.35rem;
+  }
+
+  .honeycomb-cell:nth-child(2) {
+    top: 3.25rem;
+    left: 0;
+  }
+
+  .honeycomb-cell:nth-child(3) {
+    top: 3.25rem;
+    left: 3.35rem;
+  }
+
+  .honeycomb-cell:nth-child(4) {
+    top: 6.5rem;
+    left: 1.7rem;
+  }
+
+  .honeycomb-cell:nth-child(5) {
+    top: 6.5rem;
+    left: 5.05rem;
+  }
+
   .scroll-reveal {
     opacity: 0;
     transform: translateY(24px);
@@ -184,6 +314,10 @@
   }
 
   @media (prefers-reduced-motion: reduce) {
+    .tech-icon {
+      animation: none;
+    }
+
     .scroll-reveal {
       opacity: 1;
       transform: none;

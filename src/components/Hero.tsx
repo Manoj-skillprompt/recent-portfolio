@@ -1,5 +1,7 @@
 import { useEffect, useRef } from 'react';
-import { Mail } from 'lucide-react';
+import { ExternalLink, Mail } from 'lucide-react';
+import { FaReact } from 'react-icons/fa';
+import { SiGit, SiJavascript, SiMysql, SiNextdotjs, SiPostgresql, SiPrisma, SiTypescript } from 'react-icons/si';
 import { PROFILE_INFO } from '../config/profile';
 import { SOCIALS } from '../config/socials';
 import { SITE_DESCRIPTION } from '../config/site';
@@ -45,26 +47,52 @@ const getIcon = (iconName: string, size: number = 24) => {
 };
 
 const PortfolioMosaic = ({ data }: Props) => (
-  <section className='mt-16 grid grid-cols-1 gap-2.5 overflow-hidden text-white sm:grid-cols-12'>
+  <section className='grid grid-cols-1 gap-2.5 overflow-hidden text-white sm:grid-cols-12 mt-24'>
     <article className='relative min-h-65 overflow-hidden rounded-tl-2xl rounded-tr-[3rem] rounded-br-xl rounded-bl-[3rem] bg-[#119bb6] px-7 py-7 sm:col-span-8'>
-      <h2 className='max-w-xl text-2xl font-semibold leading-tight sm:text-3xl'>Currently, I'm building Basobas</h2>
-      <p className='mt-4 max-w-xl text-lg leading-6 text-white/95'>
+      <div className='tech-icon-cloud' aria-hidden='true'>
+        <span className='tech-icon tech-icon--ts'>
+          <SiTypescript className='text-3xl' />
+        </span>
+        <span className='tech-icon tech-icon--react'>
+          <FaReact className='text-3xl' />
+        </span>
+        <span className='tech-icon tech-icon--js'>
+          <SiJavascript className='text-3xl' />
+        </span>
+        <span className='tech-icon tech-icon--git'>
+          <SiGit className='text-3xl' />
+        </span>
+        <span className='tech-icon tech-icon--next'>
+          <SiNextdotjs className='text-3xl' />
+        </span>
+        <span className='tech-icon tech-icon--api'>
+          <SiPrisma className='text-3xl' />
+        </span>
+        <span className='tech-icon tech-icon--api'>
+          <SiMysql className='text-3xl' />
+        </span>
+      </div>
+      <h2 className='relative z-10 max-w-xl text-2xl font-semibold leading-tight sm:text-3xl'>
+        Currently, I'm building Basobas
+      </h2>
+      <p className='relative z-10 mt-4 max-w-xl text-lg leading-6 text-white/95'>
         Basobas is a smart rental management portal that automates monthly rent and utility calculations, then generates
         invoices on schedule.
       </p>
-      <p className='mt-3 max-w-xl text-lg leading-6 text-white/95'>
+      <p className='relative z-10 mt-3 max-w-xl text-lg leading-6 text-white/95'>
         Landlords can notify tenants instantly by email or WhatsApp, manage everything from a feature-rich dashboard,
         and work with Nepal's Nepali calendar (B.S.)
       </p>
       <a
         href='#projects'
-        className='mt-4 inline-flex rounded-full border border-white/25 bg-white/15 px-4 py-2 text-xs font-semibold shadow-lg backdrop-blur-sm transition-colors hover:bg-white/25'
+        className='relative z-10 mt-4 inline-flex rounded-full border border-white/25 bg-white/15 px-4 py-2 text-xs font-semibold shadow-lg backdrop-blur-sm transition-colors hover:bg-white/25'
       >
-        Visit site<span className='ml-2'>→</span>
+        Visit site
+        <ExternalLink className='ml-2 h-4 w-3.5' aria-hidden='true' />
       </a>
     </article>
-    <article className='min-h-62.5 rounded-tl-[3rem] rounded-tr-2xl rounded-br-[3rem] rounded-bl-xl bg-[#242424] px-7 py-7 sm:col-span-4 sm:min-h-0'>
-      <h2 className='text-2xl font-semibold leading-tight sm:text-3xl'>
+    <article className='relative min-h-62.5 overflow-hidden rounded-tl-[3rem] rounded-tr-2xl rounded-br-[3rem] rounded-bl-xl bg-[#242424] px-7 py-7 sm:col-span-4 sm:min-h-0'>
+      <h2 className='relative z-10 text-2xl font-semibold leading-tight sm:text-3xl'>
         <span className='inline-flex items-center gap-2'>Working at</span>
         <br />
         <span className='flex gap-2 items-center'>
@@ -75,11 +103,15 @@ const PortfolioMosaic = ({ data }: Props) => (
           </span>
         </span>
       </h2>
-      <p className='mt-4 text-lg leading-6 text-white/85'>
+      <p className='relative z-10 mt-4 text-lg leading-6 text-white/85'>
         Software developer handling backend systems and user experience at Skillprompt.
       </p>
-      <div className='mt-5 flex justify-end text-6xl leading-none text-[#52616b]' aria-hidden='true'>
-        ▰
+      <div className='honeycomb-pattern' aria-hidden='true'>
+        {Array.from({ length: 4 }, (_, index) => (
+          <span className='honeycomb-cell' key={index}>
+            <span className='honeycomb-cell__inner' />
+          </span>
+        ))}
       </div>
     </article>
 
@@ -163,7 +195,7 @@ export default function Hero({ data }: Props) {
   // }, []);
 
   return (
-    <section className='flex flex-col justify-center pt-16'>
+    <section className='flex flex-col justify-center mt-22'>
       <div className='mx-auto w-full max-w-6xl'>
         {/* <div className="mb-10 flex items-center justify-center">
           <div className="flex items-center gap-4">
@@ -180,19 +212,19 @@ export default function Hero({ data }: Props) {
 
         <div className='max-w-4xl'>
           <h1 className='font-black leading-[0.95] text-white'>
-            <span className='block text-5xl sm:text-5xl'>Hey there 👋, I'm</span>
-            <span className='mt-4 block text-6xl bg-linear-to-r from-[#c4f7d6] via-[#a7f4b7] to-[#8ae3c2] bg-clip-text text-transparent sm:text-7xl'>
+            <span className='block text-5xl sm:text-3xl'>Hey there 👋, I'm</span>
+            <span className='mt-4 block text-6xl sm:text-5xl bg-linear-to-r from-[#c4f7d6] via-[#a7f4b7] to-[#8ae3c2] bg-clip-text text-transparent'>
               Manoj Chaudhary.
             </span>
           </h1>
 
-          <div className='mt-8 flex flex-wrap items-center gap-3 text-lg text-zinc-200 sm:text-xl'>
+          <div className='mt-8 flex flex-wrap items-center gap-3 text-lg text-zinc-200'>
             <span>A software engineer and tech enthusiast based in</span>
             <span className='font-bold text-white'>Butwal, Nepal</span>
             <img src='/nepal-flag.gif' alt='Nepal flag' className='h-9 w-12 rounded-sm object-cover' />
           </div>
 
-          <p className='text-lg leading-relaxed text-zinc-200 sm:text-xl'>
+          <p className='text-lg leading-relaxed text-zinc-200'>
             Welcome to my digital world, where I turn ideas into world-class products.
           </p>
 
