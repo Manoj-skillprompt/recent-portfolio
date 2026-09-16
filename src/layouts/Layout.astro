@@ -28,7 +28,7 @@ const { title, description, resetScrollOnLoad = false } = Astro.props;
 			(() => {
 				if (document.documentElement.dataset.resetScroll !== 'true') return;
 
-				const navigation = performance.getEntriesByType('navigation')[0];
+				const navigation = performance.getEntriesByType('navigation')[0] as PerformanceNavigationTiming | undefined;
 				const navigationType = navigation?.type ?? 'navigate';
 				const shouldStartAtTop = !window.location.hash && (navigationType === 'navigate' || navigationType === 'reload');
 

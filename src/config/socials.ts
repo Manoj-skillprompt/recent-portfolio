@@ -15,13 +15,13 @@ export const SOCIALS: SocialLink[] = [
   {
     name: 'LinkedIn',
     icon: 'Linkedin',
-    url: 'https://linkedin.com/in/manoj-tharu',
+    url: 'https://www.linkedin.com/in/manoj-kumar-chaudhary-a19913219',
     color: 'hover:bg-[#0077b5]',
   },
   {
     name: 'Twitter',
     icon: 'Twitter',
-    url: 'https://twitter.com/manoj-tharu',
+    url: 'https://x.com/manojtharu34',
     color: 'hover:bg-gray-800',
   },
   {

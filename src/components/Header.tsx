@@ -29,7 +29,7 @@ export default function Header() {
     const updateActiveNav = () => {
       const path = window.location.pathname.replace(/\/$/, '') || '/';
 
-      if (path === '/blog') {
+      if (path === '/blog' || path.startsWith('/blog/')) {
         setActiveNav('Blogs');
         return;
       }
@@ -92,8 +92,8 @@ export default function Header() {
         <img src='/profile.png' alt='Profile' className='h-full w-full object-cover' />
       </div>
 
-      <nav className='flex items-center justify-center rounded-full border border-(--color-border) bg-(--color-surface) px-5 py-3 shadow-[0_12px_30px_rgba(0,0,0,0.18)] backdrop-blur-sm ring-1 ring-(--color-border) sm:px-7'>
-        <div className='flex items-center gap-5 text-lg font-medium text-foreground sm:gap-8'>
+      <nav className='max-w-[calc(100vw-7rem)] overflow-x-auto rounded-full border border-(--color-border) bg-(--color-surface) px-3 py-2 shadow-[0_12px_30px_rgba(0,0,0,0.18)] backdrop-blur-sm ring-1 ring-(--color-border) sm:max-w-none sm:px-7 sm:py-3'>
+        <div className='flex items-center gap-3 whitespace-nowrap text-sm font-medium text-foreground sm:gap-8 sm:text-lg'>
           {NAV_ITEMS.map((item) => (
             <a
               key={item.label}

@@ -1,65 +1,329 @@
 ---
-import { type CollectionEntry, getCollection, render } from "astro:content";
-import Layout from "../../layouts/Layout.astro";
-import Header from "../../components/Header";
-import Footer from "../../components/Footer";
-import { SITE_TITLE } from "../../config/site"; // Import SITE_TITLE
-import { SITE_DESCRIPTION } from "../../config/site"; // Import SITE_DESCRIPTION for potentially using later if needed for global description
+import { type CollectionEntry, getCollection, render } from 'astro:content';
+import { ArrowLeft, ArrowUpRight, CalendarDays, Clock3 } from 'lucide-react';
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header';
+import Footer from '../../components/Footer';
+import { SITE_TITLE } from '../../config/site';
 
 export async function getStaticPaths() {
-  const posts = await getCollection("blog");
+  const posts = await getCollection('blog');
+
   return posts.map((post) => ({
     params: { id: post.id },
     props: post,
   }));
 }
-type Props = CollectionEntry<"blog">;
+
+type Props = CollectionEntry<'blog'>;
 
 const post = Astro.props;
 const { Content } = await render(post);
+const relatedPosts = (await getCollection('blog'))
+  .filter((entry) => entry.id !== post.id)
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .slice(0, 2);
+
+const publishedDate = post.data.pubDate.toLocaleDateString('en-us', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+
+const updatedDate = post.data.updatedDate?.toLocaleDateString('en-us', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
 ---
 
-<Layout
-  title={`${post.data.title} | ${SITE_TITLE}`} 
-  description={post.data.description}
->
+<Layout title={`${post.data.title} | ${SITE_TITLE}`} description={post.data.description}>
   <Header client:load />
-  <main class="grow">
-    <article class="prose max-w-none">
-      <header class="mb-8 border-b border-card pb-8">
-        <h1 class="text-3xl sm:text-4xl font-bold text-foreground mb-4">
-          {post.data.title}
-        </h1>
-        <div class="text-muted text-sm">
-          <time datetime={post.data.pubDate.toISOString()}>
-            {
-              post.data.pubDate.toLocaleDateString("en-us", {
-                year: "numeric",
-                month: "short",
-                day: "numeric",
-              })
-            }
-          </time>
-          {
-            post.data.updatedDate && (
-              <div class="italic mt-1">
-                Last updated on{" "}
-                <time datetime={post.data.updatedDate.toISOString()}>
-                  {post.data.updatedDate.toLocaleDateString("en-us", {
-                    year: "numeric",
-                    month: "short",
-                    day: "numeric",
-                  })}
-                </time>
-              </div>
-            )
-          }
+  <main class='grow'>
+    <article class='blog-post-page'>
+      <header class='blog-post-hero'>
+        <a href='/blog/' class='blog-post-back group'>
+          <ArrowLeft className='h-4 w-4 transition-transform group-hover:-translate-x-1' aria-hidden='true' />
+          Back to all articles
+        </a>
+        <div class='blog-post-kicker'>
+          <span class='blog-post-kicker__dot' aria-hidden='true' />
+          Engineering notes
+        </div>
+        <h1>{post.data.title}</h1>
+        <p class='blog-post-summary'>{post.data.description}</p>
+        <div class='blog-post-meta'>
+          <span>
+            <CalendarDays className='h-4 w-4' aria-hidden='true' />
+            <time datetime={post.data.pubDate.toISOString()}>{publishedDate}</time>
+          </span>
+          <span>
+            <Clock3 className='h-4 w-4' aria-hidden='true' />
+            5 min read
+          </span>
+          {updatedDate && <span>Updated {updatedDate}</span>}
         </div>
       </header>
-      <div class="mt-8">
-        <Content />
+
+      <div class='blog-post-layout'>
+        <div class='blog-post-rule' aria-hidden='true' />
+        <div class='prose blog-post-content'>
+          <Content />
+        </div>
       </div>
+
+      {relatedPosts.length > 0 && (
+        <section class='blog-post-related' aria-labelledby='related-heading'>
+          <div class='blog-post-related__heading'>
+            <p>Keep reading</p>
+            <h2 id='related-heading'>More from the journal</h2>
+          </div>
+          <div class='blog-post-related__grid'>
+            {relatedPosts.map((relatedPost) => (
+              <a href={`/blog/${relatedPost.id}/`} class='blog-related-card group'>
+                <div>
+                  <p class='blog-related-card__date'>
+                    {relatedPost.data.pubDate.toLocaleDateString('en-us', {
+                      year: 'numeric',
+                      month: 'short',
+                      day: 'numeric',
+                    })}
+                  </p>
+                  <h3>{relatedPost.data.title}</h3>
+                </div>
+                <ArrowUpRight
+                  className='h-5 w-5 transition-transform group-hover:-translate-y-1 group-hover:translate-x-1'
+                  aria-hidden='true'
+                />
+              </a>
+            ))}
+          </div>
+        </section>
+      )}
     </article>
   </main>
   <Footer />
 </Layout>
+
+<style>
+  .blog-post-page {
+    padding: 4.5rem 0 6rem;
+  }
+
+  .blog-post-hero {
+    max-width: 52rem;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .blog-post-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--color-muted);
+    font-size: 0.875rem;
+    transition: color 200ms ease;
+  }
+
+  .blog-post-back:hover {
+    color: var(--color-primary);
+  }
+
+  .blog-post-kicker {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 3.5rem;
+    color: var(--color-primary);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+
+  .blog-post-kicker__dot {
+    width: 0.4rem;
+    height: 0.4rem;
+    border-radius: 9999px;
+    background: var(--color-primary);
+    box-shadow: 0 0 1rem var(--color-primary);
+  }
+
+  .blog-post-hero h1 {
+    margin: 1.25rem 0 0;
+    color: var(--color-foreground);
+    font-size: clamp(2.25rem, 5vw, 4.5rem);
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    line-height: 1.02;
+  }
+
+  .blog-post-summary {
+    max-width: 42rem;
+    margin: 1.5rem auto 0;
+    color: var(--color-muted);
+    font-size: 1.125rem;
+    line-height: 1.75;
+  }
+
+  .blog-post-meta {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.75rem 1.25rem;
+    margin-top: 1.75rem;
+    color: var(--color-muted);
+    font-size: 0.8rem;
+  }
+
+  .blog-post-meta span {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .blog-post-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 4rem) minmax(0, 44rem);
+    gap: 1.5rem;
+    max-width: 49.5rem;
+    margin: 5rem auto 0;
+  }
+
+  .blog-post-rule {
+    width: 1px;
+    background: linear-gradient(to bottom, var(--color-primary), rgba(126, 231, 198, 0.08) 70%, transparent);
+  }
+
+  .blog-post-content {
+    min-width: 0;
+    max-width: none;
+  }
+
+  .blog-post-content :global(h2) {
+    margin-top: 3rem;
+    color: var(--color-foreground);
+    font-size: 1.75rem;
+  }
+
+  .blog-post-content :global(h3) {
+    color: var(--color-foreground);
+  }
+
+  .blog-post-content :global(p),
+  .blog-post-content :global(li) {
+    color: color-mix(in srgb, var(--color-foreground) 78%, var(--color-muted));
+    line-height: 1.9;
+  }
+
+  .blog-post-content :global(pre) {
+    border: 1px solid var(--color-border);
+    border-radius: 0.75rem;
+    box-shadow: 0 1.5rem 3rem rgba(0, 0, 0, 0.2);
+  }
+
+  .blog-post-content :global(blockquote) {
+    border-left-width: 2px;
+    border-radius: 0 0.5rem 0.5rem 0;
+    padding: 1rem 1.25rem;
+  }
+
+  .blog-post-related {
+    max-width: 49.5rem;
+    margin: 6rem auto 0;
+    padding-top: 2rem;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .blog-post-related__heading p {
+    margin: 0;
+    color: var(--color-primary);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+
+  .blog-post-related__heading h2 {
+    margin: 0.5rem 0 1.5rem;
+    color: var(--color-foreground);
+    font-size: 1.5rem;
+  }
+
+  .blog-post-related__grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  .blog-related-card {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+    min-height: 8rem;
+    padding: 1.25rem;
+    border: 1px solid var(--color-border);
+    border-radius: 0.75rem;
+    background: var(--color-surface);
+    color: var(--color-foreground);
+    transition: border-color 250ms ease, background-color 250ms ease, transform 250ms ease;
+  }
+
+  .blog-related-card:hover {
+    transform: translateY(-3px);
+    border-color: color-mix(in srgb, var(--color-primary) 58%, transparent);
+    background: color-mix(in srgb, var(--color-primary) 8%, var(--color-card));
+  }
+
+  .blog-related-card__date {
+    margin: 0 0 0.75rem;
+    color: var(--color-muted);
+    font-size: 0.75rem;
+  }
+
+  .blog-related-card h3 {
+    margin: 0;
+    font-size: 1rem;
+    line-height: 1.45;
+  }
+
+  .blog-related-card > svg {
+    flex: 0 0 auto;
+    color: var(--color-primary);
+  }
+
+  @media (max-width: 640px) {
+    .blog-post-page {
+      padding-top: 3rem;
+    }
+
+    .blog-post-kicker {
+      margin-top: 2.75rem;
+    }
+
+    .blog-post-layout {
+      display: block;
+      margin-top: 3.5rem;
+    }
+
+    .blog-post-rule {
+      width: 3rem;
+      height: 2px;
+      margin-bottom: 2rem;
+      background: linear-gradient(to right, var(--color-primary), transparent);
+    }
+
+    .blog-post-related__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .blog-post-back,
+    .blog-related-card {
+      transition: none;
+    }
+  }
+</style>

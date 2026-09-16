@@ -107,9 +107,9 @@ export default function GitHubContributions({ data }: Props) {
         rel='noopener noreferrer'
         className='inline-flex items-center gap-1.5 text-lg text-accent hover:underline'
       >
-        <GitCommit className='h-4 w-4' />
+        <GitCommit className='h-5 w-5' />
         View all contributions on GitHub
-        <ExternalLink className='h-3 w-3' />
+        <ExternalLink className='h-5 w-4' />
       </a>
     </section>
   );

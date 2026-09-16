@@ -139,6 +139,8 @@ const PortfolioMosaic = ({ data }: Props) => (
           <a
             key={social.name}
             href={social.url}
+            target='_blank'
+            rel='noopener noreferrer'
             aria-label={social.name}
             className={`flex h-20 items-center justify-center border-b border-r border-white/25 text-3xl font-bold transition-colors last:border-b-0 nth-[2n]:border-r-0 nth-[n+3]:border-b-0 ${social.color}`}
           >
@@ -216,15 +218,16 @@ export default function Hero({ data }: Props) {
           </h1>
 
           <div className='mt-8 text-lg text-muted'>
-            <span>A {PROFILE_INFO.role.toLowerCase()} and tech enthusiast based in</span>
-            {' '}
+            <span>A {PROFILE_INFO.role.toLowerCase()} and tech enthusiast based in</span>{' '}
             <span className='font-bold text-foreground'>{PROFILE_INFO.location}</span>
-            <img src='/nepal-flag.gif' alt='Nepal flag' className='ml-2 mb-3 inline-block h-8 w-11 rounded-sm object-cover align-middle' />
+            <img
+              src='/nepal-flag.gif'
+              alt='Nepal flag'
+              className='ml-2 mb-3 inline-block h-8 w-11 rounded-sm object-cover align-middle'
+            />
           </div>
 
-          <p className='text-lg leading-relaxed text-muted'>
-            {SITE_DESCRIPTION}
-          </p>
+          <p className='text-lg leading-relaxed text-muted'>{SITE_DESCRIPTION}</p>
 
           <div className='mt-10 flex flex-wrap gap-4'>
             <a
