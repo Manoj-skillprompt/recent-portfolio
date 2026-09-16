@@ -211,20 +211,20 @@ export default function Hero({ data }: Props) {
         </div> */}
 
         <div className='max-w-4xl'>
-          <h1 className='font-black leading-[0.95] text-white'>
+          <h1 className='font-black leading-[0.95] text-foreground'>
             <span className='block text-5xl sm:text-3xl'>Hey there 👋, I'm</span>
             <span className='mt-4 block text-6xl sm:text-5xl bg-linear-to-r from-[#c4f7d6] via-[#a7f4b7] to-[#8ae3c2] bg-clip-text text-transparent'>
               Manoj Chaudhary.
             </span>
           </h1>
 
-          <div className='mt-8 flex flex-wrap items-center gap-3 text-lg text-zinc-200'>
+          <div className='mt-8 flex flex-wrap items-center gap-3 text-lg text-muted'>
             <span>A software engineer and tech enthusiast based in</span>
-            <span className='font-bold text-white'>Butwal, Nepal</span>
+            <span className='font-bold text-foreground'>Butwal, Nepal</span>
             <img src='/nepal-flag.gif' alt='Nepal flag' className='h-9 w-12 rounded-sm object-cover' />
           </div>
 
-          <p className='text-lg leading-relaxed text-zinc-200'>
+          <p className='text-lg leading-relaxed text-muted'>
             Welcome to my digital world, where I turn ideas into world-class products.
           </p>
 
@@ -237,7 +237,7 @@ export default function Hero({ data }: Props) {
             </a>
             <a
               href='#projects'
-              className='inline-flex items-center justify-center rounded-full border border-[#7ee7c6]/40 bg-transparent px-7 py-3 text-lg font-semibold text-white shadow-[inset_0_0_0_1px_rgba(126,231,198,0.25)] transition-colors duration-200 hover:border-[#7ee7c6]/70 hover:bg-[#7ee7c6]/5'
+              className='inline-flex items-center justify-center rounded-full border border-[#7ee7c6]/40 bg-transparent px-7 py-3 text-lg font-semibold text-foreground shadow-[inset_0_0_0_1px_rgba(126,231,198,0.25)] transition-colors duration-200 hover:border-[#7ee7c6]/70 hover:bg-[#7ee7c6]/5'
             >
               My journey
             </a>

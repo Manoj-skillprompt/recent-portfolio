@@ -1,18 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { PROFILE_INFO } from '../config/profile';
+import { Download } from 'lucide-react';
+import { SOCIALS } from '../config/profile';
 import { NAV_ITEMS } from '../config/nav-items';
-import ThemeIcon from './ThemeIcon';
 
 export default function Header() {
-  const [theme, setTheme] = useState<'dark' | 'light'>('dark');
   const [activeNav, setActiveNav] = useState<string | null>(null);
+  const resumeUrl = SOCIALS.find((social) => social.name === 'Resume')?.url || '/files/resume.pdf';
 
   useEffect(() => {
-    const storedTheme = window.localStorage.getItem('theme');
-    const initialTheme = storedTheme === 'light' || storedTheme === 'dark' ? storedTheme : 'dark';
-    setTheme(initialTheme);
-    document.documentElement.classList.remove('light', 'dark');
-    document.documentElement.classList.add(initialTheme);
+    document.documentElement.classList.add('dark');
 
     // Handle hash navigation for sections
     const handleHashNavigation = () => {
@@ -65,14 +61,6 @@ export default function Header() {
     };
   }, []);
 
-  const toggleTheme = () => {
-    const nextTheme = theme === 'dark' ? 'light' : 'dark';
-    setTheme(nextTheme);
-    window.localStorage.setItem('theme', nextTheme);
-    document.documentElement.classList.remove('light', 'dark');
-    document.documentElement.classList.add(nextTheme);
-  };
-
   const handleNavClick = (e: React.MouseEvent, action?: string, sectionId?: string) => {
     const isHomePage = typeof window !== 'undefined' && window.location.pathname === '/';
 
@@ -100,20 +88,20 @@ export default function Header() {
 
   return (
     <header className='my-8 flex w-full items-center justify-between gap-5'>
-      <div className='flex h-12 w-12 items-center justify-center overflow-hidden rounded-full border border-white/10 bg-[#1b1b1b] shadow-[0_0_24px_rgba(0,0,0,0.45)] ring-1 ring-white/5'>
+      <div className='flex h-12 w-12 items-center justify-center overflow-hidden rounded-full border border-(--color-border) bg-(--color-surface) shadow-[0_0_24px_rgba(0,0,0,0.2)] ring-1 ring-(--color-border)'>
         <img src='/profile.png' alt='Profile' className='h-full w-full object-cover' />
       </div>
 
-      <nav className='flex items-center justify-center rounded-full border border-white/10 bg-[rgba(29,25,23,0.72)] px-5 py-3 shadow-[0_12px_30px_rgba(0,0,0,0.35)] backdrop-blur-sm ring-1 ring-white/5 sm:px-7'>
-        <div className='flex items-center  gap-5 text-lg font-medium text-white/90 sm:gap-8'>
+      <nav className='flex items-center justify-center rounded-full border border-(--color-border) bg-(--color-surface) px-5 py-3 shadow-[0_12px_30px_rgba(0,0,0,0.18)] backdrop-blur-sm ring-1 ring-(--color-border) sm:px-7'>
+        <div className='flex items-center gap-5 text-lg font-medium text-foreground sm:gap-8'>
           {NAV_ITEMS.map((item) => (
             <a
               key={item.label}
               href={item.href}
               onClick={(e) => handleNavClick(e, item.action, item.sectionId)}
               aria-current={activeNav === item.label ? 'page' : undefined}
-              className={`relative transition-colors duration-200 hover:text-[#7ee7c6] ${
-                activeNav === item.label ? 'text-[#7ee7c6]' : ''
+              className={`relative transition-colors duration-200 hover:text-(--color-primary) ${
+                activeNav === item.label ? 'text-(--color-primary)' : ''
               }`}
             >
               {item.label}
@@ -122,14 +110,15 @@ export default function Header() {
         </div>
       </nav>
 
-      <button
-        type='button'
-        onClick={toggleTheme}
-        aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
-        className='inline-flex h-12 w-12 cursor-pointer items-center justify-center rounded-full border border-white/10 bg-[rgba(30,30,30,0.8)] text-current shadow-[0_10px_26px_rgba(0,0,0,0.22)] transition-colors duration-200 hover:bg-[rgba(48,48,48,0.9)] focus:outline-none focus:ring-0'
+      <a
+        href={resumeUrl}
+        download
+        aria-label='Download resume'
+        className='inline-flex items-center gap-2 rounded-full border border-(--color-primary) bg-(--color-primary) px-3 py-2 text-xs font-bold text-[#07130d] shadow-[0_10px_26px_rgba(126,231,198,0.2)] transition-transform duration-200 hover:scale-105'
       >
-        <ThemeIcon theme={theme} />
-      </button>
+        <Download className='h-4 w-4' aria-hidden='true' />
+        <span className='hidden sm:inline'>Resume</span>
+      </a>
     </header>
   );
 }

@@ -12,18 +12,8 @@
   --color-secondary: #119bb6;
   --color-border: rgba(255, 255, 255, 0.08);
   --color-surface: rgba(255, 255, 255, 0.03);
-}
-
-.light {
-  color-scheme: light;
-  --color-background: #f8fafc;
-  --color-card: #ffffff;
-  --color-foreground: #0f172a;
-  --color-muted: #475569;
-  --color-primary: #15803d;
-  --color-secondary: #0f766e;
-  --color-border: rgba(148, 163, 184, 0.32);
-  --color-surface: rgba(15, 23, 42, 0.06);
+  --color-panel: rgba(29, 25, 23, 0.72);
+  --color-input: #222222;
 }
 
 .dark {
@@ -93,16 +83,6 @@
     opacity: 0.18;
     mix-blend-mode: screen;
     z-index: -1;
-  }
-
-  .light body {
-    background-color: var(--color-background);
-    background-image: linear-gradient(
-      180deg,
-      rgba(18, 17, 15, 0.96) 0%,
-      rgba(10, 10, 9, 0.98) 30%,
-      rgba(0, 0, 0, 1) 100%
-    );
   }
 
   .prose {

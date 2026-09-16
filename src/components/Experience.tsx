@@ -63,7 +63,7 @@ const ExperienceCard = ({ exp, isCurrent, isLast }: { exp: ExperienceItem; isCur
           className={`relative z-10 flex h-7 w-7 shrink-0 items-center justify-center rounded-xl border ${
             isCurrent
               ? 'border-[#7ee7c6]/30 bg-[#7ee7c6]/10 text-[#7ee7c6]'
-              : 'border-white/10 bg-white/4 text-zinc-500'
+              : 'border-(--color-border) bg-(--color-surface) text-muted'
           } shadow-sm`}
         >
           {isCurrent ? <CodeIcon /> : <BriefcaseIcon />}
@@ -84,7 +84,7 @@ const ExperienceCard = ({ exp, isCurrent, isLast }: { exp: ExperienceItem; isCur
             {/* Left side: Company & Role */}
             <div>
               <div className='flex flex-wrap items-center gap-2'>
-                <h4 className='text-lg font-semibold text-white'>{exp.company}</h4>
+                <h4 className='text-lg font-semibold text-foreground'>{exp.company}</h4>
                 {isCurrent && (
                   <span className='inline-flex items-center gap-1.5 rounded-full border border-[#7ee7c6]/25 bg-[#7ee7c6]/10 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-[#7ee7c6]'>
                     <span className='h-1.5 w-1.5 rounded-full bg-[#7ee7c6] animate-pulse' />
@@ -92,13 +92,13 @@ const ExperienceCard = ({ exp, isCurrent, isLast }: { exp: ExperienceItem; isCur
                   </span>
                 )}
               </div>
-              <p className='mt-1 text-sm text-zinc-400'>{exp.role}</p>
+              <p className='mt-1 text-sm text-muted'>{exp.role}</p>
             </div>
 
             {/* Right side: Duration & Location */}
             <div className='flex flex-col items-start sm:items-end sm:text-right w-full sm:w-auto mt-2 sm:mt-0'>
-              <span className='text-lg text-white'>{exp.location}</span>
-              <span className='text-xs font-medium text-zinc-500 mb-1 mt-1'>{exp.duration}</span>
+              <span className='text-lg text-foreground'>{exp.location}</span>
+              <span className='text-xs font-medium text-muted mb-1 mt-1'>{exp.duration}</span>
             </div>
           </div>
 
@@ -108,13 +108,13 @@ const ExperienceCard = ({ exp, isCurrent, isLast }: { exp: ExperienceItem; isCur
           >
             {exp.description && (
               <p
-                className={`text-sm leading-relaxed text-zinc-400 flex-1 transition-colors ${hasPoints ? 'group-hover:text-zinc-300' : ''}`}
+                className={`text-sm leading-relaxed text-muted flex-1 transition-colors ${hasPoints ? 'group-hover:text-foreground' : ''}`}
               >
                 {exp.description}
               </p>
             )}
             {!exp.description && hasPoints && (
-              <p className='text-sm font-medium text-zinc-400 flex-1 transition-colors group-hover:text-white'>
+              <p className='text-sm font-medium text-muted flex-1 transition-colors group-hover:text-foreground'>
                 View responsibilities
               </p>
             )}
@@ -122,7 +122,7 @@ const ExperienceCard = ({ exp, isCurrent, isLast }: { exp: ExperienceItem; isCur
             {hasPoints && (
               <div className='mt-0.5 shrink-0'>
                 <ChevronDownIcon
-                  className={`text-zinc-500 transition-all duration-300 group-hover:text-white ${isOpen ? 'rotate-180' : ''}`}
+                  className={`text-muted transition-all duration-300 group-hover:text-foreground ${isOpen ? 'rotate-180' : ''}`}
                 />
               </div>
             )}
@@ -136,7 +136,7 @@ const ExperienceCard = ({ exp, isCurrent, isLast }: { exp: ExperienceItem; isCur
                 {/* Points */}
                 <ul className='space-y-3 mb-1'>
                   {exp.points!.map((point, i) => (
-                    <li key={i} className='flex items-start gap-3 text-sm text-zinc-300 leading-relaxed'>
+                    <li key={i} className='flex items-start gap-3 text-sm text-muted leading-relaxed'>
                       <span className='mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-zinc-600' />
                       <span>{point}</span>
                     </li>
@@ -152,7 +152,7 @@ const ExperienceCard = ({ exp, isCurrent, isLast }: { exp: ExperienceItem; isCur
               {exp.techStack.map((tech, i) => (
                 <span
                   key={i}
-                  className='inline-flex items-center rounded-md border border-white/10 bg-white/5 px-2.5 py-1 text-xs font-medium text-zinc-300'
+                  className='inline-flex items-center rounded-md border border-(--color-border) bg-(--color-surface) px-2.5 py-1 text-xs font-medium text-muted'
                 >
                   {tech}
                 </span>

@@ -32,21 +32,21 @@ const LinkedInIcon = () => (
 export default function Footer() {
   const year = new Date().getFullYear();
   return (
-    <footer className='pt-16 pb-20 flex flex-col items-center justify-center text-zinc-500 gap-6'>
-      <div className='text-4xl text-white mb-4' style={{ fontFamily: "'Mea Culpa', cursive" }}>
+    <footer className='pt-16 pb-20 flex flex-col items-center justify-center text-muted gap-6'>
+      <div className='text-4xl text-foreground mb-4' style={{ fontFamily: "'Mea Culpa', cursive" }}>
         ManojChaudhary
       </div>
       <div className='flex items-center gap-6'>
-        <a href={getSocialUrl('twitter')} className='hover:text-white transition-colors' aria-label='X (Twitter)'>
+        <a href={getSocialUrl('twitter')} className='hover:text-foreground transition-colors' aria-label='X (Twitter)'>
           <XIcon />
         </a>
-        <a href={getSocialUrl('youtube')} className='hover:text-white transition-colors' aria-label='YouTube'>
+        <a href={getSocialUrl('youtube')} className='hover:text-foreground transition-colors' aria-label='YouTube'>
           <YouTubeIcon />
         </a>
-        <a href={getSocialUrl('github')} className='hover:text-white transition-colors' aria-label='GitHub'>
+        <a href={getSocialUrl('github')} className='hover:text-foreground transition-colors' aria-label='GitHub'>
           <GitHubIcon />
         </a>
-        <a href={getSocialUrl('linkedin')} className='hover:text-white transition-colors' aria-label='LinkedIn'>
+        <a href={getSocialUrl('linkedin')} className='hover:text-foreground transition-colors' aria-label='LinkedIn'>
           <LinkedInIcon />
         </a>
       </div>
