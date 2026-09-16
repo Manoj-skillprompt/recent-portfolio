@@ -101,7 +101,7 @@ export default function Header() {
   return (
     <header className='my-8 flex w-full items-center justify-between gap-5'>
       <div className='flex h-12 w-12 items-center justify-center overflow-hidden rounded-full border border-white/10 bg-[#1b1b1b] shadow-[0_0_24px_rgba(0,0,0,0.45)] ring-1 ring-white/5'>
-        <img src='/profile.jpg' alt='Profile' className='h-full w-full object-cover' />
+        <img src='/profile.png' alt='Profile' className='h-full w-full object-cover' />
       </div>
 
       <nav className='flex items-center justify-center rounded-full border border-white/10 bg-[rgba(29,25,23,0.72)] px-5 py-3 shadow-[0_12px_30px_rgba(0,0,0,0.35)] backdrop-blur-sm ring-1 ring-white/5 sm:px-7'>

@@ -55,7 +55,7 @@ export default function Newsletter() {
           <div className='bg-white p-3 pb-8 rounded shadow-2xl rotate-6 transition-transform duration-500 group-hover:rotate-0 group-hover:scale-105'>
             <div className='relative w-48 h-48 md:w-56 md:h-56 bg-zinc-200'>
               <img
-                src='/profile.jpg'
+                src='/profile.png'
                 alt={PROFILE_INFO?.name || 'Profile picture'}
                 className='w-full h-full object-cover filter grayscale'
               />
