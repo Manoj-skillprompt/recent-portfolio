@@ -1,8 +1,38 @@
 import React, { useState } from 'react';
 import { PROFILE_INFO } from '../config/profile';
 
+const NEWSLETTER_ENDPOINT = import.meta.env.PUBLIC_NEWSLETTER_ENDPOINT?.trim();
+
 export default function Newsletter() {
   const [isHovered, setIsHovered] = useState(false);
+  const [email, setEmail] = useState('');
+  const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error' | 'unconfigured'>('idle');
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    if (!NEWSLETTER_ENDPOINT) {
+      setStatus('unconfigured');
+      return;
+    }
+
+    setStatus('submitting');
+
+    try {
+      const response = await fetch(NEWSLETTER_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams({ email }).toString(),
+      });
+
+      if (!response.ok) throw new Error('Newsletter subscription failed');
+
+      setEmail('');
+      setStatus('success');
+    } catch {
+      setStatus('error');
+    }
+  };
 
   return (
     <section id='newsletter' className='my-20'>
@@ -29,20 +59,34 @@ export default function Newsletter() {
               </p>
             </div>
 
-            <form className='flex flex-col sm:flex-row gap-3 mt-8'>
+            <form className='mt-8 flex flex-col gap-3 sm:flex-row' onSubmit={handleSubmit}>
               <input
                 type='email'
                 placeholder='Your email'
+                value={email}
+                onChange={(event) => setEmail(event.target.value)}
+                disabled={status === 'submitting' || status === 'success'}
+                aria-label='Email address'
                 className='flex-1 rounded-lg bg-[#222222] border border-white/10 px-4 py-3 text-white placeholder:text-zinc-500 focus:outline-none focus:border-[#7ee7c6]/70 transition-colors'
                 required
               />
               <button
                 type='submit'
+                disabled={status === 'submitting' || status === 'success'}
                 className='rounded-lg bg-[#7ee7c6] hover:bg-[#64d09b] text-[#07130d] font-bold px-6 py-3 transition-colors shrink-0'
               >
-                Subscribe
+                {status === 'submitting' ? 'Subscribing...' : status === 'success' ? 'Subscribed' : 'Subscribe'}
               </button>
             </form>
+            <p
+              role='status'
+              aria-live='polite'
+              className={`text-sm ${status === 'success' ? 'text-[#7ee7c6]' : status === 'error' ? 'text-red-300' : 'text-zinc-400'}`}
+            >
+              {status === 'success' && 'You are subscribed. Thanks for joining.'}
+              {status === 'error' && 'Something went wrong. Please try again.'}
+              {status === 'unconfigured' && 'Newsletter signups are not configured yet.'}
+            </p>
           </div>
         </div>
 
