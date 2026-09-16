@@ -2,18 +2,16 @@
 import type { ProfileInfo, SocialLink } from './interfaces/profile';
 
 export const PROFILE_INFO: ProfileInfo = {
-    name: import.meta.env.PUBLIC_FULL_NAME || 'Jane Doe',
-    role: import.meta.env.PUBLIC_ROLE || 'Full-Stack Developer',
-    email: import.meta.env.PUBLIC_EMAIL || 'jane.doe@example.com',
-    phone: import.meta.env.PUBLIC_PHONE || '+1-555-555-5555',
-    location: import.meta.env.PUBLIC_LOCATION || 'San Francisco, CA',
-    quote: import.meta.env.PUBLIC_QUOTE || "your quoute here",
+    name: 'Manoj Chaudhary',
+    role: 'Software Developer',
+    email: 'manoj.tharu34@gmail.com',
+    location: 'Butwal, Nepal',
+    quote: 'Turning ideas into meaningful digital experiences.',
 };
 
 export const SOCIALS: SocialLink[] = [
-    { name: 'GitHub', url: `https://github.com/${import.meta.env.PUBLIC_GITHUB_USERNAME || 'your-github-username'}` },
-    { name: 'LinkedIn', url: `https://linkedin.com/in/${import.meta.env.PUBLIC_LINKEDIN_USERNAME || 'your-linkedin-username'}` },
-    { name: 'Twitter', url: `https://twitter.com/${import.meta.env.PUBLIC_TWITTER_USERNAME || 'your-twitter-username'}` },
-    { name: 'Portfolio Website', url: import.meta.env.PUBLIC_SITE_URL || 'https://yourwebsite.com' },
-    { name: 'Resume', url: import.meta.env.PUBLIC_RESUME_URL || '/files/resume.pdf' }
+    { name: 'GitHub', url: 'https://github.com/Manoj-skillprompt' },
+    { name: 'LinkedIn', url: 'https://linkedin.com/in/manoj-tharu' },
+    { name: 'Portfolio Website', url: 'http://localhost:4321' },
+    { name: 'Resume', url: '/files/resume.pdf' }
 ];

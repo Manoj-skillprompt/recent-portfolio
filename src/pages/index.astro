@@ -7,17 +7,17 @@ import Experience from '../components/Experience';
 import Projects from '../components/Projects';
 import Footer from '../components/Footer';
 import Newsletter from '../components/Newsletter';
+import Spotify from '../components/Spotify';
 import { ChevronRight } from 'lucide-react';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../config/site';
+import { GITHUB_USERNAME } from '../config/github';
 import type { GitHubUser, GitHubRepo, GitHubStats } from '../config/interfaces/github';
 
 const blogPosts = (await getCollection('blog')).sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 
-const GITHUB_USERNAME = import.meta.env.PUBLIC_GITHUB_USERNAME || '';
-
 let gitHubData: GitHubStats | null = null;
 
-if (GITHUB_USERNAME && GITHUB_USERNAME !== 'your-github-username') {
+if (GITHUB_USERNAME) {
   try {
     const [userResult, reposResult, contributionsResult] = await Promise.allSettled([
       fetch(`https://api.github.com/users/${GITHUB_USERNAME}`, { signal: AbortSignal.timeout(10000) }),
@@ -64,7 +64,7 @@ if (GITHUB_USERNAME && GITHUB_USERNAME !== 'your-github-username') {
   <main class='grow'>
     <Hero client:load data={gitHubData} />
     <Experience client:visible />
-    <Projects />
+    <Projects client:visible />
     <section id='blog' class='mb-12'>
       <div class='mb-8 flex items-end justify-between gap-4'>
         <div>
@@ -113,6 +113,9 @@ if (GITHUB_USERNAME && GITHUB_USERNAME !== 'your-github-username') {
     </section>
   </main>
   <Newsletter client:visible />
+  <section class='mb-16 flex justify-center' aria-label='Currently listening'>
+    <Spotify client:visible />
+  </section>
   <Footer />
 </Layout>
 

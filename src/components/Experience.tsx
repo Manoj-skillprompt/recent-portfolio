@@ -137,7 +137,7 @@ const ExperienceCard = ({ exp, isCurrent, isLast }: { exp: ExperienceItem; isCur
                 <ul className='space-y-3 mb-1'>
                   {exp.points!.map((point, i) => (
                     <li key={i} className='flex items-start gap-3 text-sm text-muted leading-relaxed'>
-                      <span className='mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-zinc-600' />
+                      <span className='mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-(--color-primary)' />
                       <span>{point}</span>
                     </li>
                   ))}
@@ -152,7 +152,7 @@ const ExperienceCard = ({ exp, isCurrent, isLast }: { exp: ExperienceItem; isCur
               {exp.techStack.map((tech, i) => (
                 <span
                   key={i}
-                  className='inline-flex items-center rounded-md border border-(--color-border) bg-(--color-surface) px-2.5 py-1 text-xs font-medium text-muted'
+                  className='tech-stack-chip'
                 >
                   {tech}
                 </span>

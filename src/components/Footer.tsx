@@ -32,7 +32,7 @@ const LinkedInIcon = () => (
 export default function Footer() {
   const year = new Date().getFullYear();
   return (
-    <footer className='pt-16 pb-20 flex flex-col items-center justify-center text-muted gap-6'>
+    <footer className='pb-16 flex flex-col items-center justify-center text-muted gap-6'>
       <div className='text-4xl text-foreground mb-4' style={{ fontFamily: "'Mea Culpa', cursive" }}>
         ManojChaudhary
       </div>

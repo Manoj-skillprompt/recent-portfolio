@@ -3,6 +3,7 @@
 // Fetch variables from the .env file using Astro's import.meta.env
 const LASTFM_API_KEY = import.meta.env.PUBLIC_LASTFM_API_KEY; 
 const USERNAME = import.meta.env.PUBLIC_LASTFM_USERNAME; 
+const FALLBACK_ALBUM_ART = '/spotify-tile.svg';
 
 export interface TrackDetails {
   songName: string;
@@ -34,7 +35,7 @@ export async function getMyMusicDetails(): Promise<TrackDetails | null> {
     const track = data.recenttracks.track[0];
     const songName = track.name;
     const artistName = track.artist['#text'];
-    const albumArt = track.image[2]['#text'] || 'https://via.placeholder.com/150'; 
+    const albumArt = track.image[2]['#text'] || FALLBACK_ALBUM_ART;
     const isCurrentlyPlaying = track['@attr'] && track['@attr'].nowplaying === 'true';
 
     const encodedQuery = encodeURIComponent(`${songName} ${artistName}`);

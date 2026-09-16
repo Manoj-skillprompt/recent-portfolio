@@ -215,10 +215,11 @@ export default function Hero({ data }: Props) {
             </span>
           </h1>
 
-          <div className='mt-8 flex flex-wrap items-center gap-3 text-lg text-muted'>
+          <div className='mt-8 text-lg text-muted'>
             <span>A {PROFILE_INFO.role.toLowerCase()} and tech enthusiast based in</span>
+            {' '}
             <span className='font-bold text-foreground'>{PROFILE_INFO.location}</span>
-            <img src='/nepal-flag.gif' alt='Nepal flag' className='h-9 w-12 rounded-sm object-cover' />
+            <img src='/nepal-flag.gif' alt='Nepal flag' className='ml-2 mb-3 inline-block h-8 w-11 rounded-sm object-cover align-middle' />
           </div>
 
           <p className='text-lg leading-relaxed text-muted'>
