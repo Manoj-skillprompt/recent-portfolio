@@ -46,6 +46,7 @@ export const POST: APIRoute = async ({ request }) => {
     );
 
     const failed = results.filter((result) => result.error).length;
+    if (failed > 0) console.error('Resend blog notification failures:', results.filter((result) => result.error));
     return json({ ok: failed === 0, sent: results.length - failed, failed });
   } catch (error) {
     console.error('New post notification failed:', error);
