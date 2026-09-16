@@ -4,13 +4,14 @@ import '../styles/global.css';
 export interface Props {
 	title: string;
 	description?: string;
+	resetScrollOnLoad?: boolean;
 }
 
-const { title, description } = Astro.props;
+const { title, description, resetScrollOnLoad = false } = Astro.props;
 ---
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-reset-scroll={resetScrollOnLoad ? 'true' : undefined}>
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width" />
@@ -22,6 +23,29 @@ const { title, description } = Astro.props;
 			{`(function() {
 				document.documentElement.classList.add('dark');
 			})();`}
+		</script>
+		<script>
+			(() => {
+				if (document.documentElement.dataset.resetScroll !== 'true') return;
+
+				const navigation = performance.getEntriesByType('navigation')[0];
+				const navigationType = navigation?.type ?? 'navigate';
+				const shouldStartAtTop = !window.location.hash && (navigationType === 'navigate' || navigationType === 'reload');
+
+				if (shouldStartAtTop) {
+					history.scrollRestoration = 'manual';
+					const resetScroll = () => window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+
+					resetScroll();
+					window.addEventListener('pageshow', (event) => {
+						if (!event.persisted) resetScroll();
+					});
+					window.addEventListener('load', resetScroll, { once: true });
+					window.addEventListener('pagehide', () => {
+						history.scrollRestoration = 'auto';
+					});
+				}
+			})();
 		</script>
 	</head>
 	<body class="bg-background text-foreground selection:bg-accent-soft">

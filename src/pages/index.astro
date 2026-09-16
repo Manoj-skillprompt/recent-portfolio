@@ -59,7 +59,7 @@ if (GITHUB_USERNAME) {
 }
 ---
 
-<Layout title={SITE_TITLE} description={SITE_DESCRIPTION}>
+<Layout title={SITE_TITLE} description={SITE_DESCRIPTION} resetScrollOnLoad>
   <Header client:load />
   <main class='grow'>
     <Hero client:load data={gitHubData} />
