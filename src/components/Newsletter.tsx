@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { PROFILE_INFO } from '../config/profile';
 
-const NEWSLETTER_ENDPOINT = import.meta.env.PUBLIC_NEWSLETTER_ENDPOINT?.trim();
+const NEWSLETTER_ENDPOINT = '/api/subscribe';
 
 export default function Newsletter() {
   const [isHovered, setIsHovered] = useState(false);
