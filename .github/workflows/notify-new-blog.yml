@@ -1,0 +1,27 @@
+name: Notify Newsletter Subscribers
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'src/content/blog/**'
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Notify subscribers about new posts
+        env:
+          GITHUB_BEFORE: ${{ github.event.before }}
+          GITHUB_AFTER: ${{ github.sha }}
+          NEWSLETTER_NOTIFY_SECRET: ${{ secrets.NEWSLETTER_NOTIFY_SECRET }}
+          SITE_URL: https://www.manojkumarchaudhary23.com.np
+        run: node scripts/notify-new-blog.mjs
