@@ -6,6 +6,7 @@ import Hero from '../components/Hero';
 import Experience from '../components/Experience';
 import Projects from '../components/Projects';
 import Footer from '../components/Footer';
+import Newsletter from '../components/Newsletter';
 import { ChevronRight } from 'lucide-react';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../config/site';
 import type { GitHubUser, GitHubRepo, GitHubStats } from '../config/interfaces/github';
@@ -111,6 +112,7 @@ if (GITHUB_USERNAME && GITHUB_USERNAME !== 'your-github-username') {
       }
     </section>
   </main>
+  <Newsletter client:visible />
   <Footer />
 </Layout>
 
