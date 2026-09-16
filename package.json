@@ -6,14 +6,11 @@
     "astro": "astro",
     "build": "astro build",
     "dev": "astro dev",
-    "preview": "astro preview",
-    "setup": "node setup.js",
-    "prepare": "husky install"
+    "preview": "astro preview"
   },
   "dependencies": {
     "@astrojs/mdx": "^7.0.0",
     "@astrojs/react": "^6.0.0",
-    "@clack/prompts": "^1.6.0",
     "@tailwindcss/typography": "^0.5.20",
     "@tailwindcss/vite": "^4.3.2",
     "@types/react": "^19.2.17",
@@ -26,8 +23,6 @@
     "tailwindcss": "^4.3.2"
   },
   "devDependencies": {
-    "husky": "^8.0.1",
-    "lint-staged": "^17.0.8",
     "prettier": "^3.9.4"
   },
   "engines": {

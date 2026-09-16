@@ -1,4 +1,3 @@
-import { useEffect, useRef } from 'react';
 import { ExternalLink, Mail } from 'lucide-react';
 import { FaReact } from 'react-icons/fa';
 import { SiGit, SiJavascript, SiMysql, SiNextdotjs, SiPostgresql, SiPrisma, SiTypescript } from 'react-icons/si';
@@ -7,8 +6,6 @@ import { SOCIALS } from '../config/socials';
 import { SITE_DESCRIPTION } from '../config/site';
 import type { GitHubStats } from '../config/interfaces/github';
 import GitHubContributions from './GitHubContributions';
-import SpotifyStatus from './Spotify';
-import Spotify from './Spotify';
 
 const GithubIcon = ({ size = 24 }: { size?: number }) => (
   <svg width={size} height={size} viewBox='0 0 24 24' fill='currentColor' xmlns='http://www.w3.org/2000/svg'>
@@ -214,18 +211,18 @@ export default function Hero({ data }: Props) {
           <h1 className='font-black leading-[0.95] text-foreground'>
             <span className='block text-5xl sm:text-3xl'>Hey there 👋, I'm</span>
             <span className='mt-4 block text-6xl sm:text-5xl bg-linear-to-r from-[#c4f7d6] via-[#a7f4b7] to-[#8ae3c2] bg-clip-text text-transparent'>
-              Manoj Chaudhary.
+              {PROFILE_INFO.name}.
             </span>
           </h1>
 
           <div className='mt-8 flex flex-wrap items-center gap-3 text-lg text-muted'>
-            <span>A software engineer and tech enthusiast based in</span>
-            <span className='font-bold text-foreground'>Butwal, Nepal</span>
+            <span>A {PROFILE_INFO.role.toLowerCase()} and tech enthusiast based in</span>
+            <span className='font-bold text-foreground'>{PROFILE_INFO.location}</span>
             <img src='/nepal-flag.gif' alt='Nepal flag' className='h-9 w-12 rounded-sm object-cover' />
           </div>
 
           <p className='text-lg leading-relaxed text-muted'>
-            Welcome to my digital world, where I turn ideas into world-class products.
+            {SITE_DESCRIPTION}
           </p>
 
           <div className='mt-10 flex flex-wrap gap-4'>
