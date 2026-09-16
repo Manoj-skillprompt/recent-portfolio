@@ -7,12 +7,15 @@ export const EXPERIENCE: ExperienceItem[] = [
     role: 'Software Developer',
     duration: 'July 2024 - Present',
     location: 'Butwal Nepal',
-    description: 'Led development of new features, mentored junior developers, and optimized application performance.',
+    description:
+      'Working on YourOSHC, an insurance platform, where I turn real business requirements into reliable, user-friendly workflows used by agencies, administrators, and customers.',
+
     points: [
-      'Design and build Pro components/blocks, from Figma to production-ready React.',
-      'Build and maintain the @shadcncraft registry.',
-      'Build and enhance features for the marketing website.',
+      'Built end-to-end workflows for applications, payments, invoices, commissions, and agency management.',
+      'Improved payment and communication flows, including payment links, email notifications, OTP verification, and reconciliation.',
+      'Turned complex Figma designs and business requirements into polished, production-ready experiences across the platform.',
     ],
+
     techStack: [
       'TypeScript',
       'Next.js',

@@ -97,7 +97,7 @@ const ExperienceCard = ({ exp, isCurrent, isLast }: { exp: ExperienceItem; isCur
 
             {/* Right side: Duration & Location */}
             <div className='flex flex-col items-start sm:items-end sm:text-right w-full sm:w-auto mt-2 sm:mt-0'>
-              <span className='text-xs text-zinc-500'>{exp.location}</span>
+              <span className='text-lg text-white'>{exp.location}</span>
               <span className='text-xs font-medium text-zinc-500 mb-1 mt-1'>{exp.duration}</span>
             </div>
           </div>
