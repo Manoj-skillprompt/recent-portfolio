@@ -6,7 +6,7 @@ const NEWSLETTER_ENDPOINT = '/api/subscribe';
 export default function Newsletter() {
   const [isHovered, setIsHovered] = useState(false);
   const [email, setEmail] = useState('');
-  const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error' | 'unconfigured'>('idle');
+  const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'alreadySubscribed' | 'error' | 'unconfigured'>('idle');
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -27,8 +27,9 @@ export default function Newsletter() {
 
       if (!response.ok) throw new Error('Newsletter subscription failed');
 
+      const result = (await response.json()) as { alreadySubscribed?: boolean };
       setEmail('');
-      setStatus('success');
+      setStatus(result.alreadySubscribed ? 'alreadySubscribed' : 'success');
     } catch {
       setStatus('error');
     }
@@ -65,7 +66,7 @@ export default function Newsletter() {
                 placeholder='Your email'
                 value={email}
                 onChange={(event) => setEmail(event.target.value)}
-                disabled={status === 'submitting' || status === 'success'}
+                disabled={status === 'submitting' || status === 'success' || status === 'alreadySubscribed'}
                 aria-label='Email address'
                 className='flex-1 rounded-lg bg-[#222222] border border-white/10 px-4 py-3 text-white placeholder:text-zinc-500 focus:outline-none focus:border-[#7ee7c6]/70 transition-colors'
                 required
@@ -75,15 +76,20 @@ export default function Newsletter() {
                 disabled={status === 'submitting' || status === 'success'}
                 className='rounded-lg bg-[#7ee7c6] hover:bg-[#64d09b] text-[#07130d] font-bold px-6 py-3 transition-colors shrink-0'
               >
-                {status === 'submitting' ? 'Subscribing...' : status === 'success' ? 'Subscribed' : 'Subscribe'}
+                {status === 'submitting'
+                  ? 'Subscribing...'
+                  : status === 'success' || status === 'alreadySubscribed'
+                    ? 'Subscribed'
+                    : 'Subscribe'}
               </button>
             </form>
             <p
               role='status'
               aria-live='polite'
-              className={`text-sm ${status === 'success' ? 'text-[#7ee7c6]' : status === 'error' ? 'text-red-300' : 'text-zinc-400'}`}
+              className={`text-sm ${status === 'success' || status === 'alreadySubscribed' ? 'text-[#7ee7c6]' : status === 'error' ? 'text-red-300' : 'text-zinc-400'}`}
             >
               {status === 'success' && 'You are subscribed. Thanks for joining.'}
+              {status === 'alreadySubscribed' && 'You are already subscribed :)'}
               {status === 'error' && 'Something went wrong. Please try again.'}
               {status === 'unconfigured' && 'Newsletter signups are not configured yet.'}
             </p>
