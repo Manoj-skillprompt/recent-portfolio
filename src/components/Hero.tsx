@@ -116,7 +116,7 @@ const PortfolioMosaic = ({ data }: Props) => (
       <div className='absolute inset-0 bg-[radial-gradient(circle_at_50%_38%,#fff59a_0%,#ffd13d_48%,#ff9d00_100%)]' />
       <span className='absolute left-1/2 top-10 z-10 -translate-x-1/2 text-xl text-white/80'>✦</span>
       <img
-        src='/profile.jpg'
+        src='/profile.png'
         alt='Manoj Chaudhary'
         className='absolute bottom-0 left-1/2 z-10 h-[88%] w-full -translate-x-1/2 object-cover object-top mix-blend-multiply'
       />
@@ -201,7 +201,7 @@ export default function Hero({ data }: Props) {
             <div className="h-16 w-16 overflow-hidden rounded-full border border-white/10 bg-[#1b1b1b] shadow-[0_0_24px_rgba(0,0,0,0.45)] ring-1 ring-white/5 sm:h-16 sm:w-16">
               <img
                 ref={imgRef}
-                src="/profile.jpg"
+                src="/profile.png"
                 alt={`${PROFILE_INFO.name} profile`}
                 className="h-full w-full object-cover"
               />
