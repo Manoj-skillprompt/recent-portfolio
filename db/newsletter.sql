@@ -16,3 +16,16 @@ CREATE TABLE IF NOT EXISTS newsletter_notifications (
   url TEXT NOT NULL,
   sent_at TIMESTAMPTZ NOT NULL DEFAULT now()
 );
+
+CREATE TABLE IF NOT EXISTS newsletter_email_usage (
+  period TEXT NOT NULL,
+  period_start DATE NOT NULL,
+  sent_count INTEGER NOT NULL DEFAULT 0,
+  PRIMARY KEY (period, period_start)
+);
+
+CREATE TABLE IF NOT EXISTS newsletter_rate_limits (
+  rate_key TEXT PRIMARY KEY,
+  window_start TIMESTAMPTZ NOT NULL,
+  request_count INTEGER NOT NULL DEFAULT 0
+);

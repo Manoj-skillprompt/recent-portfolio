@@ -1,5 +1,5 @@
 import type { APIRoute } from 'astro';
-import { escapeHtml, isNewsletterConfigured, json, newsletterFrom, resend, siteUrl, sql } from '../../lib/newsletter';
+import { escapeHtml, isNewsletterConfigured, json, newsletterFrom, resend, reserveEmailQuota, siteUrl, sql } from '../../lib/newsletter';
 
 export const prerender = false;
 
@@ -29,6 +29,10 @@ export const POST: APIRoute = async ({ request }) => {
       FROM newsletter_subscribers
       WHERE unsubscribed_at IS NULL
     `;
+
+    if (!(await reserveEmailQuota(subscribers.length))) {
+      return json({ error: 'Newsletter email limit reached. Notification was not sent.' }, 429);
+    }
 
     const results = await Promise.all(
       subscribers.map((subscriber) =>
