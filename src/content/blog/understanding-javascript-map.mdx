@@ -1,0 +1,195 @@
+---
+title: 'Understanding JavaScript Map'
+description: 'Learn how JavaScript Map stores key-value pairs, use its most useful methods, and understand when it is a better choice than a standard object.'
+pubDate: 'Sep 16 2026'
+---
+
+# Understanding JavaScript Map
+
+A `Map` is a JavaScript collection for storing key-value pairs. It is similar to a standard object, but it is designed specifically for collections of data and provides useful methods for managing them.
+
+The biggest difference is the type of keys each structure supports. Object keys are generally strings or symbols, while a `Map` can use values of any type as keys, including strings, numbers, objects, and functions.
+
+## Creating a Map
+
+Create a `Map` with the `new` keyword, then add entries with `set()`:
+
+```js
+const users = new Map();
+
+users.set('name', 'Manoj');
+users.set(1, 'Role');
+
+console.log(users.get(1)); // Role
+console.log(users.get('name')); // Manoj
+```
+
+`set()` returns the same `Map`, so calls can also be chained:
+
+```js
+const user = new Map()
+  .set('name', 'Manoj')
+  .set('role', 'Developer');
+```
+
+You can also create a `Map` from an array of key-value pairs:
+
+```js
+const users = new Map([
+  ['id1', 1],
+  ['id2', 2],
+]);
+
+console.log(users.get('id1')); // 1
+```
+
+## The `size` Property
+
+The `size` property returns the number of entries in a `Map`:
+
+```js
+const users = new Map([
+  ['id1', 1],
+  ['id2', 2],
+]);
+
+console.log(users.size); // 2
+```
+
+Unlike the `length` property on arrays, `Map` uses `size` to report how many entries it contains.
+
+## The `delete()` Method
+
+Use `delete()` to remove an entry by its key. It returns `true` when an entry was removed and `false` when the key did not exist:
+
+```js
+const users = new Map([
+  ['id1', 1],
+  ['id2', 2],
+]);
+
+users.delete('id1');
+console.log(users.size); // 1
+```
+
+## The `clear()` Method
+
+Use `clear()` to remove every entry from a `Map`:
+
+```js
+const users = new Map([
+  ['id1', 1],
+  ['id2', 2],
+]);
+
+users.clear();
+console.log(users.size); // 0
+```
+
+## The `has()` Method
+
+The `has()` method checks whether a key exists and returns a boolean:
+
+```js
+const users = new Map([
+  ['id1', 1],
+  ['id2', 2],
+]);
+
+const exists = users.has('id1');
+console.log(exists); // true
+```
+
+This is useful when you need to distinguish between a missing key and a key whose value happens to be `undefined`.
+
+## Iterating Over a Map
+
+`forEach()` receives each value and key. It is convenient when you only need to perform an action for every entry:
+
+```js
+const colors = new Map([
+  ['primary', 'red'],
+  ['secondary', 'blue'],
+  ['accent', 'green'],
+]);
+
+colors.forEach((value, key) => {
+  console.log(key, value);
+});
+```
+
+`entries()` returns an iterator of `[key, value]` pairs. Use it with `for...of` when you want more control over the loop:
+
+```js
+for (const [key, value] of colors.entries()) {
+  console.log(key, value);
+}
+```
+
+Both examples output:
+
+```text
+primary red
+secondary blue
+accent green
+```
+
+A `Map` is iterable by default, so the same loop can be shortened to:
+
+```js
+for (const [key, value] of colors) {
+  console.log(key, value);
+}
+```
+
+## Getting Only Keys or Values
+
+Use `keys()` when you need only the keys, and `values()` when you need only the values:
+
+```js
+const person = new Map([
+  ['name', 'Bob'],
+  ['age', 30],
+  ['job', 'developer'],
+]);
+
+for (const key of person.keys()) {
+  console.log(key); // name, age, job
+}
+
+for (const value of person.values()) {
+  console.log(value); // Bob, 30, developer
+}
+```
+
+## Using Objects as Keys
+
+One of the most useful features of `Map` is that objects can be keys. The key is matched by object identity, not by the object’s contents:
+
+```js
+const metadata = new Map();
+const user = { id: 1 };
+
+metadata.set(user, { lastLogin: 'today' });
+
+console.log(metadata.get(user)); // { lastLogin: 'today' }
+console.log(metadata.get({ id: 1 })); // undefined
+```
+
+The second lookup uses a different object, even though it has the same contents, so it does not match the original key.
+
+## Why Use `Map` Instead of an Object?
+
+A `Map` is often a good choice when:
+
+1. Keys can be different types, such as numbers or objects.
+2. You want insertion order to be preserved during iteration.
+3. You need collection-specific methods such as `set()`, `get()`, `has()`, `delete()`, and `clear()`.
+4. You need a reliable `size` property.
+5. The data represents a collection of dynamic entries rather than a fixed-shaped record.
+
+Objects are still a good fit for structured records, configuration, and data with a known set of string keys. `Map` is usually more expressive when you are adding, finding, removing, and iterating over entries.
+
+## Conclusion
+
+JavaScript `Map` provides a clear API for managing key-value collections. Its support for keys of any type, predictable insertion order, and built-in collection methods make it a useful tool for caches, lookup tables, metadata, and other dynamic data structures.
