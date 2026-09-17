@@ -14,7 +14,9 @@ export default function GitHubContributions({ data }: Props) {
 
   useEffect(() => {
     const username = data?.user?.login;
-    if (!username || typeof window === 'undefined') return;
+    if (!username || typeof window === 'undefined') {
+      return;
+    }
 
     setLoading(true);
 
@@ -28,7 +30,7 @@ export default function GitHubContributions({ data }: Props) {
     }));
 
     const renderer = new ArcadeRenderer({
-      game: 'bomberman',
+      game: 'breakout',
       username: username,
       // If server data exists, use 'scenario' platform with customData
       ...(formattedContributions.length > 0

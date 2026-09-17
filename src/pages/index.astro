@@ -16,14 +16,26 @@ import type { GitHubUser, GitHubRepo, GitHubStats } from '../config/interfaces/g
 const blogPosts = (await getCollection('blog')).sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 
 let gitHubData: GitHubStats | null = null;
+const GITHUB_TOKEN = import.meta.env.GITHUB_TOKEN;
 
 if (GITHUB_USERNAME) {
   try {
+    // 1. Separate GitHub headers from third-party API headers
+    const githubHeaders: HeadersInit = {
+      'User-Agent': 'Astro-Portfolio-App',
+      ...(GITHUB_TOKEN ? { Authorization: `Bearer ${GITHUB_TOKEN}` } : {}),
+    };
+
     const [userResult, reposResult, contributionsResult] = await Promise.allSettled([
-      fetch(`https://api.github.com/users/${GITHUB_USERNAME}`, { signal: AbortSignal.timeout(10000) }),
-      fetch(`https://api.github.com/users/${GITHUB_USERNAME}/repos?per_page=100&sort=updated`, {
+      fetch(`https://api.github.com/users/${GITHUB_USERNAME}`, {
+        headers: githubHeaders,
         signal: AbortSignal.timeout(10000),
       }),
+      fetch(`https://api.github.com/users/${GITHUB_USERNAME}/repos?per_page=100&sort=updated`, {
+        headers: githubHeaders,
+        signal: AbortSignal.timeout(10000),
+      }),
+      // 2. Omit the GitHub Authorization header for the third-party API
       fetch(`https://github-contributions-api.jogruber.de/v4/${GITHUB_USERNAME}`, {
         signal: AbortSignal.timeout(10000),
       }),
@@ -51,7 +63,10 @@ if (GITHUB_USERNAME) {
 
       gitHubData = { user, repos: topRepos, totalStars, totalForks, contributions: contributionResponse.contributions };
     } else {
-      console.warn('GitHub profile data is unavailable during the build.');
+      // Detailed logging to identify exact failure during build
+      const userStatus = userResult.status === 'fulfilled' ? userResult.value.status : userResult.reason;
+      const reposStatus = reposResult.status === 'fulfilled' ? reposResult.value.status : reposResult.reason;
+      console.warn(`GitHub profile data unavailable. User API HTTP: ${userStatus}, Repos API HTTP: ${reposStatus}`);
     }
   } catch (err) {
     console.warn('GitHub data could not be loaded during the build:', err instanceof Error ? err.message : err);
