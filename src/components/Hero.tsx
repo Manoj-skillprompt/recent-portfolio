@@ -112,26 +112,6 @@ const PortfolioMosaic = ({ data }: Props) => (
       </div>
     </article>
 
-    {/* <article className='relative min-h-65 overflow-hidden rounded-4xl bg-[#ffb300] sm:col-span-1 sm:min-h-0'>
-      <div className='absolute inset-0 bg-[radial-gradient(circle_at_50%_38%,#fff59a_0%,#ffd13d_48%,#ff9d00_100%)]' />
-      <span className='absolute left-1/2 top-10 z-10 -translate-x-1/2 text-xl text-white/80'>✦</span>
-      <img
-        src='/profile.png'
-        alt='Manoj Chaudhary'
-        className='absolute bottom-0 left-1/2 z-10 h-[88%] w-full -translate-x-1/2 object-cover object-top mix-blend-multiply'
-      />
-    </article>
-
-    <article className='min-h-62.5 overflow-hidden rounded-4xl bg-[#008c4a] px-7 py-7 sm:col-span-2 sm:min-h-0'>
-      <h2 className='text-center text-2xl font-medium sm:text-3xl'>Building my Homelab</h2>
-      <p className='mx-auto mt-4 max-w-2xl text-sm leading-6 text-white/90'>
-        Aside from software development, I am also interested in building a homelab and have been following this journey
-        for a while now. Currently I am self-hosting lots of services and applications on my homelab. Read more about it
-        on my <u>blog</u>.
-      </p>
-      <pre className='mt-4 overflow-hidden rounded-t-xl bg-[#242424] p-3 text-[9px] leading-3 text-[#76d68b] shadow-2xl'>{`$ ssh yuj\n\n       .--.       akash@yuj\n      |o_o |      OS: Ubuntu 22.04.4 LTS\n      |:_/ |      Host: RK3588\n     //   \\      Kernel: 6.1.43\n    (|     |)     Uptime: 3 mins`}</pre>
-    </article> */}
-
     <article className='min-h-57.5 rounded-tl-[3rem] rounded-tr-xl rounded-br-[3rem] rounded-bl-2xl bg-yellow-950 px-7 py-7 sm:col-span-3 sm:row-span-1 sm:min-h-0'>
       <h2 className='text-2xl font-semibold sm:text-3xl'>Find Me Here</h2>
       <div className='mt-7 grid grid-cols-2 overflow-hidden rounded-lg border border-white/35'>

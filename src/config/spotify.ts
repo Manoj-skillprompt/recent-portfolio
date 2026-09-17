@@ -5,6 +5,15 @@ const LASTFM_API_KEY = import.meta.env.PUBLIC_LASTFM_API_KEY;
 const USERNAME = import.meta.env.PUBLIC_LASTFM_USERNAME; 
 const FALLBACK_ALBUM_ART = '/spotify-tile.svg';
 
+// Last.fm serves this stock image when a track has no cover art:
+// https://lastfm.freetls.fastly.net/i/u/*/2a96cbd8b46e442fc41c2b86b821562f.png
+const LASTFM_PLACEHOLDER_HASH = '2a96cbd8b46e442fc41c2b86b821562f';
+
+function isValidAlbumArt(url: string): boolean {
+  const value = url.trim();
+  return value.length > 0 && !value.includes(LASTFM_PLACEHOLDER_HASH);
+}
+
 export interface TrackDetails {
   songName: string;
   artistName: string;
@@ -35,7 +44,8 @@ export async function getMyMusicDetails(): Promise<TrackDetails | null> {
     const track = data.recenttracks.track[0];
     const songName = track.name;
     const artistName = track.artist['#text'];
-    const albumArt = track.image[2]['#text'] || FALLBACK_ALBUM_ART;
+    const albumArtUrl = track.image?.[2]?.['#text'] || '';
+    const albumArt = isValidAlbumArt(albumArtUrl) ? albumArtUrl : FALLBACK_ALBUM_ART;
     const isCurrentlyPlaying = track['@attr'] && track['@attr'].nowplaying === 'true';
 
     const encodedQuery = encodeURIComponent(`${songName} ${artistName}`);
