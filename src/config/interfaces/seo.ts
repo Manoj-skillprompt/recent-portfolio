@@ -1,6 +1,4 @@
 // src/config/interfaces/seo.ts
-import { SiteConfig } from './site';
-
 export interface OpenGraphConfig {
     'og:title': string;
     'og:description': string;

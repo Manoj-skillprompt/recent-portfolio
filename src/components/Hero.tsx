@@ -45,7 +45,7 @@ const getIcon = (iconName: string, size: number = 24) => {
 
 const PortfolioMosaic = ({ data }: Props) => (
   <section className='grid grid-cols-1 gap-2.5 overflow-hidden text-white sm:grid-cols-12 mt-24'>
-    <article className='relative min-h-65 overflow-hidden rounded-tl-2xl rounded-tr-[3rem] rounded-br-xl rounded-bl-[3rem] bg-blue-400 px-7 py-7 sm:col-span-8'>
+    <article className='relative min-h-65 overflow-hidden rounded-tl-2xl rounded-tr-[3rem] rounded-br-xl rounded-bl-[3rem] bg-blue-900 px-7 py-7 sm:col-span-8'>
       <div className='tech-icon-cloud' aria-hidden='true'>
         <span className='tech-icon tech-icon--ts'>
           <SiTypescript className='text-3xl' />
@@ -88,7 +88,7 @@ const PortfolioMosaic = ({ data }: Props) => (
         <ExternalLink className='ml-2 h-4 w-3.5' aria-hidden='true' />
       </a>
     </article>
-    <article className='relative min-h-62.5 overflow-hidden rounded-tl-[3rem] rounded-tr-2xl rounded-br-[3rem] rounded-bl-xl bg-[#242424] px-7 py-7 sm:col-span-4 sm:min-h-0'>
+    <article className='relative min-h-62.5 overflow-hidden rounded-tl-[3rem] rounded-tr-2xl rounded-br-[3rem] rounded-bl-xl bg-purple-900 px-7 py-7 sm:col-span-4 sm:min-h-0'>
       <h2 className='relative z-10 text-2xl font-semibold leading-tight sm:text-3xl'>
         <span className='inline-flex items-center gap-2'>Working at</span>
         <br />
@@ -150,7 +150,7 @@ const PortfolioMosaic = ({ data }: Props) => (
       </div>
     </article>
 
-    <article className='min-h-57.5 overflow-hidden rounded-tl-xl rounded-tr-[3rem] rounded-br-2xl rounded-bl-[3rem] bg-[#176B4D] px-7 py-7 sm:col-span-9 sm:min-h-0'>
+    <article className='min-h-57.5 overflow-hidden rounded-tl-xl rounded-tr-[3rem] rounded-br-2xl rounded-bl-[3rem] bg-[#161b22] px-7 py-7 sm:col-span-9 sm:min-h-0'>
       <h2 className='text-2xl font-semibold sm:text-3xl'>Github Contributions</h2>
       {/* <p className='mt-4 text-sm text-white/90'>A snapshot of my GitHub contributions.</p> */}
       <GitHubContributions data={data} />
@@ -210,35 +210,35 @@ export default function Hero({ data }: Props) {
         </div> */}
 
         <div className='max-w-4xl'>
-          <h1 className='font-black leading-[0.95] text-foreground'>
-            <span className='block text-5xl sm:text-3xl'>Hey there 👋, I'm</span>
-            <span className='mt-4 block text-6xl sm:text-5xl bg-linear-to-r from-[#c4f7d6] via-[#a7f4b7] to-[#8ae3c2] bg-clip-text text-transparent'>
+          <h1 className='font-black leading-[0.94] text-foreground'>
+            <span className='block text-4xl sm:text-5xl lg:text-6xl'>Hey there 👋, I'm</span>
+            <span className='mt-3 block bg-linear-to-r from-[#c4f7d6] via-[#a7f4b7] to-[#8ae3c2] bg-clip-text text-5xl text-transparent sm:text-6xl lg:text-7xl'>
               {PROFILE_INFO.name}.
             </span>
           </h1>
 
-          <div className='mt-8 text-lg text-muted'>
+          <div className='mt-6 text-base text-muted sm:text-lg'>
             <span>A {PROFILE_INFO.role.toLowerCase()} and tech enthusiast based in</span>{' '}
             <span className='font-bold text-foreground'>{PROFILE_INFO.location}</span>
             <img
               src='/nepal-flag.gif'
               alt='Nepal flag'
-              className='ml-2 mb-3 inline-block h-8 w-11 rounded-sm object-cover align-middle'
+              className='ml-2 mb-2 inline-block h-7 w-10 rounded-sm object-cover align-middle sm:h-8 sm:w-11'
             />
           </div>
 
-          <p className='text-lg leading-relaxed text-muted'>{SITE_DESCRIPTION}</p>
+          <p className='mt-4 text-base leading-relaxed text-muted sm:text-lg'>{SITE_DESCRIPTION}</p>
 
-          <div className='mt-10 flex flex-wrap gap-4'>
+          <div className='mt-8 flex flex-wrap gap-3 sm:gap-4'>
             <a
               href='/blog'
-              className='inline-flex items-center justify-center rounded-full border border-[#7ee7c6]/60 bg-linear-to-r from-[#98f1c8] via-[#6fe7c0] to-[#64d09b] px-7 py-3 text-lg font-semibold text-[#07130d] shadow-[0_10px_30px_rgba(110,232,176,0.35)] transition-transform duration-200 hover:scale-[1.02]'
+              className='inline-flex items-center justify-center rounded-full border border-[#7ee7c6]/60 bg-linear-to-r from-[#98f1c8] via-[#6fe7c0] to-[#64d09b] px-5 py-3 text-base font-semibold text-[#07130d] shadow-[0_10px_30px_rgba(110,232,176,0.35)] transition-transform duration-200 hover:scale-[1.02] sm:px-7 sm:text-lg'
             >
               Read blog
             </a>
             <a
               href='#projects'
-              className='inline-flex items-center justify-center rounded-full border border-[#7ee7c6]/40 bg-transparent px-7 py-3 text-lg font-semibold text-foreground shadow-[inset_0_0_0_1px_rgba(126,231,198,0.25)] transition-colors duration-200 hover:border-[#7ee7c6]/70 hover:bg-[#7ee7c6]/5'
+              className='inline-flex items-center justify-center rounded-full border border-[#7ee7c6]/40 bg-transparent px-5 py-3 text-base font-semibold text-foreground shadow-[inset_0_0_0_1px_rgba(126,231,198,0.25)] transition-colors duration-200 hover:border-[#7ee7c6]/70 hover:bg-[#7ee7c6]/5 sm:px-7 sm:text-lg'
             >
               My journey
             </a>

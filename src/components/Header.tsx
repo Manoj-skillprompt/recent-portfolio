@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { Download } from 'lucide-react';
+import { Download, Menu, X } from 'lucide-react';
 import { SOCIALS } from '../config/profile';
 import { NAV_ITEMS } from '../config/nav-items';
 
 export default function Header() {
   const [activeNav, setActiveNav] = useState<string | null>(null);
+  const [menuOpen, setMenuOpen] = useState(false);
   const resumeUrl = SOCIALS.find((social) => social.name === 'Resume')?.url || '/files/resume.pdf';
 
   useEffect(() => {
     document.documentElement.classList.add('dark');
 
-    // Handle hash navigation for sections
     const handleHashNavigation = () => {
       const hash = window.location.hash.slice(1);
       if (hash) {
@@ -63,6 +63,7 @@ export default function Header() {
 
   const handleNavClick = (e: React.MouseEvent, action?: string, sectionId?: string) => {
     const isHomePage = typeof window !== 'undefined' && window.location.pathname === '/';
+    setMenuOpen(false);
 
     if (action === 'scroll-top') {
       e.preventDefault();
@@ -79,21 +80,19 @@ export default function Header() {
           section.scrollIntoView({ behavior: 'smooth' });
         }
       } else {
-        // Navigate to home page with section hash
         window.location.href = `/#${sectionId}`;
       }
     }
-    // 'navigate' action lets the default link behavior happen
   };
 
   return (
-    <header className='my-8 flex w-full items-center justify-between gap-5'>
+    <header className='relative z-50 my-8 flex w-full items-center justify-between gap-5'>
       <div className='flex h-12 w-12 items-center justify-center overflow-hidden rounded-full border border-(--color-border) bg-(--color-surface) shadow-[0_0_24px_rgba(0,0,0,0.2)] ring-1 ring-(--color-border)'>
         <img src='/profile.png' alt='Profile' className='h-full w-full object-cover' />
       </div>
 
-      <nav className='max-w-[calc(100vw-7rem)] overflow-x-auto rounded-full border border-(--color-border) bg-(--color-surface) px-3 py-2 shadow-[0_12px_30px_rgba(0,0,0,0.18)] backdrop-blur-sm ring-1 ring-(--color-border) sm:max-w-none sm:px-7 sm:py-3'>
-        <div className='flex items-center gap-3 whitespace-nowrap text-sm font-medium text-foreground sm:gap-8 sm:text-lg'>
+      <nav className='hidden max-w-[calc(100vw-7rem)] overflow-x-auto rounded-full border border-(--color-border) bg-(--color-surface) px-3 py-2 shadow-[0_12px_30px_rgba(0,0,0,0.18)] backdrop-blur-sm ring-1 ring-(--color-border) lg:flex lg:max-w-none lg:px-7 lg:py-3'>
+        <div className='flex items-center gap-3 whitespace-nowrap text-sm font-medium text-foreground lg:gap-8 lg:text-lg'>
           {NAV_ITEMS.map((item) => (
             <a
               key={item.label}
@@ -114,11 +113,50 @@ export default function Header() {
         href={resumeUrl}
         download
         aria-label='Download resume'
-        className='inline-flex items-center gap-2 rounded-full border border-(--color-primary) bg-(--color-primary) px-3 py-2 text-xs font-bold text-[#07130d] shadow-[0_10px_26px_rgba(126,231,198,0.2)] transition-transform duration-200 hover:scale-105'
+        className='hidden items-center gap-2 rounded-full border border-(--color-primary) bg-(--color-primary) px-3 py-2 text-xs font-bold text-[#07130d] shadow-[0_10px_26px_rgba(126,231,198,0.2)] transition-transform duration-200 hover:scale-105 lg:inline-flex'
       >
         <Download className='h-4 w-4' aria-hidden='true' />
         <span className='hidden sm:inline'>Resume</span>
       </a>
+
+      <button
+        type='button'
+        aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+        aria-expanded={menuOpen}
+        onClick={() => setMenuOpen((open) => !open)}
+        className='inline-flex h-11 w-11 items-center justify-center rounded-full border border-(--color-border) bg-(--color-surface) text-foreground transition-colors duration-200 hover:border-(--color-primary) hover:text-(--color-primary) lg:hidden'
+      >
+        {menuOpen ? <X className='h-5 w-5' /> : <Menu className='h-5 w-5' />}
+      </button>
+
+      {menuOpen && (
+        <div className='absolute left-0 right-0 top-[calc(100%+0.75rem)] overflow-hidden rounded-2xl border border-(--color-border) bg-(--color-surface)/95 shadow-[0_20px_40px_rgba(0,0,0,0.28)] backdrop-blur-sm ring-1 ring-(--color-border) lg:hidden'>
+          <nav className='flex flex-col p-3'>
+            {NAV_ITEMS.map((item) => (
+              <a
+                key={item.label}
+                href={item.href}
+                onClick={(e) => handleNavClick(e, item.action, item.sectionId)}
+                aria-current={activeNav === item.label ? 'page' : undefined}
+                className={`rounded-xl px-3 py-3 text-base font-medium transition-colors duration-200 ${
+                  activeNav === item.label ? 'bg-(--color-primary)/10 text-(--color-primary)' : 'text-foreground hover:bg-white/5'
+                }`}
+              >
+                {item.label}
+              </a>
+            ))}
+
+            <a
+              href={resumeUrl}
+              download
+              className='mt-2 inline-flex items-center justify-center gap-2 rounded-xl border border-(--color-primary) bg-(--color-primary) px-3 py-3 text-sm font-bold text-[#07130d]'
+            >
+              <Download className='h-4 w-4' aria-hidden='true' />
+              Download Resume
+            </a>
+          </nav>
+        </div>
+      )}
     </header>
   );
 }
