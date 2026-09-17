@@ -8,7 +8,7 @@ export const PROFILE_INFO: ProfileInfo = {
   role: 'Software Developer',
   email: 'manoj.tharu34@gmail.com',
   location: 'Butwal, Nepal',
-  quote: 'Turning ideas into meaningful digital experiences.',
+  description: 'Welcome to my digital world, where I turn ideas into world-class products.',
 };
 
 export const SOCIALS: SocialLink[] = [

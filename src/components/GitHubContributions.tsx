@@ -83,27 +83,31 @@ export default function GitHubContributions({ data }: Props) {
 
   return (
     <section id='github'>
-        <div className='relative w-full max-w-full rounded-lg pb-4'>
-          {loading && (
-            <div className='absolute inset-0 flex items-center justify-center bg-surface/80 text-sm text-muted'>
-              Loading contributions
-            </div>
-          )}
-          <div
-            ref={containerRef}
-            // GitHubContributions.tsx
-            className='w-full max-w-full mt-7 [&_svg]:rounded-md [&_svg]:h-auto [&_svg]:w-full [&_svg]:max-w-full [&_svg]:block'
-          />
+      <div className='relative w-full max-w-full rounded-lg pb-4'>
+        {loading && (
+          <div className='absolute inset-0 flex items-center justify-center bg-surface/80 text-sm text-muted'>
+            Loading contributions
+          </div>
+        )}
+        <div
+          ref={containerRef}
+          // GitHubContributions.tsx
+          className='w-full max-w-full mt-7 [&_svg]:rounded-md [&_svg]:h-auto [&_svg]:w-full [&_svg]:max-w-full [&_svg]:block'
+        />
       </div>
 
       <a
         href={data.user.html_url}
         target='_blank'
         rel='noopener noreferrer'
-        className='inline-flex items-center gap-1.5 text-base sm:text-lg text-accent hover:underline'
+        className='inline-flex items-center gap-1.5 text-base'
       >
         <GitCommit className='h-5 w-5' />
-        View all contributions on GitHub
+
+        <span className='relative after:absolute after:-bottom-1 after:left-0 after:h-px after:w-full after:origin-bottom-right after:scale-x-0 after:bg-current after:transition-transform after:duration-300 after:ease-out hover:after:origin-bottom-left hover:after:scale-x-100'>
+          View all contributions on GitHub
+        </span>
+
         <ExternalLink className='h-4 w-5' />
       </a>
     </section>

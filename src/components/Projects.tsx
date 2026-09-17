@@ -61,7 +61,7 @@ export default function Projects() {
                     <span className='hidden text-xs font-medium text-muted sm:block'>View project</span>
                   </div>
 
-                  <p className='mt-4 max-w-2xl text-sm leading-relaxed text-muted transition-colors group-hover:text-foreground'>
+                  <p className='mt-4 max-w-2xl text-base leading-relaxed text-muted transition-colors group-hover:text-foreground'>
                     {project.description}
                   </p>
                 </a>

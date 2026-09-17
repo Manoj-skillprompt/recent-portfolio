@@ -8,7 +8,7 @@
   --color-card: #101713;
   --color-foreground: #f8fafc;
   --color-muted: #94a3b8;
-  --color-primary: #7ee7c6;
+  --color-primary: #1DB954;
   --color-secondary: #119bb6;
   --color-border: rgba(255, 255, 255, 0.08);
   --color-surface: rgba(255, 255, 255, 0.03);
@@ -335,6 +335,87 @@
     transform: translateY(-1px);
   }
 
+  .btn-primary {
+    overflow: hidden;
+    border: 1px solid var(--color-primary);
+    background-color: var(--color-primary);
+    color: #07130d;
+    font-weight: 700;
+    border-radius: 1.5rem;
+    box-shadow: 0 10px 26px rgba(126, 231, 198, 0.2);
+    transition: all 300ms ease-out;
+    transform: translateZ(0);
+    will-change: transform;
+    cursor: pointer;
+  }
+
+  .btn-primary:hover {
+    border-radius: 0.5rem;
+    scale: 1.05;
+  }
+
+  .btn-primary:disabled {
+    cursor: default;
+    opacity: 0.7;
+  }
+
+  .card-hover-glow {
+    transition:
+      transform 400ms cubic-bezier(0.22, 1, 0.36, 1),
+      border-color 400ms ease,
+      box-shadow 400ms ease;
+  }
+
+  .card-hover-glow:hover,
+  .card-hover-glow:focus-visible,
+  .card-hover-glow.is-hovered {
+    transform: translateY(-5px);
+    border-color: color-mix(in srgb, var(--color-primary) 76%, transparent);
+    box-shadow:
+      0 0 0 1px color-mix(in srgb, var(--color-primary) 24%, transparent),
+      0 20px 46px rgba(0, 0, 0, 0.42),
+      0 0 34px color-mix(in srgb, var(--color-primary) 30%, transparent);
+  }
+
+  .social-tile {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    transition:
+      background-color 300ms ease,
+      box-shadow 300ms ease,
+      transform 200ms ease;
+  }
+
+  .social-tile::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25), transparent);
+    transform: translateX(-100%);
+    transition: transform 700ms ease-out;
+    pointer-events: none;
+  }
+
+  .social-tile:hover::after {
+    transform: translateX(100%);
+  }
+
+  .social-tile > * {
+    position: relative;
+    z-index: 1;
+    transition: transform 300ms ease-out;
+  }
+
+  .social-tile:hover > * {
+    transform: translateY(-2px) scale(1.1);
+  }
+
+  .social-tile:active {
+    transform: scale(0.95);
+  }
+
   .project-preview {
     position: fixed;
     z-index: 50;
@@ -369,6 +450,39 @@
   @media (prefers-reduced-motion: reduce) {
     .tech-icon {
       animation: none;
+    }
+
+    .btn-primary {
+      transition: none;
+    }
+
+    .btn-primary:hover {
+      scale: none;
+    }
+
+    .card-hover-glow {
+      transition: none;
+    }
+
+    .card-hover-glow:hover,
+    .card-hover-glow:focus-visible,
+    .card-hover-glow.is-hovered {
+      transform: none;
+    }
+
+    .social-tile,
+    .social-tile::after,
+    .social-tile > * {
+      transition: none;
+    }
+
+    .social-tile:hover::after {
+      transform: translateX(-100%);
+    }
+
+    .social-tile:hover > *,
+    .social-tile:active {
+      transform: none;
     }
 
     .scroll-reveal {

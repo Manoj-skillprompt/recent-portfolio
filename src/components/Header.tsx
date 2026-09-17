@@ -92,7 +92,7 @@ export default function Header() {
       </div>
 
       <nav className='hidden max-w-[calc(100vw-7rem)] overflow-x-auto rounded-full border border-(--color-border) bg-(--color-surface) px-3 py-2 shadow-[0_12px_30px_rgba(0,0,0,0.18)] backdrop-blur-sm ring-1 ring-(--color-border) lg:flex lg:max-w-none lg:px-7 lg:py-3'>
-        <div className='flex items-center gap-3 whitespace-nowrap text-sm font-medium text-foreground lg:gap-8 lg:text-lg'>
+        <div className='flex items-center gap-3 whitespace-nowrap text-base font-bold lg:gap-8 lg:text-lg'>
           {NAV_ITEMS.map((item) => (
             <a
               key={item.label}
@@ -113,9 +113,9 @@ export default function Header() {
         href={resumeUrl}
         download
         aria-label='Download resume'
-        className='hidden items-center gap-2 rounded-full border border-(--color-primary) bg-(--color-primary) px-3 py-2 text-xs font-bold text-[#07130d] shadow-[0_10px_26px_rgba(126,231,198,0.2)] transition-transform duration-200 hover:scale-105 lg:inline-flex'
+        className='btn-primary hidden items-center gap-2 px-4 py-2 text-base lg:inline-flex'
       >
-        <Download className='h-4 w-4' aria-hidden='true' />
+        <Download className='h-4 w-4 shrink-0' aria-hidden='true' />
         <span className='hidden sm:inline'>Resume</span>
       </a>
 
@@ -139,7 +139,9 @@ export default function Header() {
                 onClick={(e) => handleNavClick(e, item.action, item.sectionId)}
                 aria-current={activeNav === item.label ? 'page' : undefined}
                 className={`rounded-xl px-3 py-3 text-base font-medium transition-colors duration-200 ${
-                  activeNav === item.label ? 'bg-(--color-primary)/10 text-(--color-primary)' : 'text-foreground hover:bg-white/5'
+                  activeNav === item.label
+                    ? 'bg-(--color-primary)/10 text-(--color-primary)'
+                    : 'text-foreground hover:bg-white/5'
                 }`}
               >
                 {item.label}
@@ -149,7 +151,7 @@ export default function Header() {
             <a
               href={resumeUrl}
               download
-              className='mt-2 inline-flex items-center justify-center gap-2 rounded-xl border border-(--color-primary) bg-(--color-primary) px-3 py-3 text-sm font-bold text-[#07130d]'
+              className='btn-primary mt-2 inline-flex items-center justify-center gap-2 px-3 py-3 text-sm'
             >
               <Download className='h-4 w-4' aria-hidden='true' />
               Download Resume

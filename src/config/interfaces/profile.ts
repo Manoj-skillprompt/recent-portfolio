@@ -5,7 +5,7 @@ export interface ProfileInfo {
     email: string;
     phone?: string | null;
     location?: string | null;
-    quote?: string | null;
+    description?: string | null;
 }
 
 /** Social link interface */

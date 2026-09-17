@@ -92,13 +92,13 @@ const ExperienceCard = ({ exp, isCurrent, isLast }: { exp: ExperienceItem; isCur
                   </span>
                 )}
               </div>
-              <p className='mt-1 text-sm text-muted'>{exp.role}</p>
+              <p className='mt-1 text-base font-medium text-muted'>{exp.role}</p>
             </div>
 
             {/* Right side: Duration & Location */}
             <div className='flex flex-col items-start sm:items-end sm:text-right w-full sm:w-auto mt-2 sm:mt-0'>
               <span className='text-lg text-foreground'>{exp.location}</span>
-              <span className='text-xs font-medium text-muted mb-1 mt-1'>{exp.duration}</span>
+              <span className='text-base font-medium text-muted mb-1 mt-1'>{exp.duration}</span>
             </div>
           </div>
 
@@ -108,7 +108,7 @@ const ExperienceCard = ({ exp, isCurrent, isLast }: { exp: ExperienceItem; isCur
           >
             {exp.description && (
               <p
-                className={`text-sm leading-relaxed text-muted flex-1 transition-colors ${hasPoints ? 'group-hover:text-foreground' : ''}`}
+                className={`text-base leading-relaxed text-muted flex-1 transition-colors ${hasPoints ? 'group-hover:text-foreground' : ''}`}
               >
                 {exp.description}
               </p>

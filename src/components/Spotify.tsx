@@ -41,9 +41,9 @@ export default function Spotify() {
       href={track.spotifyLink}
       target="_blank"
       rel="noopener noreferrer"
-      className='group relative flex w-full max-w-xl items-center gap-4 overflow-hidden rounded-2xl border border-[#1DB954]/25 bg-[#101713] p-4 shadow-[0_18px_50px_rgba(0,0,0,0.28)] transition-all duration-300 hover:-translate-y-1 hover:border-[#1DB954]/60 hover:shadow-[0_22px_60px_rgba(29,185,84,0.16)]'
+      className='group relative flex w-full max-w-xl items-center gap-4 overflow-hidden rounded-2xl border border-(--color-primary)/25 bg-[#101713] p-4 shadow-[0_18px_50px_rgba(0,0,0,0.28)] transition-all duration-300 hover:-translate-y-1 hover:border-(--color-primary)/60 hover:shadow-[0_22px_60px_rgba(29,185,84,0.16)]'
     >
-      <div className='pointer-events-none absolute -right-10 -top-12 h-36 w-36 rounded-full bg-[#1DB954]/10 blur-3xl transition-opacity duration-300 group-hover:opacity-90' />
+      <div className='pointer-events-none absolute -right-10 -top-12 h-36 w-36 rounded-full bg-(--color-primary)/10 blur-3xl transition-opacity duration-300 group-hover:opacity-90' />
 
       <div className='relative h-16 w-16 shrink-0 overflow-hidden rounded-xl border border-white/10 bg-[#1b2a20] shadow-lg'>
         <img
@@ -61,15 +61,15 @@ export default function Spotify() {
       </div>
 
       <div className='relative min-w-0 flex-1'>
-        <div className='mb-1 flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.18em] text-[#1DB954]'>
-          <span className={`h-1.5 w-1.5 rounded-full bg-[#1DB954] ${track.isCurrentlyPlaying ? 'animate-pulse' : ''}`} />
+        <div className='mb-1 flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.18em] text-(--color-primary)'>
+          <span className={`h-1.5 w-1.5 rounded-full bg-(--color-primary) ${track.isCurrentlyPlaying ? 'animate-pulse' : ''}`} />
           {track.isCurrentlyPlaying ? 'Now playing' : 'Last played'}
         </div>
         <p className='truncate text-base font-semibold text-foreground'>{track.songName}</p>
         <p className='truncate text-sm text-muted'>{track.artistName}</p>
       </div>
 
-      <div className='relative flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-white/10 text-[#1DB954] transition-colors group-hover:bg-[#1DB954] group-hover:text-[#07130d]'>
+      <div className='relative flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-white/10 text-(--color-primary) transition-colors group-hover:bg-(--color-primary) group-hover:text-[#07130d]'>
         <ArrowUpRight className='h-4 w-4' aria-hidden='true' />
       </div>
 

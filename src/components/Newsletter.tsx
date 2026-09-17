@@ -40,10 +40,8 @@ export default function Newsletter() {
       <div className='relative'>
         {/* Dark Card */}
         <div
-          className={`relative overflow-hidden rounded-2xl border bg-[#151515] p-8 md:p-12 md:ml-28 md:mr-48 transition-all duration-500 ${
-            isHovered
-              ? 'border-[#7ee7c6]/40 shadow-[0_0_80px_-15px_rgba(126,231,198,0.25)]'
-              : 'border-white/5 shadow-none'
+          className={`card-hover-glow relative overflow-hidden rounded-2xl border border-white/5 bg-[#151515] p-8 md:p-12 md:ml-28 md:mr-48 ${
+            isHovered ? 'is-hovered' : ''
           }`}
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
@@ -51,9 +49,9 @@ export default function Newsletter() {
           {/* Left Side: Text and Form */}
           <div className='md:w-3/4 space-y-6 z-10 relative'>
             <div>
-              <h3 className='text-[#7ee7c6] font-bold uppercase tracking-wider text-sm mb-2'>Stay in touch</h3>
-              <h2 className='text-3xl md:text-4xl font-bold text-white mb-4'>Join my newsletter</h2>
-              <p className='text-zinc-400 text-sm leading-relaxed max-w-md'>
+              <h3 className='text-(--color-primary) font-bold uppercase tracking-wider text-base mb-2'>Stay in touch</h3>
+              <h2 className='text-xl font-bold text-forground mb-4'>Join my newsletter</h2>
+              <p className='text-base leading-relaxed max-w-md'>
                 I&apos;m not very regular with posting, but whenever I find something interesting or useful in tech, I
                 like to share it. Subscribe to my newsletter and I&apos;ll send you the updates so you don&apos;t miss
                 anything important :)
@@ -74,7 +72,7 @@ export default function Newsletter() {
               <button
                 type='submit'
                 disabled={status === 'submitting' || status === 'success'}
-                className='rounded-lg bg-[#7ee7c6] hover:bg-[#64d09b] text-[#07130d] font-bold px-6 py-3 transition-colors shrink-0'
+                className='btn-primary inline-flex shrink-0 items-center justify-center px-6 py-3'
               >
                 {status === 'submitting'
                   ? 'Subscribing...'
