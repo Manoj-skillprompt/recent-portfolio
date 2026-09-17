@@ -1,6 +1,7 @@
 ---
 import '../styles/global.css';
 import { SITE_URL, SITE_TITLE } from '../config/site';
+import { PROFILE_INFO, SOCIALS } from '../config/profile';
 import SEO_CONFIG from '../config/seo';
 
 export interface Props {
@@ -13,6 +14,48 @@ const { title, description, resetScrollOnLoad = false } = Astro.props;
 const pageTitle = title || SEO_CONFIG.defaultTitle;
 const pageDescription = description || SEO_CONFIG.defaultDescription;
 const pageUrl = new URL(Astro.url.pathname, SITE_URL).toString();
+const sameAs = [...new Set(SOCIALS.filter((social) => social.url).map((social) => social.url))];
+const personSchema = {
+	'@context': 'https://schema.org',
+	'@type': 'Person',
+	name: PROFILE_INFO.name,
+	jobTitle: PROFILE_INFO.role,
+	description: pageDescription,
+	url: SITE_URL,
+	image: `${SITE_URL}/profile.png`,
+	email: `mailto:${PROFILE_INFO.email}`,
+	address: {
+		'@type': 'PostalAddress',
+		addressLocality: PROFILE_INFO.location,
+	},
+	knowsAbout: [
+		'JavaScript',
+		'Typescript',
+		'React',
+		'Astro',
+		'Frontend Development',
+		'Full Stack Development',
+		'Web Development',
+		'Software Development'
+	],
+	sameAs,
+};
+
+const websiteSchema = {
+	'@context': 'https://schema.org',
+	'@type': 'WebSite',
+	name: SITE_TITLE,
+	url: SITE_URL,
+	description: pageDescription,
+	inLanguage: 'en',
+	potentialAction: {
+		'@type': 'SearchAction',
+		target: `${SITE_URL}/?q={search_term_string}`,
+		'query-input': 'required name=search_term_string',
+	},
+};
+
+const structuredData = [websiteSchema, personSchema];
 ---
 
 <!DOCTYPE html>
@@ -22,8 +65,11 @@ const pageUrl = new URL(Astro.url.pathname, SITE_URL).toString();
 		<meta name="viewport" content="width=device-width" />
 		<link rel="icon" type="image/png" href="/favicon.png" />
 		<meta name="generator" content={Astro.generator} />
-		<title>{pageTitle}</title>
 		<meta name="description" content={pageDescription} />
+		<meta name="author" content={PROFILE_INFO.name} />
+		<meta name="robots" content="index, follow" />
+		<meta name="theme-color" content="#0f172a" />
+		<title>{pageTitle}</title>
 		<link rel="canonical" href={pageUrl} />
 		<meta property="og:site_name" content={SITE_TITLE} />
 		<meta property="og:title" content={pageTitle} />
@@ -41,6 +87,7 @@ const pageUrl = new URL(Astro.url.pathname, SITE_URL).toString();
 		<meta name="twitter:image" content={SEO_CONFIG.twitter['twitter:image']} />
 		<meta name="twitter:image:alt" content={pageTitle} />
 		{SEO_CONFIG.twitter['twitter:site'] && <meta name="twitter:site" content={SEO_CONFIG.twitter['twitter:site']} />}
+		<script type="application/ld+json" set:html={JSON.stringify(structuredData)}></script>
 		<script>
 			{`(function() {
 				document.documentElement.classList.add('dark');
