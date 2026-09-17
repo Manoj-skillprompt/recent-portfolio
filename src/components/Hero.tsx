@@ -44,7 +44,7 @@ const getIcon = (iconName: string, size: number = 24) => {
 };
 
 const PortfolioMosaic = ({ data }: Props) => (
-  <section className='grid grid-cols-1 gap-2.5 overflow-hidden text-white sm:grid-cols-12 mt-24'>
+  <section className='grid grid-cols-1 gap-2.5 overflow-hidden text-white sm:grid-cols-12 mt-12 sm:mt-24'>
     <article className='relative min-h-65 overflow-hidden rounded-tl-2xl rounded-tr-[3rem] rounded-br-xl rounded-bl-[3rem] bg-blue-900 px-7 py-7 sm:col-span-8'>
       <div className='tech-icon-cloud' aria-hidden='true'>
         <span className='tech-icon tech-icon--ts'>
@@ -159,60 +159,15 @@ const PortfolioMosaic = ({ data }: Props) => (
 );
 
 export default function Hero({ data }: Props) {
-  // const imgRef = useRef<HTMLImageElement>(null);
-
-  // const getIcon = (iconName: string, size: number = 24) => {
-  //   switch (iconName) {
-  //     case 'Github':
-  //       return <GithubIcon size={size} />;
-  //     case 'Linkedin':
-  //       return <LinkedinIcon size={size} />;
-  //     case 'Mail':
-  //       return <Mail size={size} />;
-  //     default:
-  //       return <GithubIcon size={size} />;
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   if (imgRef.current) {
-  //     console.log('Image element found, src:', imgRef.current.src);
-  //     const handleError = () => {
-  //       console.log('Image load error detected');
-  //       if (imgRef.current && !imgRef.current.src.includes('profile-placeholder.svg')) {
-  //         console.log('Switching to placeholder');
-  //         imgRef.current.src = '/profile-placeholder.svg';
-  //       }
-  //     };
-  //     imgRef.current.addEventListener('error', handleError);
-  //     return () => {
-  //       if (imgRef.current) {
-  //         imgRef.current.removeEventListener('error', handleError);
-  //       }
-  //     };
-  //   }
-  // }, []);
 
   return (
-    <section className='flex flex-col justify-center mt-22'>
+    <section className='flex flex-col justify-center mt-8 sm:mt-22'>
       <div className='mx-auto w-full max-w-267'>
-        {/* <div className="mb-10 flex items-center justify-center">
-          <div className="flex items-center gap-4">
-            <div className="h-16 w-16 overflow-hidden rounded-full border border-white/10 bg-[#1b1b1b] shadow-[0_0_24px_rgba(0,0,0,0.45)] ring-1 ring-white/5 sm:h-16 sm:w-16">
-              <img
-                ref={imgRef}
-                src="/profile.png"
-                alt={`${PROFILE_INFO.name} profile`}
-                className="h-full w-full object-cover"
-              />
-            </div>
-          </div>
-        </div> */}
 
         <div className='max-w-4xl'>
           <h1 className='font-black leading-[0.94] text-foreground'>
-            <span className='block text-4xl sm:text-5xl lg:text-6xl'>Hey there 👋, I'm</span>
-            <span className='mt-3 block bg-linear-to-r from-[#c4f7d6] via-[#a7f4b7] to-[#8ae3c2] bg-clip-text text-5xl text-transparent sm:text-6xl lg:text-7xl'>
+            <span className='block text-3xl sm:text-5xl lg:text-6xl'>Hey there 👋, I'm</span>
+            <span className='mt-3 block bg-linear-to-r from-[#c4f7d6] via-[#a7f4b7] to-[#8ae3c2] bg-clip-text text-4xl text-transparent sm:text-6xl lg:text-7xl'>
               {PROFILE_INFO.name}.
             </span>
           </h1>
@@ -245,28 +200,8 @@ export default function Hero({ data }: Props) {
           </div>
         </div>
 
-        {/* <div className='mt-12'>
-          <Spotify />
-        </div> */}
-
         <PortfolioMosaic data={data} />
 
-        {/* <div className='mt-8 flex gap-6'>
-          {SOCIALS.map((social) => {
-            return (
-              <a
-                key={social.name}
-                href={social.url}
-                target='_blank'
-                rel='noopener noreferrer'
-                aria-label={social.name}
-                className='text-gray-400 transition-all duration-300 transform hover:scale-125 hover:text-[#9af3cf]'
-              >
-                {getIcon(social.icon, 20)}
-              </a>
-            );
-          })}
-        </div> */}
       </div>
     </section>
   );

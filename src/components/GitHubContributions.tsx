@@ -100,7 +100,7 @@ export default function GitHubContributions({ data }: Props) {
         href={data.user.html_url}
         target='_blank'
         rel='noopener noreferrer'
-        className='inline-flex items-center gap-1.5 text-lg text-accent hover:underline'
+        className='inline-flex items-center gap-1.5 text-base sm:text-lg text-accent hover:underline'
       >
         <GitCommit className='h-5 w-5' />
         View all contributions on GitHub

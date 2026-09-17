@@ -8,7 +8,7 @@ export default function Projects() {
   if (!PROJECTS || PROJECTS.length === 0) return null;
 
   return (
-    <section id='projects' className='mb-16 mt-22'>
+    <section id='projects' className='mt-10 sm:mt-22'>
       <h3 className='text-xl font-bold text-foreground'>Projects</h3>
       <p className='mt-2 mb-8 text-base text-muted'>A few things I've built, worked on, and learned from.</p>
       <div className='relative'>

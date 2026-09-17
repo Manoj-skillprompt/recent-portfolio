@@ -36,7 +36,7 @@ export default function Newsletter() {
   };
 
   return (
-    <section id='newsletter' className='my-20'>
+    <section id='newsletter' className='my-22'>
       <div className='relative'>
         {/* Dark Card */}
         <div

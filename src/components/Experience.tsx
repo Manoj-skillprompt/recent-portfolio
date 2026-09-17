@@ -169,7 +169,7 @@ export default function Experience() {
   if (!EXPERIENCE || EXPERIENCE.length === 0) return null;
 
   return (
-    <section id='experience' className='mb-16 mt-22'>
+    <section id='experience' className='mt-10 sm:mt-22'>
       {/* Section Header */}
       <h3 className='text-xl font-bold text-foreground mb-8'>Experience</h3>
 
