@@ -1,0 +1,251 @@
+---
+title: 'Understanding JavaScript Objects'
+description: 'Learn what JavaScript objects are, how they store key-value pairs, how to access properties, and how object methods and this work.'
+pubDate: 'Sep 17 2026'
+---
+
+# Understanding JavaScript Objects
+
+Object is a `variable` or `data structure` that stores related data and functionalities as `key-value`pairs.
+
+- `Keys` (also known as properties) are always `string or symbol` whereas `values` are of any `data type`
+- When a `function` is stored in an object, then it is called `method`
+
+```
+const user= {
+    name:"Manoj",
+    role:"Admin",
+    setRole:function{
+        console.log('setting role of users')
+    }
+}
+```
+
+### Defining objects
+
+1. `Object literals`: simplest way to define key-value pairs inside {} directly.
+
+```
+const person = {
+  name: "Alice",
+  age: 25,
+  isStudent: true
+};
+```
+
+1. `new` keyword
+
+```
+const obj = new Object()
+obj.name="Alice
+obj.age=25
+console.log(obj) // {name:"Alice", age:25}
+```
+
+1. `Object.create()`: creates an object from an existing object
+
+```
+const person = {
+  name: "Alice",
+  age: 25,
+  isStudent: true
+};
+const newPerson= Object.create(person)
+console.log(newPerson.name)// Alice
+```
+
+### Object properties
+
+Properties are `key:value` pairs. They can be changed, added and deleted.
+
+##### Accessing object properties
+
+1. `Dot notaion`:
+
+```
+const person = {
+  name: "Alice",
+  age: 25,
+  isStudent: true
+};
+const person_name = person.name // dot notation
+console.log(person_name)// Alice
+```
+
+1. `Bracket notation`:
+
+```
+const person = {
+  name: "Alice",
+  age: 25,
+  isStudent: true
+};
+const person_name = person["name"] // bracket notation
+console.log(person_name)// Alice
+```
+
+1. `Destructuring`:
+
+```
+const person = {
+  name: "Alice",
+  age: 25,
+  isStudent: true
+};
+const {name, age, isStudent}= obj // destructuring
+console.log(name)// Alice
+```
+
+##### Deleting object properties
+
+```
+const person = {
+  name: "Alice",
+  age: 25,
+  isStudent: true
+};
+delete person.name
+console.log(person_name) // undefined
+```
+
+ after deleting, `property` will be removed. Accessing it will return `undefined`.
+
+##### checks if property exists:
+
+```
+const person = {
+ name: "Alice",
+ age: 25,
+ isStudent: true
+};
+// checks if name exists in person object
+console.log("name" in person) // true 
+```
+
+### Object methods
+
+methods are `key:function` pairs.
+
+```
+const obj = {
+    name:"manoj",
+    role:"admin",
+    print:function(){
+        console.log(this.name)
+    }
+}
+
+obj.print() // manoj
+```
+
+Note: `this` keyword refers to the object.
+
+### Explicit function binding
+
+- `call()` and `apply()`: Both are used to call `method` of one object and pass data from `other object` as an `argument`. Only difference is `call()` passes arguments one by one and `apply()` passes arguments in `array`.
+
+```
+const obj1= {
+    name:"Manoj",
+    print:function(){
+        console.log(this.name, this.role)
+    }
+}
+
+const obj2 = {
+    role = "admin"
+}
+
+// call obj1's method (print) and pass data from obj2 as an argument
+obj1.print.call(obj2) // output: undefined admin
+
+// undefined on output because while using call(), `this` keyword points to obj2 and no name is passed from obj2 as an argument
+```
+
+- `Bind()`: same as above but it does not execute the function, it returns the new function.
+
+```
+const obj1= {
+    name:"Manoj",
+    print:function(){
+        console.log(this.name, this.role)
+    }
+}
+
+const obj2 = {
+    role = "admin"
+}
+
+const new_function = obj1.print.bind(obj2)
+new_function() // we have to call the function while using bind()
+```
+
+### what is `this` keyword
+
+- Alone: `this` refers to `global object`
+- Function: `this` refers to `global object`
+- Function (in strict mode): `this` refers to `undefined`
+- object methods: `this` refers to `object`
+- Event: `this` refers to the `element` that receives the event
+
+### Object iterations
+
+1. `Object.assign()`: copies properties from source object to target object. It returns `new object`.
+
+```
+const person1 = {
+    name:"Anna",
+    age:"12",
+    color:"fair"
+}
+
+const person2 = {
+    name:"Mary",
+    age:"20",
+}
+
+const newPerson = Object.assign(person1, person2)
+console.log(newPerson) 
+// output: {name:"Mary", age:"20", color:"fair"}
+```
+
+1. `Object.entries()`: return an array of key/value pairs of an object.
+
+```
+const person1 = {
+    name :"Anna",
+    role:"admin",
+    isAdmin:true
+}
+const person2 = Object.entries(person1)
+console.log(person2)
+// output: [ [ 'name', 'Anna' ], [ 'role', 'admin' ], [ 'isAdmin', true ] ]
+```
+
+1. `Object.keys()`: return an array of keys of an object.
+
+```
+const person1 = {
+    name :"Anna",
+    role:"admin",
+    isAdmin:true
+}
+const person2 = Object.keys(person1)
+console.log(person2)
+// output: [ 'name', 'role', 'isAdmin' ]
+```
+
+1. `Object.values()`: return an array of values of an object.
+
+```
+const person1 = {
+    name :"Anna",
+    role:"admin",
+    isAdmin:true
+}
+const person2 = Object.values(person1)
+console.log(person2)
+// output: [ 'Anna', 'admin', true ]
+```
+
+add this on the blog, do not change anything
