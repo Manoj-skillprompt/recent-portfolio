@@ -2,7 +2,8 @@
 import { SITE_DESCRIPTION, SITE_TITLE, SITE_URL } from './site';
 import type { SEOConfig } from './interfaces/seo';
 
-// Base SEO configuration without client-side environment variables
+const ogImageUrl = `${SITE_URL}/profile.png`;
+
 const baseSEOConfig: SEOConfig = {
   defaultTitle: SITE_TITLE,
   defaultDescription: SITE_DESCRIPTION,
@@ -15,33 +16,32 @@ const baseSEOConfig: SEOConfig = {
     'Personal Portfolio',
     'Astro Dev',
     'CSS Developer',
-    'JavaScript Developer'
+    'JavaScript Developer',
   ],
   openGraph: {
-    'og:title': `${SITE_TITLE}`,
+    'og:title': SITE_TITLE,
     'og:description': SITE_DESCRIPTION,
-    'og:image': '/images/OpenClaw-og-image.jpg', // Should be updated by the user
+    'og:image': ogImageUrl,
     'og:url': SITE_URL,
-    'og:type': 'website'
+    'og:type': 'website',
   },
   twitter: {
-    'twitter:title': `${SITE_TITLE}`,
+    'twitter:title': SITE_TITLE,
     'twitter:description': SITE_DESCRIPTION,
-    'twitter:image': '/images/OpenClaw-og-image.jpg',
+    'twitter:image': ogImageUrl,
     'twitter:url': SITE_URL,
     'twitter:card': 'summary_large_image',
-    'twitter:site': '@yourTwitterHandle' // Update with the actual handle
+    'twitter:site': '',
   },
   feedOptions: {
-    title: `${SITE_TITLE}`,
+    title: SITE_TITLE,
     description: SITE_DESCRIPTION,
     feedUrl: `${SITE_URL}/feed.xml`,
     siteUrl: SITE_URL,
-    language: 'en'
-  }
+    language: 'en',
+  },
 };
 
-// Export the Typed Configuration
 export const SEO_CONFIG: SEOConfig = baseSEOConfig;
 
 export default SEO_CONFIG;

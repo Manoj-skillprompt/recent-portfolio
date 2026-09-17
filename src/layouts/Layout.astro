@@ -1,5 +1,7 @@
 ---
 import '../styles/global.css';
+import { SITE_URL, SITE_TITLE } from '../config/site';
+import SEO_CONFIG from '../config/seo';
 
 export interface Props {
 	title: string;
@@ -8,6 +10,9 @@ export interface Props {
 }
 
 const { title, description, resetScrollOnLoad = false } = Astro.props;
+const pageTitle = title || SEO_CONFIG.defaultTitle;
+const pageDescription = description || SEO_CONFIG.defaultDescription;
+const pageUrl = new URL(Astro.url.pathname, SITE_URL).toString();
 ---
 
 <!DOCTYPE html>
@@ -17,8 +22,25 @@ const { title, description, resetScrollOnLoad = false } = Astro.props;
 		<meta name="viewport" content="width=device-width" />
 		<link rel="icon" type="image/png" href="/favicon.png" />
 		<meta name="generator" content={Astro.generator} />
-		<title>{title}</title>
-		{description && <meta name="description" content={description} />}
+		<title>{pageTitle}</title>
+		<meta name="description" content={pageDescription} />
+		<link rel="canonical" href={pageUrl} />
+		<meta property="og:site_name" content={SITE_TITLE} />
+		<meta property="og:title" content={pageTitle} />
+		<meta property="og:description" content={pageDescription} />
+		<meta property="og:type" content={SEO_CONFIG.openGraph['og:type']} />
+		<meta property="og:url" content={pageUrl} />
+		<meta property="og:image" content={SEO_CONFIG.openGraph['og:image']} />
+		<meta property="og:image:alt" content={pageTitle} />
+		<meta property="og:image:width" content="1200" />
+		<meta property="og:image:height" content="630" />
+		<meta name="twitter:card" content={SEO_CONFIG.twitter['twitter:card']} />
+		<meta name="twitter:title" content={pageTitle} />
+		<meta name="twitter:description" content={pageDescription} />
+		<meta name="twitter:url" content={pageUrl} />
+		<meta name="twitter:image" content={SEO_CONFIG.twitter['twitter:image']} />
+		<meta name="twitter:image:alt" content={pageTitle} />
+		{SEO_CONFIG.twitter['twitter:site'] && <meta name="twitter:site" content={SEO_CONFIG.twitter['twitter:site']} />}
 		<script>
 			{`(function() {
 				document.documentElement.classList.add('dark');
