@@ -172,7 +172,7 @@ export default function Hero({ data }: Props) {
             </a>
             <a
               href='#projects'
-              className='inline-flex items-center justify-center rounded-3xl border border-(--color-primary) bg-transparent px-5 py-3 text-base font-bold text-(--color-primary) shadow-[inset_0_0_0_1px_rgba(126,231,198,0.25)] transition-all duration-300 ease-out transform-gpu hover:rounded-lg hover:scale-105 sm:px-7 sm:text-lg'
+              className='inline-flex items-center justify-center rounded-3xl border border-(--color-primary) bg-transparent px-5 py-3 text-base font-bold text-(--color-primary) shadow-[inset_0_0_0_1px_rgba(126,231,198,0.25)] transition-all duration-300 ease-out transform-gpu hover:rounded-[1.5rem_0.5rem_1.5rem_0.5rem] hover:scale-105 sm:px-7 sm:text-lg'
             >
               My journey
             </a>
