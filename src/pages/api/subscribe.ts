@@ -63,10 +63,6 @@ export const POST: APIRoute = async ({ request }) => {
           <body style="margin:0;background:#f4f7f5;color:#17231d;font-family:Arial,Helvetica,sans-serif;line-height:1.6;">
             <div style="padding:32px 16px;">
               <div style="max-width:600px;margin:0 auto;background:#ffffff;border:1px solid #dce8e0;border-radius:16px;overflow:hidden;">
-                <div style="padding:34px 36px;background:#10251c;color:#ffffff;">
-                  <p style="margin:0 0 14px;color:#8ae3c2;font-size:12px;font-weight:bold;letter-spacing:2px;text-transform:uppercase;">Manoj Chaudhary</p>
-                  <h1 style="margin:0;font-size:30px;line-height:1.2;">You are on the list.</h1>
-                </div>
                 <div style="padding:36px;">
                   <p style="margin:0 0 20px;font-size:18px;">Thanks for subscribing.</p>
                   <p style="margin:0 0 18px;color:#4b5d53;">I will send you practical notes, useful discoveries, and new articles when they are published. The emails will be focused and occasional.</p>
@@ -75,11 +71,11 @@ export const POST: APIRoute = async ({ request }) => {
                   </p>
                   <p style="margin:0;color:#718078;font-size:13px;">You received this email because you subscribed on my website.</p>
                 </div>
-                <div style="padding:20px 36px;background:#f4f7f5;color:#718078;font-size:12px;">
+                <div style="padding:20px 36px;color:#718078;font-size:12px;">
                   <p style="margin:0;">Prefer not to receive these emails? <a href="${unsubscribeUrl}" style="color:#246f51;">Unsubscribe</a>.</p>
+                  <p style="max-width:600px;margin:18px auto 0;text-align:center;color:#8a9890;font-size:11px;">Manoj Chaudhary · Software Developer · Butwal, Nepal</p>
                 </div>
               </div>
-              <p style="max-width:600px;margin:18px auto 0;text-align:center;color:#8a9890;font-size:11px;">Manoj Chaudhary · Software Developer · Butwal, Nepal</p>
             </div>
           </body>
         </html>
