@@ -1,4 +1,5 @@
 import type { APIRoute } from 'astro';
+import { PROFILE_INFO } from '../../config/profile';
 import {
   allowRequest,
   escapeHtml,
@@ -52,6 +53,8 @@ export const POST: APIRoute = async ({ request }) => {
     if (!subscriber) return json({ ok: true, alreadySubscribed: true });
 
     const unsubscribeUrl = `${siteUrl}/api/unsubscribe?token=${encodeURIComponent(subscriber.unsubscribe_token)}`;
+    const ownerEmail = PROFILE_INFO.email;
+
     const result = await resend.emails.send({
       from: newsletterFrom,
       to: email,
@@ -86,6 +89,38 @@ export const POST: APIRoute = async ({ request }) => {
       console.error('Resend welcome email failed:', result.error);
       return json({ error: 'The confirmation email could not be sent.' }, 502);
     }
+
+    const adminResult = await resend.emails.send({
+      from: newsletterFrom,
+      to: ownerEmail,
+      subject: 'New newsletter subscriber',
+      text: `New subscriber alert\n\nA new person subscribed to your newsletter.\n\nEmail: ${email}\nTime: ${new Date().toISOString()}\n`,
+      html: `
+        <!doctype html>
+        <html lang="en">
+          <body style="margin:0;background:#f4f7f5;color:#17231d;font-family:Arial,Helvetica,sans-serif;line-height:1.6;">
+            <div style="padding:32px 16px;">
+              <div style="max-width:600px;margin:0 auto;background:#ffffff;border:1px solid #dce8e0;border-radius:16px;overflow:hidden;">
+                <div style="padding:34px 36px;background:#10251c;color:#ffffff;">
+                  <p style="margin:0 0 14px;color:#8ae3c2;font-size:12px;font-weight:bold;letter-spacing:2px;text-transform:uppercase;">Newsletter</p>
+                  <h1 style="margin:0;font-size:30px;line-height:1.2;">New subscriber</h1>
+                </div>
+                <div style="padding:36px;">
+                  <p style="margin:0 0 18px;font-size:18px;">A new person subscribed to your newsletter.</p>
+                  <p style="margin:0;color:#4b5d53;"><strong>Email:</strong> ${escapeHtml(email)}</p>
+                  <p style="margin:10px 0 0;color:#4b5d53;"><strong>Time:</strong> ${new Date().toISOString()}</p>
+                </div>
+              </div>
+            </div>
+          </body>
+        </html>
+      `,
+    });
+
+    if (adminResult.error) {
+      console.error('Resend admin notification failed:', adminResult.error);
+    }
+
     return json({ ok: true });
   } catch (error) {
     console.error('Newsletter subscription failed:', error);
