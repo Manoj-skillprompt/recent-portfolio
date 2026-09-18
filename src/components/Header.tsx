@@ -113,7 +113,7 @@ export default function Header() {
         href={resumeUrl}
         download
         aria-label='Download resume'
-        className='btn-primary hidden items-center gap-2 px-4 py-2 text-base lg:inline-flex'
+        className='btn-primary hidden items-center gap-2 px-4 py-3 text-base lg:inline-flex'
       >
         <Download className='h-4 w-4 shrink-0' aria-hidden='true' />
         <span className='hidden sm:inline'>Resume</span>
