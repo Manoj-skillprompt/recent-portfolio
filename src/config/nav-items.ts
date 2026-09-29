@@ -24,7 +24,7 @@ export const NAV_ITEMS: NavItem[] = [
     sectionId: 'experience',
   },
   {
-    label: 'Blogs',
+    label: 'Articles',
     href: '/blog',
     action: 'navigate',
     sectionId: 'blog',

@@ -30,7 +30,7 @@ export default function Header() {
       const path = window.location.pathname.replace(/\/$/, '') || '/';
 
       if (path === '/blog' || path.startsWith('/blog/')) {
-        setActiveNav('Blogs');
+        setActiveNav('Articles');
         return;
       }
 

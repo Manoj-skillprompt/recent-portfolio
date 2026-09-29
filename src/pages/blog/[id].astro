@@ -1,6 +1,6 @@
 ---
 import { type CollectionEntry, getCollection, render } from 'astro:content';
-import { ArrowLeft, ArrowUpRight, CalendarDays, Clock3 } from 'lucide-react';
+import { ArrowLeft, CalendarDays, Clock3, Bookmark } from 'lucide-react';
 import Layout from '../../layouts/Layout.astro';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
@@ -28,309 +28,388 @@ const relatedPosts = (await getCollection('blog'))
 
 const publishedDate = post.data.pubDate.toLocaleDateString('en-us', {
   year: 'numeric',
-  month: 'long',
+  month: 'short',
   day: 'numeric',
 });
 
 const updatedDate = post.data.updatedDate?.toLocaleDateString('en-us', {
   year: 'numeric',
-  month: 'long',
+  month: 'short',
   day: 'numeric',
 });
 ---
 
 <Layout
-	title={`${post.data.title} | ${SITE_TITLE}`}
-	description={post.data.description}
-	ogType='article'
-	article={{ publishedTime: post.data.pubDate.toISOString(), modifiedTime: post.data.updatedDate?.toISOString() }}
+  title={`${post.data.title} | ${SITE_TITLE}`}
+  description={post.data.description}
+  ogType='article'
+  article={{ publishedTime: post.data.pubDate.toISOString(), modifiedTime: post.data.updatedDate?.toISOString() }}
 >
   <Header client:load />
-  <main class='grow'>
-    <article class='blog-post-page'>
-      <header class='blog-post-hero'>
-        <a href='/blog/' class='blog-post-back group'>
-          <ArrowLeft className='h-4 w-4 transition-transform group-hover:-translate-x-1' aria-hidden='true' />
-          Back to all articles
-        </a>
-        <div class='blog-post-kicker'>
-          <span class='blog-post-kicker__dot' aria-hidden='true' />
-          Engineering notes
-        </div>
-        <h1>{post.data.title}</h1>
-        <p class='blog-post-summary'>{post.data.description}</p>
-        <div class='blog-post-meta'>
-          <span>
-            <CalendarDays className='h-4 w-4' aria-hidden='true' />
-            <time datetime={post.data.pubDate.toISOString()}>{publishedDate}</time>
-          </span>
-          <span>
-            <Clock3 className='h-4 w-4' aria-hidden='true' />
-            5 min read
-          </span>
-          {updatedDate && <span>Updated {updatedDate}</span>}
-        </div>
-      </header>
 
-      <div class='blog-post-layout'>
-        <div class='blog-post-rule' aria-hidden='true' />
-        <div class='prose blog-post-content'>
+  <main class='grow py-6 sm:py-10 relative overflow-hidden'>
+    <!-- Back to Articles Button -->
+    <div class='w-full max-w-267 mx-auto mb-6 sm:mb-8 relative z-10 pl-5'>
+      <a href='/blog/' class='notebook-back-btn group inline-flex items-center gap-2 font-handwriting text-lg sm:text-xl text-muted hover:text-accent transition-colors duration-200'>
+        <ArrowLeft className='h-4 w-4 transition-transform group-hover:-translate-x-1.5 text-accent' aria-hidden='true' />
+        <span>Back to all articles</span>
+      </a>
+    </div>
+
+    <!-- Main Blog Container matching Nav Width -->
+    <article class='w-full max-w-267 mx-auto relative z-10'>
+      <div class='notebook-paper relative w-full'>
+        <!-- Article Header -->
+        <header class='notebook-header mb-8 pb-8 border-b border-white/10 relative z-10'>
+      
+          <div class='relative inline-block w-full my-2'>
+            <h1 class='font-handwriting text-4xl sm:text-6xl lg:text-7xl font-bold text-foreground leading-[1.08] tracking-wide'>
+              {post.data.title}
+            </h1>
+            <!-- Sketchy Hand-drawn Underline SVG -->
+            <svg class='handwritten-underline-svg w-full h-4 sm:h-6 text-accent opacity-85 my-2' viewBox='0 0 600 24' preserveAspectRatio='none' fill='none' xmlns='http://www.w3.org/2000/svg' aria-hidden='true'>
+              <path d='M 6 14 Q 150 4, 300 16 T 594 10' stroke='currentColor' stroke-width='4' stroke-linecap='round' fill='none'/>
+            </svg>
+          </div>
+
+          <!-- Handwritten Executive Summary Box -->
+          <div class='notebook-summary-box mt-6 p-5 rounded-lg border border-accent/25 bg-accent/5 relative overflow-hidden'>
+            <div class='font-handwriting text-accent font-bold text-base tracking-wider uppercase mb-1 flex items-center gap-2'>
+              <Bookmark className='w-4 h-4' />
+              <span>EXECUTIVE SUMMARY</span>
+            </div>
+            <p class='text-base sm:text-lg text-slate-200 leading-relaxed font-sans'>
+              {post.data.description}
+            </p>
+          </div>
+
+          <!-- Stamped Metadata Bar -->
+          <div class='notebook-meta-stamp font-handwriting text-base sm:text-lg text-muted flex flex-wrap items-center gap-4 sm:gap-7 mt-6 pt-2'>
+            <span class='inline-flex items-center gap-1.5 text-slate-300'>
+              <CalendarDays className='h-4 w-4 text-accent' />
+              <span>DATE: {publishedDate}</span>
+            </span>
+            <span class='inline-flex items-center gap-1.5 text-slate-300'>
+              <Clock3 className='h-4 w-4 text-accent' />
+              <span>EST. READ: 5 MIN</span>
+            </span>
+            <span class='text-accent font-semibold'>
+              ★ AUTHOR: MANOJ CHAUDHARY
+            </span>
+            {updatedDate && <span class='text-xs text-muted font-sans ml-auto'>Updated: {updatedDate}</span>}
+          </div>
+        </header>
+
+        <!-- Article Content -->
+        <div class='notebook-prose prose prose-invert max-w-none relative z-10'>
           <Content />
         </div>
       </div>
-
-      {relatedPosts.length > 0 && (
-        <section class='blog-post-related' aria-labelledby='related-heading'>
-          <div class='blog-post-related__heading'>
-            <p>Keep reading</p>
-            <h2 id='related-heading'>More from the journal</h2>
-          </div>
-          <div class='blog-post-related__grid'>
-            {relatedPosts.map((relatedPost) => (
-              <a href={`/blog/${relatedPost.id}/`} class='blog-related-card group'>
-                <div>
-                  <p class='blog-related-card__date'>
-                    {relatedPost.data.pubDate.toLocaleDateString('en-us', {
-                      year: 'numeric',
-                      month: 'short',
-                      day: 'numeric',
-                    })}
-                  </p>
-                  <h3>{relatedPost.data.title}</h3>
-                </div>
-                <ArrowUpRight
-                  className='h-5 w-5 transition-transform group-hover:-translate-y-1 group-hover:translate-x-1'
-                  aria-hidden='true'
-                />
-              </a>
-            ))}
-          </div>
-        </section>
-      )}
     </article>
+
+    <!-- Related Articles Index Cards -->
+    {relatedPosts.length > 0 && (
+      <section class='w-full max-w-267 mx-auto mt-20 relative z-10 pt-8 border-t border-white/10' aria-labelledby='related-heading'>
+        <div class='mb-6'>
+          <p class='text-xs font-bold tracking-widest text-primary uppercase mb-1'>Keep reading</p>
+          <h2 id='related-heading' class='text-xl font-bold text-foreground sm:text-2xl'>More from the article</h2>
+        </div>
+        <ul class='grid gap-5 sm:grid-cols-2'>
+          {relatedPosts.map((relatedPost) => (
+            <li class='h-full'>
+              <a href={`/blog/${relatedPost.id}/`} class='blog-card group'>
+                <div class='blog-card__content'>
+                  <h3 class='mb-3 text-xl font-medium text-foreground transition-colors duration-300 group-hover:text-primary'>
+                    {relatedPost.data.title}
+                  </h3>
+                  <p class='text-sm leading-relaxed text-muted'>{relatedPost.data.description}</p>
+                  <p class='mt-8 text-sm text-muted'>
+                    <time datetime={relatedPost.data.pubDate.toISOString()}>
+                      {relatedPost.data.pubDate.toLocaleDateString('en-us', {
+                        year: 'numeric',
+                        month: 'short',
+                        day: 'numeric',
+                      })}
+                    </time>
+                  </p>
+                </div>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )}
   </main>
+
   <Footer />
 </Layout>
 
+<script>
+  const cards = document.querySelectorAll<HTMLElement>('.blog-card');
+
+  cards.forEach((card) => {
+    card.addEventListener('pointermove', (event) => {
+      const bounds = card.getBoundingClientRect();
+      const x = ((event.clientX - bounds.left) / bounds.width) * 100;
+      const y = ((event.clientY - bounds.top) / bounds.height) * 100;
+
+      card.style.setProperty('--pointer-x', `${x}%`);
+      card.style.setProperty('--pointer-y', `${y}%`);
+      card.style.setProperty('--pointer-glow', 'color-mix(in srgb, var(--color-primary) 20%, transparent)');
+    });
+
+    card.addEventListener('pointerleave', () => {
+      card.style.setProperty('--pointer-glow', 'transparent');
+    });
+  });
+</script>
+
 <style>
-  .blog-post-page {
-    padding: 4.5rem 0 6rem;
+  /* Standard Blog Card Styling (matching blog index page) */
+  .blog-card {
+    --pointer-x: 50%;
+    --pointer-y: 50%;
+    --pointer-glow: transparent;
+    position: relative;
+    display: block;
+    height: 100%;
+    overflow: hidden;
+    border: 1px solid rgba(148, 163, 184, 0.25);
+    border-radius: 1rem 3rem 1rem 3rem;
+    background:
+      radial-gradient(circle at var(--pointer-x) var(--pointer-y), var(--pointer-glow), transparent 36%), transparent;
+    transition:
+      transform 400ms cubic-bezier(0.22, 1, 0.36, 1),
+      border-color 400ms ease,
+      background-color 400ms ease,
+      box-shadow 400ms ease;
   }
 
-  .blog-post-hero {
-    max-width: 52rem;
-    margin: 0 auto;
-    text-align: center;
+  .blog-card::after {
+    position: absolute;
+    inset: 0;
+    border: 1px solid color-mix(in srgb, var(--color-primary) 34%, transparent);
+    border-radius: inherit;
+    content: '';
+    opacity: 0;
+    transition: opacity 400ms ease;
+    pointer-events: none;
   }
 
-  .blog-post-back {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    color: var(--color-muted);
-    font-size: 0.875rem;
-    transition: color 200ms ease;
+  .blog-card__content {
+    position: relative;
+    z-index: 1;
+    padding: 1.35rem;
   }
 
-  .blog-post-back:hover {
-    color: var(--color-primary);
+  .blog-card:hover,
+  .blog-card:focus-visible {
+    transform: translateY(-5px);
+    border-color: color-mix(in srgb, var(--color-primary) 76%, transparent);
+    background-color: color-mix(in srgb, var(--color-primary) 10%, var(--color-card));
+    box-shadow:
+      0 0 0 1px color-mix(in srgb, var(--color-primary) 24%, transparent),
+      0 18px 42px rgba(0, 0, 0, 0.28),
+      0 0 28px color-mix(in srgb, var(--color-primary) 18%, transparent);
   }
 
-  .blog-post-kicker {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-    margin-top: 3.5rem;
-    color: var(--color-primary);
-    font-size: 0.75rem;
+  .blog-card:hover::after,
+  .blog-card:focus-visible::after {
+    opacity: 1;
+  }
+
+  .blog-card:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 4px;
+  }
+
+  /* Animated Hand-drawn Underline */
+  .handwritten-underline-svg path {
+    stroke-dasharray: 600;
+    stroke-dashoffset: 0;
+    animation: drawLine 1.2s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+  }
+
+  @keyframes drawLine {
+    from {
+      stroke-dashoffset: 600;
+    }
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+
+  /* Notebook Content / MDX Styling */
+  .notebook-prose :global(h1:first-child) {
+    display: none;
+  }
+
+  .notebook-prose :global(h2) {
+    font-family: 'Caveat', 'Patrick Hand', cursive, sans-serif;
+    font-size: 2.25rem;
     font-weight: 700;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
+    color: #ffffff;
+    margin-top: 3.25rem;
+    margin-bottom: 1.25rem;
+    letter-spacing: 0.01em;
+    border-bottom: 1px dashed rgba(126, 231, 198, 0.3);
+    padding-bottom: 0.4rem;
+    position: relative;
   }
 
-  .blog-post-kicker__dot {
-    width: 0.4rem;
-    height: 0.4rem;
-    border-radius: 9999px;
-    background: var(--color-primary);
-    box-shadow: 0 0 1rem var(--color-primary);
-  }
-
-  .blog-post-hero h1 {
-    margin: 1.25rem 0 0;
-    color: var(--color-foreground);
-    font-size: clamp(2.25rem, 5vw, 4.5rem);
-    font-weight: 800;
-    letter-spacing: -0.04em;
-    line-height: 1.02;
-  }
-
-  .blog-post-summary {
-    max-width: 42rem;
-    margin: 1.5rem auto 0;
-    color: var(--color-muted);
-    font-size: 1.125rem;
-    line-height: 1.75;
-  }
-
-  .blog-post-meta {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 0.75rem 1.25rem;
-    margin-top: 1.75rem;
-    color: var(--color-muted);
-    font-size: 0.8rem;
-  }
-
-  .blog-post-meta span {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.4rem;
-  }
-
-  .blog-post-layout {
-    display: grid;
-    grid-template-columns: minmax(0, 4rem) minmax(0, 44rem);
-    gap: 1.5rem;
-    max-width: 49.5rem;
-    margin: 5rem auto 0;
-  }
-
-  .blog-post-rule {
-    width: 1px;
-    background: linear-gradient(to bottom, var(--color-primary), rgba(126, 231, 198, 0.08) 70%, transparent);
-  }
-
-  .blog-post-content {
-    min-width: 0;
-    max-width: none;
-  }
-
-  .blog-post-content :global(h2) {
-    margin-top: 3rem;
-    color: var(--color-foreground);
-    font-size: 1.75rem;
-  }
-
-  .blog-post-content :global(h3) {
-    color: var(--color-foreground);
-  }
-
-  .blog-post-content :global(p),
-  .blog-post-content :global(li) {
-    color: color-mix(in srgb, var(--color-foreground) 78%, var(--color-muted));
-    line-height: 1.9;
-  }
-
-  .blog-post-content :global(pre) {
-    border: 1px solid var(--color-border);
-    border-radius: 0.75rem;
-    box-shadow: 0 1.5rem 3rem rgba(0, 0, 0, 0.2);
-  }
-
-  .blog-post-content :global(blockquote) {
-    border-left-width: 2px;
-    border-radius: 0 0.5rem 0.5rem 0;
-    padding: 1rem 1.25rem;
-  }
-
-  .blog-post-related {
-    max-width: 49.5rem;
-    margin: 6rem auto 0;
-    padding-top: 2rem;
-    border-top: 1px solid var(--color-border);
-  }
-
-  .blog-post-related__heading p {
-    margin: 0;
-    color: var(--color-primary);
-    font-size: 0.75rem;
+  .notebook-prose :global(h3) {
+    font-family: 'Caveat', 'Patrick Hand', cursive, sans-serif;
+    font-size: 1.8rem;
     font-weight: 700;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
+    color: #7ee7c6;
+    margin-top: 2.25rem;
+    margin-bottom: 0.85rem;
   }
 
-  .blog-post-related__heading h2 {
-    margin: 0.5rem 0 1.5rem;
-    color: var(--color-foreground);
+  .notebook-prose :global(h4),
+  .notebook-prose :global(h5) {
+    font-family: 'Caveat', 'Patrick Hand', cursive, sans-serif;
     font-size: 1.5rem;
+    font-weight: 700;
+    color: #e2e8f0;
+    margin-top: 1.75rem;
+    margin-bottom: 0.5rem;
   }
 
-  .blog-post-related__grid {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 1rem;
+  .notebook-prose :global(p),
+  .notebook-prose :global(li) {
+    color: #cbd5e1;
+    font-size: 1.05rem;
+    line-height: 1.85;
+    margin-bottom: 1.25rem;
   }
 
-  .blog-related-card {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 1rem;
-    min-height: 8rem;
-    padding: 1.25rem;
-    border: 1px solid var(--color-border);
-    border-radius: 0.75rem;
-    background: var(--color-surface);
-    color: var(--color-foreground);
-    transition: border-color 250ms ease, background-color 250ms ease, transform 250ms ease;
+  .notebook-prose :global(ul) {
+    list-style-type: none;
+    padding-left: 1.25rem;
   }
 
-  .blog-related-card:hover {
-    transform: translateY(-3px);
-    border-color: color-mix(in srgb, var(--color-primary) 58%, transparent);
-    background: color-mix(in srgb, var(--color-primary) 8%, var(--color-card));
+  .notebook-prose :global(ul > li) {
+    position: relative;
+    padding-left: 1.5rem;
   }
 
-  .blog-related-card__date {
-    margin: 0 0 0.75rem;
-    color: var(--color-muted);
-    font-size: 0.75rem;
+  .notebook-prose :global(ul > li::before) {
+    content: '➺';
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: #7ee7c6;
+    font-family: 'Caveat', cursive;
+    font-size: 1.3rem;
   }
 
-  .blog-related-card h3 {
-    margin: 0;
-    font-size: 1rem;
-    line-height: 1.45;
+  /* Code Block styling as dark ink snippet */
+  .notebook-prose :global(pre) {
+    position: relative;
+    background-color: #0c100e !important;
+    border: 1px solid rgba(126, 231, 198, 0.22);
+    border-radius: 0.6rem;
+    padding: 1.25rem 1.5rem;
+    margin: 2rem 0;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+    font-family: 'Fira Code', monospace;
+    font-size: 0.95rem;
+    line-height: 1.65;
+    overflow-x: auto;
   }
 
-  .blog-related-card > svg {
-    flex: 0 0 auto;
-    color: var(--color-primary);
+  .notebook-prose :global(code) {
+    font-family: 'Fira Code', monospace;
+    background-color: rgba(126, 231, 198, 0.12);
+    border: 1px dashed rgba(126, 231, 198, 0.35);
+    border-radius: 4px;
+    padding: 0.15rem 0.45rem;
+    color: #7ee7c6;
+    font-size: 0.9em;
+    font-weight: 500;
   }
 
-  @media (max-width: 640px) {
-    .blog-post-page {
-      padding-top: 3rem;
-    }
+  .notebook-prose :global(pre code) {
+    background-color: transparent;
+    border: none;
+    padding: 0;
+    color: inherit;
+    font-size: inherit;
+  }
 
-    .blog-post-kicker {
-      margin-top: 2.75rem;
-    }
+  /* Sticky Note Blockquote */
+  .notebook-prose :global(blockquote) {
+    position: relative;
+    background-color: #151d18;
+    border-left: 4px solid #7ee7c6;
+    border-radius: 0 8px 8px 0;
+    padding: 1.25rem 1.5rem;
+    margin: 2rem 0;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+  }
 
-    .blog-post-layout {
-      display: block;
-      margin-top: 3.5rem;
-    }
+  .notebook-prose :global(blockquote::before) {
+    content: '📌 NOTEBOOK ANNOTATION';
+    display: block;
+    font-family: 'Caveat', cursive;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #7ee7c6;
+    margin-bottom: 0.5rem;
+    letter-spacing: 0.05em;
+  }
 
-    .blog-post-rule {
-      width: 3rem;
-      height: 2px;
-      margin-bottom: 2rem;
-      background: linear-gradient(to right, var(--color-primary), transparent);
-    }
+  .notebook-prose :global(blockquote p) {
+    margin-bottom: 0;
+    font-style: italic;
+    color: #e2e8f0;
+  }
 
-    .blog-post-related__grid {
-      grid-template-columns: 1fr;
-    }
+  /* Table styling */
+  .notebook-prose :global(table) {
+    width: 100%;
+    margin: 2rem 0;
+    border-collapse: collapse;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    background-color: rgba(0, 0, 0, 0.2);
+  }
+
+  .notebook-prose :global(th) {
+    font-family: 'Caveat', cursive;
+    font-size: 1.3rem;
+    color: #7ee7c6;
+    background-color: rgba(126, 231, 198, 0.08);
+    padding: 0.75rem 1rem;
+    text-align: left;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+  }
+
+  .notebook-prose :global(td) {
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    color: #cbd5e1;
+  }
+
+  .notebook-prose :global(tr:nth-child(even)) {
+    background-color: rgba(255, 255, 255, 0.02);
+  }
+
+  .notebook-prose :global(a) {
+    color: #7ee7c6;
+    text-decoration: none;
+    border-bottom: 1px dashed #7ee7c6;
+    transition: color 0.2s ease, border-color 0.2s ease;
+  }
+
+  .notebook-prose :global(a:hover) {
+    color: #ffffff;
+    border-bottom-style: solid;
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .blog-post-back,
-    .blog-related-card {
-      transition: none;
+    .handwritten-underline-svg path {
+      animation: none;
     }
   }
 </style>

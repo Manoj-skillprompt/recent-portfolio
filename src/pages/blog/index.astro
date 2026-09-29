@@ -9,7 +9,7 @@ import { SITE_DESCRIPTION } from '../../config/site'; // Import SITE_DESCRIPTION
 const posts = (await getCollection('blog')).sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 ---
 
-<Layout title={`Blog | ${SITE_TITLE}`} description={SITE_DESCRIPTION}>
+<Layout title={`Articles | ${SITE_TITLE}`} description={SITE_DESCRIPTION}>
   {/* Dynamically use SITE_TITLE */}
   <Header client:load />
   <main class='grow'>
@@ -17,7 +17,7 @@ const posts = (await getCollection('blog')).sort((a, b) => b.data.pubDate.valueO
       <div class='mb-8 flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between'>
         <div class='flex flex-col gap-2 max-w-2xl'>
           <h1 class='max-w-2xl text-2xl font-bold leading-tight text-foreground sm:text-3xl'>
-            Thoughts, Learnings & Experiments
+            Thoughts & Learnings
           </h1>
           <p class='text-lg mt-4'>
             A collection of things I’ve learned while building projects, solving problems, and exploring software
@@ -28,7 +28,7 @@ const posts = (await getCollection('blog')).sort((a, b) => b.data.pubDate.valueO
       </div>
       <p id='blog-no-results' class='mb-6 hidden text-sm text-muted'>No articles matched your search.</p>
       <div class='relative ml-auto block w-full sm:max-w-xs my-4'>
-        <span class='sr-only'>Search blog articles</span>
+        <span class='sr-only'>Search articles</span>
         <input
           id='blog-search'
           type='search'

@@ -168,7 +168,7 @@ export default function Hero({ data }: Props) {
               href='/blog'
               className='btn-primary inline-flex items-center justify-center px-5 py-3 text-base sm:px-7 sm:text-lg'
             >
-              Read blog
+              Read articles
             </a>
             <a
               href='#projects'
