@@ -12,6 +12,8 @@
     "@astrojs/check": "^0.9.10",
     "@astrojs/mdx": "^7.0.0",
     "@astrojs/react": "^6.0.0",
+    "@astrojs/rss": "^4.0.19",
+    "@astrojs/sitemap": "^3.7.4",
     "@astrojs/vercel": "^11.0.10",
     "@neondatabase/serverless": "^1.1.0",
     "@tailwindcss/typography": "^0.5.20",

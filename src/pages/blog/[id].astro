@@ -39,7 +39,12 @@ const updatedDate = post.data.updatedDate?.toLocaleDateString('en-us', {
 });
 ---
 
-<Layout title={`${post.data.title} | ${SITE_TITLE}`} description={post.data.description}>
+<Layout
+	title={`${post.data.title} | ${SITE_TITLE}`}
+	description={post.data.description}
+	ogType='article'
+	article={{ publishedTime: post.data.pubDate.toISOString(), modifiedTime: post.data.updatedDate?.toISOString() }}
+>
   <Header client:load />
   <main class='grow'>
     <article class='blog-post-page'>

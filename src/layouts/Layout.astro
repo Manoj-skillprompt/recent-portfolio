@@ -8,9 +8,14 @@ export interface Props {
 	title: string;
 	description?: string;
 	resetScrollOnLoad?: boolean;
+	ogType?: 'website' | 'article';
+	article?: {
+		publishedTime: string;
+		modifiedTime?: string;
+	};
 }
 
-const { title, description, resetScrollOnLoad = false } = Astro.props;
+const { title, description, resetScrollOnLoad = false, ogType = 'website', article } = Astro.props;
 const pageTitle = title || SEO_CONFIG.defaultTitle;
 const pageDescription = description || SEO_CONFIG.defaultDescription;
 const pageUrl = new URL(Astro.url.pathname, SITE_URL).toString();
@@ -55,15 +60,38 @@ const websiteSchema = {
 	},
 };
 
-const structuredData = [websiteSchema, personSchema];
+const articleSchema = article
+	? {
+			'@context': 'https://schema.org',
+			'@type': 'BlogPosting',
+			headline: title,
+			description: pageDescription,
+			image: `${SITE_URL}/profile.png`,
+			author: {
+				'@type': 'Person',
+				name: PROFILE_INFO.name,
+				url: `${SITE_URL}/#about`,
+			},
+			publisher: {
+				'@type': 'Person',
+				name: PROFILE_INFO.name,
+			},
+			mainEntityOfPage: pageUrl,
+			datePublished: article.publishedTime,
+			...(article.modifiedTime ? { dateModified: article.modifiedTime } : {}),
+		}
+	: null;
+
+const structuredData = [websiteSchema, personSchema, ...(articleSchema ? [articleSchema] : [])];
 ---
 
 <!DOCTYPE html>
 <html lang="en" data-reset-scroll={resetScrollOnLoad ? 'true' : undefined}>
 	<head>
 		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link rel="icon" type="image/png" href="/favicon.png" />
+		<link rel="apple-touch-icon" href="/favicon.png" />
 		<meta name="generator" content={Astro.generator} />
 		<meta name="description" content={pageDescription} />
 		<meta name="author" content={PROFILE_INFO.name} />
@@ -71,22 +99,27 @@ const structuredData = [websiteSchema, personSchema];
 		<meta name="theme-color" content="#0f172a" />
 		<title>{pageTitle}</title>
 		<link rel="canonical" href={pageUrl} />
+		<link rel="alternate" type="application/rss+xml" title={`${SITE_TITLE} | RSS Feed`} href={`${SITE_URL}/feed.xml`} />
+		{ogType === 'article' && (
+			<meta property="article:published_time" content={article?.publishedTime} />
+			<meta property="article:modified_time" content={article?.modifiedTime || article?.publishedTime} />
+			<meta property="article:author" content={`${SITE_URL}/#about`} />
+		)}
+		<meta property="og:locale" content="en_US" />
 		<meta property="og:site_name" content={SITE_TITLE} />
+		<meta property="og:type" content={ogType} />
 		<meta property="og:title" content={pageTitle} />
 		<meta property="og:description" content={pageDescription} />
-		<meta property="og:type" content={SEO_CONFIG.openGraph['og:type']} />
 		<meta property="og:url" content={pageUrl} />
 		<meta property="og:image" content={SEO_CONFIG.openGraph['og:image']} />
 		<meta property="og:image:alt" content={pageTitle} />
-		<meta property="og:image:width" content="1200" />
-		<meta property="og:image:height" content="630" />
 		<meta name="twitter:card" content={SEO_CONFIG.twitter['twitter:card']} />
+		<meta name="twitter:site" content={SEO_CONFIG.twitter['twitter:site']} />
 		<meta name="twitter:title" content={pageTitle} />
 		<meta name="twitter:description" content={pageDescription} />
 		<meta name="twitter:url" content={pageUrl} />
 		<meta name="twitter:image" content={SEO_CONFIG.twitter['twitter:image']} />
 		<meta name="twitter:image:alt" content={pageTitle} />
-		{SEO_CONFIG.twitter['twitter:site'] && <meta name="twitter:site" content={SEO_CONFIG.twitter['twitter:site']} />}
 		<script type="application/ld+json" set:html={JSON.stringify(structuredData)}></script>
 		<script>
 			{`(function() {

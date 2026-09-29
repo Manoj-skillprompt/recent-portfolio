@@ -31,7 +31,7 @@ const baseSEOConfig: SEOConfig = {
     'twitter:image': ogImageUrl,
     'twitter:url': SITE_URL,
     'twitter:card': 'summary_large_image',
-    'twitter:site': '',
+    'twitter:site': '@manojtharu34',
   },
   feedOptions: {
     title: SITE_TITLE,

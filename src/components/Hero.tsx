@@ -111,7 +111,7 @@ const PortfolioMosaic = ({ data }: Props) => (
       </div>
     </article>
 
-    <article className='min-h-57.5 rounded-tl-[3rem] rounded-tr-xl rounded-br-[3rem] rounded-bl-2xl bg-yellow-950 px-7 py-7 sm:col-span-3 sm:row-span-1 sm:min-h-0'>
+    <article id='find_me_here' className='min-h-57.5 rounded-tl-[3rem] rounded-tr-xl rounded-br-[3rem] rounded-bl-2xl bg-yellow-950 px-7 py-7 sm:col-span-3 sm:row-span-1 sm:min-h-0'>
       <h2 className='text-xl font-bold'>Find Me Here</h2>
       <div className='mt-7 grid grid-cols-2 overflow-hidden rounded-lg border border-white/35'>
         {SOCIALS.map((social) => (
@@ -174,7 +174,7 @@ export default function Hero({ data }: Props) {
               href='#projects'
               className='inline-flex items-center justify-center rounded-3xl border border-(--color-primary) bg-transparent px-5 py-3 text-base font-bold text-(--color-primary) shadow-[inset_0_0_0_1px_rgba(126,231,198,0.25)] transition-all duration-300 ease-out transform-gpu hover:rounded-[1.5rem_0.5rem_1.5rem_0.5rem] hover:scale-105 sm:px-7 sm:text-lg'
             >
-              My journey
+              My works
             </a>
           </div>
         </div>
