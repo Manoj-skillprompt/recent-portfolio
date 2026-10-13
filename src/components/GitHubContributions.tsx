@@ -22,7 +22,6 @@ export default function GitHubContributions({ data }: Props) {
 
     const rawContributions = data.contributions || [];
 
-    // Map jogruber.de data to the structure expected by ArcadeRenderer
     const formattedContributions = rawContributions.map((item) => ({
       date: item.date,
       count: item.count,
@@ -32,7 +31,6 @@ export default function GitHubContributions({ data }: Props) {
     const renderer = new ArcadeRenderer({
       game: 'breakout',
       username: username,
-      // If server data exists, use 'scenario' platform with customData
       ...(formattedContributions.length > 0
         ? {
             platform: 'scenario',
@@ -91,7 +89,6 @@ export default function GitHubContributions({ data }: Props) {
         )}
         <div
           ref={containerRef}
-          // GitHubContributions.tsx
           className='w-full max-w-full mt-7 [&_svg]:rounded-md [&_svg]:h-auto [&_svg]:w-full [&_svg]:max-w-full [&_svg]:block'
         />
       </div>
