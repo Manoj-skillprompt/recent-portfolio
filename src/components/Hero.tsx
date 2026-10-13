@@ -145,7 +145,7 @@ export default function Hero({ data }: Props) {
 
         <div className='max-w-4xl'>
           <h1 className='font-black leading-[0.94] text-foreground'>
-            <span className='block text-3xl sm:text-5xl lg:text-6xl'>Hey there 👋, I'm</span>
+            <span className='block text-3xl sm:text-5xl lg:text-6xl'>Hey there, I'm</span>
             <span className='mt-3 block bg-linear-to-r from-[#e6fbf0] via-[#7ee7c6] to-[#0f93ad] bg-clip-text text-4xl text-transparent drop-shadow-[0_0_22px_rgba(126,231,198,0.28)] sm:text-6xl lg:text-7xl'>
               {PROFILE_INFO.name}.
             </span>

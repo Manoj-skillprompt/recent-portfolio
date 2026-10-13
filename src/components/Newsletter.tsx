@@ -105,7 +105,7 @@ export default function Newsletter() {
               <img
                 src='/profile.png'
                 alt={PROFILE_INFO?.name || 'Profile picture'}
-                className='w-full h-full object-cover filter grayscale'
+                className='w-full h-full object-cover'
               />
             </div>
             <div className='absolute bottom-2 left-0 right-0 text-center font-serif italic text-sm text-black'>
